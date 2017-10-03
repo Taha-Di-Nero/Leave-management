@@ -1,0 +1,121 @@
+@import '~ngx-toastr/toastr.css';
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+hr.double {
+    border-top: 0.25rem double;
+}
+
+hr.dashed {
+    border-top: 0.1rem dashed;
+}
+
+hr.dotted {
+    border-top: 0.01rem dotted;
+}
+
+.modal {
+    overflow: scroll;
+}
+
+.modal-xxl .modal-lg {
+    max-width: 75%;
+}
+
+.modal-header-red {
+    background-color: #ad2121;
+    color: white;
+}
+
+.modal-header-yellow {
+    background-color: #e3bc08;
+    color: white;
+}
+
+.modal-header-primary {
+    background-color: #3f51b5;
+    color: white;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-weight: 500;
+    font-stretch: normal;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+pre {
+    padding: 15px;
+    color: white;
+    background-color: #555;
+    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.5);
+}
+
+div {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #3f51b5;
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+}
+
+.btn-primary {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.text-primary {
+    color: #3f51b5 !important;
+}
+
+.badge-primary {
+    background-color: #3f51b5;
+}
+
+@keyframes blinker {
+    to {
+        opacity: 0;
+    }
+}
+
+.btn-pointer-cursor {
+    cursor: pointer;
+}
+
+.font-weight-bolder {
+    font-weight: bolder !important;
+}
+
+.flexible {
+    background-color: #e3bc08 !important;
+}
+
+.inflexible {
+    background-color: #ad2121 !important;
+}
+
+.indifferent {
+    background-color: green !important;
+}
+
+.flexible-text {
+    color: #e3bc08 !important;
+}
+
+.inflexible-text {
+    color: #ad2121 !important;
+}
+
+.indifferent-text {
+    color: green !important;
+}

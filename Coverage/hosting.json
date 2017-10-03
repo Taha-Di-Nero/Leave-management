@@ -1,0 +1,18 @@
+﻿{
+  "Certificates": {
+    "Https": {
+      "Path": "coverage.pfx",
+      "Password": "seac@2017"
+    }
+  },
+  "Server": {
+    "Endpoints": {
+      "Http": {
+        "Port": "8080"
+      },
+      "Https": {
+        "Port": "8443"
+      }
+    }
+  }
+}
