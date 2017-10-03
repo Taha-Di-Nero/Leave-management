@@ -1,0 +1,16 @@
+.employe-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 2px;
+    vertical-align: middle !important;
+}
+
+.badge {
+    min-width: 1.5rem !important;
+}
+
+/deep/ .cdk-overlay-container {
+    z-index: 1051;
+}
