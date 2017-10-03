@@ -1,0 +1,25 @@
+<md-list-item>
+    <span md-line>
+        <span class="align-bottom">Dal {{item.from | date: 'dd/MM/yyyy'}} al {{item.to | date: 'dd/MM/yyyy'}} per:</span>
+        <span class="mx-sm-3">
+            <md-select floatPlaceholder="true" [(ngModel)]="item.employes[0].id" name="employe">
+                <md-option *ngFor="let employe of item.employes" [value]="employe.id">
+                    <span [ngClass]="getStateColor(employe)"> {{ employe.surname}} {{employe.name}}</span>
+                </md-option>
+            </md-select>
+        </span>
+        <span class="mx-sm-3 align-bottom">
+            Motivo:&nbsp;&nbsp;{{item.inflexibilityPeriodMotivation.description}}
+        </span>
+    </span>
+    <span ngbTooltip="Modifica">
+        <button md-icon-button (click)="update()">
+            <md-icon class="md-24">edit</md-icon>
+        </button>
+    </span>
+    <span ngbTooltip="Elimina">
+        <button md-icon-button (click)="delete()">
+            <md-icon class="md-24">delete</md-icon>
+        </button>
+    </span>
+</md-list-item>

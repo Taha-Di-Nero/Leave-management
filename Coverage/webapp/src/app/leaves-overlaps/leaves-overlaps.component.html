@@ -1,0 +1,48 @@
+<ng-template #modalContent let-close="close">
+	<div [class]="modalheaderCss">
+		<h5 class="modal-title">{{ modalData?.event.meta.modalTitle }}</h5>
+	</div>
+	<div class="modal-body">
+		<div>
+			<pre class="cal-event-title">{{ modalData?.event.meta.list }}</pre>
+		</div>
+	</div>
+</ng-template>
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+	<div class="cal-cell-top">
+		<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+		<span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+	</div>
+	<div class="cell-totals">
+		<span *ngFor="let group of day.gapGroups" class="badge badge-{{ group[0] }}">
+      {{ group[1].length }}
+    </span>
+	</div>
+</ng-template>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>
+				<div class="row text-center">
+					<div class="col-md-12">
+						<div class="btn-group">
+							<div class="btn btn-outline-primary"><span style="text-transform: capitalize;">{{ viewDate | calendarDate:(view + 'ViewTitle'):'it' }}</span></div>
+						</div>
+					</div>
+				</div>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<div>
+					<mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [refresh]="refresh" [excludeDays]="excludeDays" [activeDayIsOpen]="activeDayIsOpen"
+					 (dayClicked)="dayClicked($event.day)" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" [cellTemplate]="customCellTemplate"
+					 (beforeViewRender)="beforeMonthViewRender($event)" (eventClicked)="handleEvent($event.event)">
+					</mwl-calendar-month-view>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

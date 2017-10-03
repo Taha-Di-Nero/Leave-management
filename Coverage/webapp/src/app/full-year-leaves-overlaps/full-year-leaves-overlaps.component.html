@@ -1,0 +1,58 @@
+<ng-template #modalContent let-close="close">
+  <div class="modal-content">
+    <div class="modal-body">
+      <app-leave-tab-set></app-leave-tab-set>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div [ngClass]="day.cssClass">
+    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+  </div>
+</ng-template>
+
+<md-card>
+  <div class="row text-center vertical-align">
+    <div class="col-lg-5 col-md-12 col-sm-12">
+      <app-years-coverage [yearsMonths]="viewDate"></app-years-coverage>
+    </div>
+    <div class="col-lg-2 col-md-12 col-sm-12">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="previousYear()" ngbTooltip="Anno precedente"><i class="fa fa-backward" aria-hidden="true"></i></div>
+        <div class="btn btn-outline-primary">{{currentYear}}</div>
+        <div class="btn btn-primary" (click)="nextYear()" ngbTooltip="Anno seguente"><i class="fa fa-forward" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-md-12 col-sm-12">
+      <app-flexibility-pie></app-flexibility-pie>
+    </div>
+  </div>
+  <hr class="double text-primary">
+  <div class="row text-center">
+    <div *ngFor="let month of viewDate  | slice:0:6" class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+      <div>
+        <span style="width: 100%;text-transform: capitalize;" class="badge badge-primary">{{ month | calendarDate:(view + 'ViewTitle'):'it' }}</span>
+      </div>
+      <hr style="margin: 0px;" class="bg-primary" />
+      <mwl-calendar-month-view [viewDate]="month" [events]="events" [refresh]="refresh" [excludeDays]="excludeDays" [locale]="locale"
+        [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" [cellTemplate]="customCellTemplate" (beforeViewRender)="beforeMonthViewRender($event)"
+        (dayClicked)="dayClicked($event.day)">
+      </mwl-calendar-month-view>
+    </div>
+  </div>
+  <hr class="dashed text-primary">
+  <div class="row text-center">
+    <div *ngFor="let month of viewDate  | slice:6" class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+      <div>
+        <span style="width: 100%;text-transform: capitalize;" class="badge badge-primary">{{ month | calendarDate:(view + 'ViewTitle'):'it' }}</span>
+      </div>
+      <hr style="margin: 0px;" class="calendarhedearFooter" />
+      <mwl-calendar-month-view [viewDate]="month" [events]="events" [refresh]="refresh" [excludeDays]="excludeDays" [locale]="locale"
+        [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" [cellTemplate]="customCellTemplate" (beforeViewRender)="beforeMonthViewRender($event)"
+        (dayClicked)="dayClicked($event.day)">
+      </mwl-calendar-month-view>
+    </div>
+  </div>
+  <hr class="double text-primary">
+</md-card>

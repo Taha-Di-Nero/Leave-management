@@ -1,0 +1,93 @@
+<div *ngIf="editMode; then edit else list"></div>
+<ng-template #list>
+  <div class="container">
+    <h3>Inserisci periodo di presenza</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <hr class="dotted text-primary">
+    <div *ngIf="(inflexibilityPeriods && inflexibilityPeriods.length > 0); then notEmpty else empty"></div>
+    <ng-template #notEmpty>
+      <md-list>
+        <h3>Presenze obbligatorie programmate</h3>
+        <app-inflexibility-period *ngFor="let inflexibilityPeriod of inflexibilityPeriods;" [item]="inflexibilityPeriod" (updateRequest)="editInflexibilityPeriod(inflexibilityPeriod) "
+          (deleteRequest)="deleteInflexibilityPeriod(inflexibilityPeriod) "></app-inflexibility-period>
+      </md-list>
+    </ng-template>
+    <ng-template #empty>
+      <h3>Non ci sono periodi di presenze obbligatorie.</h3>
+    </ng-template>
+    <br>
+  </div>
+</ng-template>
+<ng-template #edit>
+  <div class="container">
+    <h3>Modifica periodo di presenza</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <br>
+  </div>
+</ng-template>
+<ng-template #form>
+  <form class="form" [formGroup]="inflexibilityPeriodForm" ngNativeValidate>
+    <div class="form-group row">
+      <div class="col input-group">
+        <input id="from" class="form-control" placeholder="Dal" formControlName="from" [(ngModel)]="inflexibilityPeriodModel.from"
+          ngbDatepicker #dFrom="ngbDatepicker" (click)="dTo.close();dFrom.close();" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" (click)="dFrom.toggle();dTo.close();">
+            <i class="fa fa-calendar" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+          </button>
+        </span>
+      </div>
+      <div class="col input-group">
+        <input id="to" class="form-control" placeholder="Al" formControlName="to" [(ngModel)]="inflexibilityPeriodModel.to" ngbDatepicker
+          #dTo="ngbDatepicker" (click)="dTo.close();dFrom.close();" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" (click)="dTo.toggle();dFrom.close();">
+            <i class="fa fa-calendar" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col input-group">
+        <app-inflexibility-period-motivation #motivationAutocomplete placeholder="Aggiungi motivo" [editMotivation]="inflexibilityPeriodModel.inflexibilityPeriodMotivation"
+          (reset)="resetMotivation()" (selected)="selectedMotivation($event)" style="width: 100%">
+        </app-inflexibility-period-motivation>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-4">
+        <app-employe-autocomplete #employeAutocomplete placeholder="Aggiungi dipendente" (selected)="selectedEmploye($event)">
+        </app-employe-autocomplete>
+      </div>
+      <div class="col-12">
+        <md-chip-list selectable="false" placeholder="Dipendenti" required>
+          <md-chip *ngFor="let employe of inflexibilityPeriodModel.employes;" (remove)="removeChip(employe)" color="primary" [ngClass]="getChipColor(employe)"
+            selected="false">
+            {{ employe?.surname}} {{employe?.name}}
+            <md-icon mdChipRemove class="employe-chip-remove">cancel</md-icon>
+          </md-chip>
+        </md-chip-list>
+      </div>
+    </div>
+    <ul *ngIf="isFormInvalid()" class="col list-group">
+      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{msg}}</li>
+    </ul>
+    <hr class="dotted text-primary">
+    <div class="form-group row">
+      <div class="col text-left">
+        <span ngbTooltip="Salva">
+          <button class="btn btn-primary" type="button" (click)="saveInflexibilityPeriod()" [disabled]="!inflexibilityPeriodForm.valid">
+            <i class="fa fa-floppy-o" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+        <span ngbTooltip="Annulla">
+          <button class="btn btn-primary" type="button" (click)="resetView()">
+            <i class="fa fa-times" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </form>
+</ng-template>

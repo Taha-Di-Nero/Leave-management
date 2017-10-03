@@ -1,0 +1,66 @@
+<div *ngIf="editMode; then edit else list"></div>
+<ng-template #list>
+  <div class="container">
+    <h3>Inserisci periodo di chiursura</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <hr class="dashed text-primary">
+    <div *ngIf="(holidayShutdowns && holidayShutdowns.length > 0); then notEmpty else empty"></div>
+    <ng-template #notEmpty>
+      <h3>Chiusure programmate</h3>
+      <md-list>
+        <app-holiday-shutdown *ngFor="let holidayShutdown of holidayShutdowns;" [item]="holidayShutdown" (updateRequest)="editHolidayShutdown(holidayShutdown) "
+          (deleteRequest)="deleteHolidayShutdown(holidayShutdown) "></app-holiday-shutdown>
+      </md-list>
+    </ng-template>
+    <ng-template #empty>
+      <h3>Non ci sono chiusure programmate</h3>
+    </ng-template>
+    <br>
+  </div>
+</ng-template>
+<ng-template #edit>
+  <div class="container">
+    <h3>Modifica periodo di chiursura</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <br>
+  </div>
+</ng-template>
+<ng-template #form>
+  <form class="form-inline" [formGroup]="holidayShutdownsForm" ngNativeValidate>
+    <div class="form-group">
+      <div class="mx-sm-3 input-group">
+        <input id="from" class="form-control" placeholder="Dal" formControlName="from" [(ngModel)]="holidayShutdownModel.from" ngbDatepicker
+          #dFrom="ngbDatepicker" (click)="dTo.close();dFrom.close();" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" (click)="dFrom.toggle();dTo.close();">
+            <i class="fa fa-calendar" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+          </button>
+        </span>
+      </div>
+      <div class="mx-sm-3 input-group">
+        <input id="to" class="form-control" placeholder="Al" formControlName="to" [(ngModel)]="holidayShutdownModel.to" ngbDatepicker
+          #dTo="ngbDatepicker" (click)="dTo.close();dFrom.close();" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" (click)="dTo.toggle();dFrom.close();">
+            <i class="fa fa-calendar" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+          </button>
+        </span>
+      </div>
+      <div class="mx-sm-3">
+        <span ngbTooltip="Salva">
+          <button class="btn btn-primary" type="button" (click)="saveHolidayShutdown()" [disabled]="!holidayShutdownsForm.valid">
+            <i class="fa fa-floppy-o" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+        <span ngbTooltip="Annulla">
+          <button class="btn btn-primary" type="button" (click)="resetView()">
+            <i class="fa fa-times" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <ul *ngIf="isFormInvalid()" class="col list-group">
+      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{msg}}</li>
+    </ul>
+  </form>
+</ng-template>

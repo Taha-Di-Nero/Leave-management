@@ -1,0 +1,16 @@
+<ngb-tabset [destroyOnHide]="false">
+	<ngb-tab title="Dipendenti" id="tab-employe">
+		<ng-template ngbTabContent>
+			<div>	
+				<app-leaves-overlaps [mode]="ViewMode.Employe" #leaveEmploye></app-leaves-overlaps>
+			</div>
+		</ng-template>
+	</ngb-tab>
+	<ngb-tab title="Procedure" id="tab-aree">
+		<ng-template ngbTabContent>
+			<div>				
+				<app-leaves-overlaps [mode]="ViewMode.Area" #leaveAree></app-leaves-overlaps>
+			</div>
+		</ng-template>
+	</ngb-tab>
+</ngb-tabset>

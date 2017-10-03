@@ -1,0 +1,6 @@
+<div class="float-button">
+  <a md-fab [ngbTooltip]="tooltipMsg" placement="left" #t="ngbTooltip" (click)="t.close()">
+    <md-icon *ngIf="leavesIcon">weekend</md-icon>
+    <md-icon *ngIf="!leavesIcon">show_chart</md-icon>
+  </a>
+</div>

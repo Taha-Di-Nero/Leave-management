@@ -1,0 +1,48 @@
+/deep/ .cal-month-view .cal-cell-top{
+    min-height: 3.4375rem;
+    min-width: 1rem;
+  }
+
+/deep/ .cal-month-view .cal-day-number{
+  opacity: 1;
+  margin-right: 5px;
+}
+
+/deep/ .tooltip-inner{
+    background-color: #3f51b5;
+    white-space: nowrap;
+}
+
+.cal-cell-normal {
+    background-color: white;
+    color: black;
+ }
+
+.cal-cell-problem {
+    background-color: #b94a48;
+    color: white;
+}
+
+.cal-cell-today-year-has-gap {
+    color: lime;
+     animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+}
+
+.cal-cell-today-year {
+    background-color: #e8fde7;
+    animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+/deep/ .ngx-charts {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/deep/ .ngx-charts-outer {
+    margin-right: auto;
+    margin-left: auto;
+}
