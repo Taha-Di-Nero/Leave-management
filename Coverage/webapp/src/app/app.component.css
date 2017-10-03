@@ -1,0 +1,29 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-name{
+  padding-right: 1rem;
+}
+
+.badge {
+  color: #3f51b5 !important;
+  background-color: white !important;
+}
+
+/deep/ div.block-ui-wrapper {
+  background-color: rgba(63, 81, 181, 0.7);
+}
+
+/* UI block Spinner */
+/deep/ div.block-ui-wrapper .loader {
+  border-color: #fff; /* Circle color */
+  border-left-color: #ff4081; /* Spinning section in circle color */
+}
+
+/* UI block Message */
+/deep/ div.block-ui-spinner .message {
+  color: #ffffff;
+  font-weight: bold;
+  animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+}
