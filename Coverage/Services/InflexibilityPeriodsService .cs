@@ -7,6 +7,7 @@ using AutoMapper;
 using Seac.Coverage.Models;
 using Seac.Coverage.Repositories;
 using Seac.Coverage.Dto;
+using Seac.Coverage.Enum;
 
 namespace Seac.Coverage.Services
 {

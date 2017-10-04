@@ -8,6 +8,7 @@ using AutoMapper;
 using Seac.Coverage.Dto;
 using Seac.Coverage.Extensions;
 using static Seac.Coverage.Utils.GeneralConstants;
+using Seac.Coverage.Enum;
 
 namespace Seac.Coverage.Services
 {

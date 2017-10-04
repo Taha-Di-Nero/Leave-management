@@ -1,4 +1,5 @@
-﻿using Seac.Coverage.Models;
+﻿using Seac.Coverage.Enum;
+using Seac.Coverage.Models;
 
 namespace Seac.Coverage.Dto
 {
