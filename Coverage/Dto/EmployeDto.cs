@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Seac.Coverage.Models;
+using Seac.Coverage.Enum;
 
 namespace Seac.Coverage.Dto
 {

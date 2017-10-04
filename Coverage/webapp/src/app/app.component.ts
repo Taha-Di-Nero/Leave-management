@@ -47,8 +47,12 @@ export class AppComponent implements OnInit {
     fabToolTipMsg: string;
     fabLeavesIcon: boolean;
 
+    appTitle: string;
+
     leavesPlanTooltip = 'Piano Ferie';
     yearCoverageTooltip = 'Copertura annuale';
+    leaveTitle = 'Piani Ferie';
+    mainTitle = 'Copertura - Piani Ferie';
 
     ApplicationSharedData = ApplicationSharedData;
 
@@ -72,11 +76,13 @@ export class AppComponent implements OnInit {
         ApplicationSharedData.getInstance().loggedEmploye = e;
         if (e &&  this.isManager) {
             ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
+            this.appTitle = this.mainTitle;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.displayLeavesPlanDownload = true;
             this.fabToolTipMsg = this.leavesPlanTooltip;
             this.fabLeavesIcon = true;
         } else if (e && !this.isManager) {
+            this.appTitle = this.leaveTitle;
             this.currentView = FullYearLeavesComponent;
         } else {
             this.currentView = AccessDeniedComponent;
@@ -87,11 +93,13 @@ export class AppComponent implements OnInit {
 
     private toggleLeavesCoverage(): void {
         if (this.currentView === FullYearLeavesOverlapsComponent) {
+            this.appTitle = this.leaveTitle;
             this.currentView = FullYearLeavesComponent;
             this.fabToolTipMsg = this.yearCoverageTooltip;
             this.fabLeavesIcon = false;
             this.displayLeavesPlanDownload = false;
         } else {
+            this.appTitle = this.mainTitle;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.fabToolTipMsg = this.leavesPlanTooltip;
             this.fabLeavesIcon = true;

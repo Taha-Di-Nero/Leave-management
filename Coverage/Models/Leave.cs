@@ -1,7 +1,7 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Seac.Coverage.Models;
+
+using Seac.Coverage.Enum;
 
 namespace Seac.Coverage.Models
 {
@@ -30,6 +30,8 @@ namespace Seac.Coverage.Models
 
         [Column("a_to")]
         public TimeSpan ATo { get; set; }
+
+        public LeaveState State { get; set; }
 
         [ForeignKey("employe_id")]
         public Employe Employe { get; set; }

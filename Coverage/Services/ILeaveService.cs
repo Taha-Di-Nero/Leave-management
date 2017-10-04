@@ -14,7 +14,7 @@ namespace Seac.Coverage.Services
 
         IEnumerable<LeaveDto> GetYearLeaves(int year);
 
-        UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId);
+        UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne);
 
         IEnumerable<LeaveDto> GetLeavesRange(DateTime yearInit, DateTime yearEnd);
 

@@ -34,8 +34,8 @@ export class LeaveService extends BaseService {
 
   updateLeavesPlan(addedLeaves: FullDayLeave[], removededLeaves: FullDayLeave[], employeId: number): Promise<UpdatePlanResponse> {
     const uri = LeaveUri.LeavesEmployePlanUpdate;
-    const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD') })),
-      removededLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD') })));
+    const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })),
+      removededLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
     return this.post(`${uri}${this.getEmployeIdParam(employeId)}`, update)
       .toPromise()
       .then((response) => {

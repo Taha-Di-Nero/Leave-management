@@ -9,7 +9,7 @@
 }
 
 /deep/ .tooltip-inner{
-    background-color: #3f51b5;
+    background-color: rgba(63, 81, 181, 1);
     white-space: nowrap;
 }
 
@@ -20,11 +20,21 @@
 
 .cal-cell-normal-holiday {
     background-color: white;
-    color: red;
+    color: rgba(255, 0, 0, 1);
  }
 
-.cal-cell-leave {
-    background-color: #3f51b5;
+.cal-cell-approved-leave {
+    background-color: rgba(63, 81, 181, 1);
+    color: white;
+}
+
+.cal-cell-added-leave {
+    background-color: rgba(63, 81, 181, 0.5);
+    color: white;
+}
+
+.cal-cell-removed-leave {
+    background-color: rgba(255, 0, 0, 0.5);
     color: white;
 }
 
@@ -39,8 +49,25 @@
 }
 
 .cal-cell-leave-period {
-    background-color: #ff4081;
+    background-color: rgba(255, 64, 129, 1);
     color: white;
+}
+.cal-legend { 
+    list-style: none; 
+}
+
+.cal-legend li { 
+    float: left; 
+    margin-right: 0.7rem; 
+}
+
+.cal-legend span { 
+    vertical-align: middle;
+    border: 0.05rem groove gray; 
+    float: left; 
+    width: 1rem; 
+    height: 1rem;
+    margin: 0.2rem; 
 }
 
 @keyframes blinker { 

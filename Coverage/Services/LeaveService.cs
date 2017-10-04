@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Globalization;
 using System.Collections.Generic;
 
 using AutoMapper;
@@ -8,6 +7,7 @@ using AutoMapper;
 using Seac.Coverage.Repositories;
 using Seac.Coverage.Models;
 using Seac.Coverage.Dto;
+using Seac.Coverage.Enum;
 
 using static Seac.Coverage.Utils.GeneralConstants;
 
@@ -42,13 +42,22 @@ namespace Seac.Coverage.Services
             return _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(_leaveRepository.GetLeavesRange(yearInit, yearEnd));
         }
 
-        public UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId)
+        public UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne)
         {
             Employe currentEmploye = _employeRepository.GetWithArea(employeId);
             var response = AddRejectedLeavesToResponse(coverageService, leaves.AddedLeaves, currentEmploye);
 
-            _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye));
-            _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovededLeaves, currentEmploye));
+            if (loggedOne.Profile == EmployeProfile.Manager)
+            {
+                _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye, LeaveState.Approved));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovededLeaves, currentEmploye, LeaveState.Approved));
+            }
+            else
+            {
+                _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye, LeaveState.ToAdd));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovededLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.ToRemove));
+                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.RemovededLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.ToRemove));
+            }
 
             SetUpdatedDatesMessage(leaves.AddedLeaves, leaves.RemovededLeaves, response);
             return response;
@@ -81,10 +90,14 @@ namespace Seac.Coverage.Services
             response.RemovedDates += (removededLeaves.Count > 0) ? String.Join(", ", removededLeaves.Select(d => d.Date.ToString(DateParamFormat))) : null;
         }
 
-        private IList<Leave> GetLeavesEntity(IEnumerable<LeaveDto> leaves, Employe currentEmploye)
+        private IList<Leave> GetLeavesEntity(IEnumerable<LeaveDto> leaves, Employe currentEmploye, LeaveState state)
         {
             var entities = _mapper.Map<IEnumerable<LeaveDto>, IEnumerable<Leave>>(leaves).ToList();
-            entities.ForEach(l => l.Employe = currentEmploye);
+            entities.ForEach(l =>
+            {
+                l.Employe = currentEmploye;
+                l.State = state;
+            });
             return entities;
         }
     }

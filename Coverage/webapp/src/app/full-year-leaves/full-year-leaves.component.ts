@@ -23,7 +23,7 @@ import { LeaveService } from '../service/leave.service';
 import { FullDayLeave } from '../shared/dto/leave';
 import { ApplicationSharedData } from '../shared/application-shared-data';
 import { Employe } from '../shared/dto/employe';
-import { EmployeState, Profile } from '../shared/enums';
+import { EmployeState, Profile, LeaveState } from '../shared/enums';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
 import { EmployeAutocompleteComponent } from '../employe-autocomplete/employe-autocomplete.component';
 import { CoverageService } from '../service/coverage.service';
@@ -91,7 +91,7 @@ export class FullYearLeavesComponent implements OnInit {
     this.leaveService.getLeaves(format(getStart(this.viewDate[0]), 'DD-MM-YYYY'),
       format(getEnd(this.viewDate[11]), 'DD-MM-YYYY'), this.getSelectedEmployeId())
       .then(leaves => {
-        this.updateEmployeLeavesNumber(leaves.length);
+        this.updateEmployeLeavesNumber(leaves.filter(l => l.state === LeaveState.Approved).length);
         this.setLeaves(leaves);
         this.stopBlockUI();
       })
@@ -189,16 +189,28 @@ export class FullYearLeavesComponent implements OnInit {
   }
 
   private setDayCss(day: CalendarMonthViewDay) {
+    const leave = this.leavesDates.find(l => isSameDay(l.date, day.date));
     day.cssClass = 'cal-cell-top';
     if (Utils.isHolidayDay(day.date)) {
       day.cssClass += ' cal-cell-normal-holiday';
-    } else if (this.leavesDates.findIndex(leave => isSameDay(leave.date, day.date)) > -1 && day.inMonth) {
-      day.cssClass += ' cal-cell-leave';
+    } else if (!!leave && day.inMonth) {
+      day.cssClass += this.getLeaveCellClass(leave);
     } else {
       day.cssClass += ' cal-cell-normal';
     }
     this.setTodayCss(day);
     day.isToday = false;
+  }
+
+  private getLeaveCellClass(leave: FullDayLeave): string {
+    switch (leave.state) {
+      case LeaveState.Approved:
+        return ' cal-cell-approved-leave';
+      case LeaveState.ToAdd:
+        return ' cal-cell-added-leave';
+      case LeaveState.ToRemove:
+        return ' cal-cell-removed-leave';
+    }
   }
 
   private setTodayCss(day: CalendarMonthViewDay): void {
