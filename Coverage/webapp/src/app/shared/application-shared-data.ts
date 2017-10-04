@@ -1,7 +1,7 @@
 import { FullDayLeave } from './dto/leave';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import { ViewMode } from './enums';
+import { LeaveState, ViewMode } from './enums';
 import { CalendarEvent } from 'calendar-utils/dist/calendar-utils';
 import { EmployesFlexibility } from './dto/employes-flexibility';
 import { Employe } from './dto/employe';
@@ -57,7 +57,7 @@ export class ApplicationSharedData {
     private setEmployeLeavesNumber(employesFlexibility: EmployesFlexibility, leaves: FullDayLeave[]): void {
         employesFlexibility.getAll().forEach(e => {
             const employeLeaves = leaves.filter(l => l.employe.id === e.id);
-            e.currentYearLeaves = employeLeaves ? employeLeaves.length : 0;
+            e.currentYearLeaves = employeLeaves ? employeLeaves.filter(l => l.state === LeaveState.Approved).length : 0;
         });
         const employe = employesFlexibility.getAll().find(e => e.id === ApplicationSharedData.instance.loggedEmploye.id);
         ApplicationSharedData.instance.loggedEmploye = employe;

@@ -6,6 +6,9 @@
 <md-card>
   <div class="row text-center vertical-align">
     <div class="col-12">
+      <div *ngIf="ApplicationSharedData.getInstance().loggedEmploye?.profile === Profile.Manager" class="float-left" style="width: 18rem;">
+        &nbsp;
+      </div>
       <div class="btn-group">
         <div class="btn btn-primary" (click)="previousYear()" ngbTooltip="Anno precedente"><i class="fa fa-backward" aria-hidden="true"></i></div>
         <div class="btn btn-outline-primary">{{currentYear}}</div>
@@ -19,7 +22,7 @@
   </div>
   <hr class="double text-primary">
   <div class="row text-center">
-    <div *ngFor="let month of viewDate  | slice:0:6"class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+    <div *ngFor="let month of viewDate  | slice:0:6" class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
       <div>
         <span style="width: 100%;text-transform: capitalize;" class="badge badge-primary">{{ month | calendarDate:(view + 'ViewTitle'):'it' }}</span>
       </div>
@@ -42,4 +45,18 @@
     </div>
   </div>
   <hr class="double text-primary">
+  <div class="row">
+    <div class="col-md-2 col-sm-12"></div>
+    <div class="col-md-8 col-sm-12">
+      <ul class="cal-legend">
+        <li>
+          <span class="cal-cell-approved-leave"></span> Giorno approvato</li>
+        <li>
+          <span class="cal-cell-added-leave"></span> Giorno aggiunto in attesa di approvazione</li>
+        <li>
+          <span class="cal-cell-removed-leave"></span> Giorno rimosso in attesa di approvazione</li>
+      </ul>
+    </div>
+    <div class="col-md-2 col-sm-12"></div>
+  </div>
 </md-card>

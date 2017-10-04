@@ -38,7 +38,7 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<LeaveDto> GetYearLeaves(int year) => _leaveService.GetYearLeaves(year);
 
         [HttpPost("employe/plan")]
-        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId) => _leaveService.UpdateLeavesPlan(_coverageService, leaves, GetEmployeId(employeId));
+        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId) => _leaveService.UpdateLeavesPlan(_coverageService, leaves, GetEmployeId(employeId), GetLoggedEmploye());
 
         [HttpGet("plan/export/{year}")]
         [DeleteFileAttribute]

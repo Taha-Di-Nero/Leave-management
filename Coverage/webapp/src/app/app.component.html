@@ -26,15 +26,17 @@
 <ng-template #normal>
   <div *ngIf="loggedEmploye">
     <md-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
+      <ng-container *ngTemplateOutlet="logoUsername"></ng-container>
       <div class="btn btn-primary" (click)="logout()" ngbTooltip="Log out" placement="bottom"><i class="fa fa-sign-out" aria-hidden="true" style="font-size:24px"></i></div>
     </md-toolbar>
-    <ng-container *ngTemplateOutlet="logoUsername"></ng-container>
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
 </ng-template>
 
 <ng-template #logoUsername>
   <img src="/assets/images/logo-seac.png" style="max-height:58px;">
+  <span class="spacer"></span>
+  <span class="title zoomIn">{{appTitle}}</span>
   <span class="spacer"></span>
   <span class="user-name">{{loggedEmploye?.surname}} {{loggedEmploye?.name}}</span>
   <span  ngbTooltip="Giorni di ferie" placement="bottom" class="badge rounded">{{ApplicationSharedData.getInstance().loggedEmploye?.currentYearLeaves}}</span>

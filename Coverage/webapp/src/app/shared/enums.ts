@@ -19,6 +19,8 @@ export enum Profile { Manager, Normal }
 
 export enum EmployeState { Flexible, Inflexible, Indifferent }
 
+export enum LeaveState { Approved, ToAdd, ToRemove }
+
 export enum ViewMode { Employe, Area }
 
 export enum LeaveOverlapsUri {

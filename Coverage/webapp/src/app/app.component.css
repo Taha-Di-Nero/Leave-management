@@ -6,6 +6,13 @@
   padding-right: 1rem;
 }
 
+.title{
+  font-family: 'Bungee';
+  font-size: 2.5rem;
+  letter-spacing: 0.2rem;
+  opacity: 0.7;
+}
+
 .badge {
   color: #3f51b5 !important;
   background-color: white !important;
@@ -18,7 +25,7 @@
 /* UI block Spinner */
 /deep/ div.block-ui-wrapper .loader {
   border-color: #fff; /* Circle color */
-  border-left-color: #ff4081; /* Spinning section in circle color */
+  border-left-color: rgba(255, 64, 129, 1); /* Spinning section in circle color */
 }
 
 /* UI block Message */

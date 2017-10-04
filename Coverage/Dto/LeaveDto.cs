@@ -1,5 +1,7 @@
 using System;
 
+using Seac.Coverage.Enum;
+
 namespace Seac.Coverage.Dto
 {
     public class LeaveDto
@@ -15,6 +17,8 @@ namespace Seac.Coverage.Dto
         public TimeSpan AFrom { get; set; }
 
         public TimeSpan ATo { get; set; }
+
+        public LeaveState State { get; set; }
 
         public EmployeDto Employe { get; set; }
 
