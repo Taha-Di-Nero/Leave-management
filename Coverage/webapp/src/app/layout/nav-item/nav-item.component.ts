@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { NavigationNode } from '../nav-menu/nav-menu.model';
+import { MdIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,9 +20,14 @@ export class NavItemComponent implements OnChanges {
 
   isExpanded = false;
   isSelected = false;
-  classes: {[index: string]: boolean };
+  classes: { [index: string]: boolean };
   nodeChildren: NavigationNode[];
 
+  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'keyboard-arrow-right',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/images/keyboard-arrow-right.svg'));
+  }
   ngOnChanges() {
     this.nodeChildren = this.node && this.node.children ? this.node.children.filter(n => !n.hidden) : [];
 
@@ -29,8 +36,8 @@ export class NavItemComponent implements OnChanges {
       this.isSelected = ix !== -1; // this node is the selected node or its ancestor
       this.isExpanded = this.isParentExpanded &&
         (this.isSelected || // expand if selected or ...
-        // preserve expanded state when display is wide; collapse in mobile.
-        (this.isWide && this.isExpanded));
+          // preserve expanded state when display is wide; collapse in mobile.
+          (this.isWide && this.isExpanded));
     } else {
       this.isSelected = false;
     }

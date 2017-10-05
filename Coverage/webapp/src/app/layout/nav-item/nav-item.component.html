@@ -8,14 +8,8 @@
   <a href="#" [ngClass]="classes" (click)="nodeClicked()" ngbTooltip="{{node.tooltip}}" placement="right" container="body"
     (click)="headerClicked()" class="vertical-menu-item heading">
     {{node.title}}
-    <md-icon class="rotating-icon" svgIcon="keyboard_arrow_right"></md-icon>
+    <md-icon class="rotating-icon" svgIcon="keyboard-arrow-right"></md-icon>
   </a>
-
-  <button type="button" [ngClass]="classes" ngbTooltip="{{node.tooltip}}" placement="right" container="body"
-    (click)="headerClicked()" class="vertical-menu-item heading" [attr.aria-pressed]="isExpanded">
-    {{node.title}}
-    <md-icon class="rotating-icon" svgIcon="keyboard_arrow_right"></md-icon>
-  </button>
 
   <div class="heading-children" [ngClass]="classes">
     <app-nav-item *ngFor="let node of nodeChildren" [level]="level + 1" [isWide]="isWide" [isParentExpanded]="isExpanded" [node]="node"

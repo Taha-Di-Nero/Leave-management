@@ -4,7 +4,7 @@
     <block-ui>
       <md-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
         <button md-button (click)="sidenav.toggle()">
-              <md-icon>menu</md-icon>
+          <md-icon>menu</md-icon>
         </button>
         <ng-container *ngTemplateOutlet="logoUsername"></ng-container>
         <div *ngIf="displayLeavesPlanDownload" class="btn btn-primary" (click)="downloadLeavesPlan()" ngbTooltip="Piano ferie {{ApplicationSharedData.getInstance().currentYear}}"
@@ -36,10 +36,13 @@
 <ng-template #logoUsername>
   <img src="/assets/images/logo-seac.png" style="max-height:58px;">
   <span class="spacer"></span>
-  <span class="title zoomIn">{{appTitle}}</span>
+  <div class="row">
+    <img *ngIf="!showCoverageTitle" src="/assets/images/leaves-page-title.png" style="max-height:58px;">
+    <img *ngIf="showCoverageTitle" src="/assets/images/coverage-page-title.png" style="max-height:58px;">
+  </div>
   <span class="spacer"></span>
   <span class="user-name">{{loggedEmploye?.surname}} {{loggedEmploye?.name}}</span>
-  <span  ngbTooltip="Giorni di ferie" placement="bottom" class="badge rounded">{{ApplicationSharedData.getInstance().loggedEmploye?.currentYearLeaves}}</span>
+  <span ngbTooltip="Giorni di ferie" placement="bottom" class="badge rounded">{{ApplicationSharedData.getInstance().loggedEmploye?.currentYearLeaves}}</span>
 </ng-template>
 
 <ng-template #content>

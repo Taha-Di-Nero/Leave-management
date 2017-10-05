@@ -8,16 +8,8 @@ export interface NavigationNode {
   children?: NavigationNode[];
 }
 
-export interface NavigationViews {
-  [name: string]: NavigationNode[];
-}
-
 export interface CurrentNode {
   id: MenuItemIds;
   view: string;
   nodes: NavigationNode[];
-}
-
-export interface CurrentNodes {
-  [view: string]: CurrentNode;
 }
