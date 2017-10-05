@@ -13,7 +13,7 @@ export const COLORS: any = {
   }
 };
 
-export enum MenuItemIds { Chiusure, Presenze }
+export enum MenuItemIds { Chiusure, Presenze, AddedLeaves, RemovedLeaves }
 
 export enum Profile { Manager, Normal }
 

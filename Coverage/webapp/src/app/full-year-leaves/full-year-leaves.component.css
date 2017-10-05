@@ -9,7 +9,7 @@
 }
 
 /deep/ .tooltip-inner{
-    background-color: rgba(63, 81, 181, 1);
+    background-color: rgb(63, 81, 181);
     white-space: nowrap;
 }
 
@@ -20,11 +20,11 @@
 
 .cal-cell-normal-holiday {
     background-color: white;
-    color: rgba(255, 0, 0, 1);
+    color: rgb(255, 0, 0);
  }
 
 .cal-cell-approved-leave {
-    background-color: rgba(63, 81, 181, 1);
+    background-color: rgb(63, 81, 181);
     color: white;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .cal-cell-leave-period {
-    background-color: rgba(255, 64, 129, 1);
+    background-color: rgb(255, 64, 129);
     color: white;
 }
 .cal-legend { 

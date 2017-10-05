@@ -1,5 +1,3 @@
-import { leave } from '@angular/core/src/profile/wtf_impl';
-import { EmployesFlexibility } from './shared/dto/employes-flexibility';
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -16,6 +14,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { Profile, MenuItemIds } from './shared/enums';
 import { LeaveService } from './service/leave.service';
 import { NavigationNode } from './layout/nav-menu/nav-menu.model';
+import { sideNavNodes } from './layout/nav-menu/menu-nodes';
 import { CoverageService } from './service/coverage.service';
 import { ApplicationSharedData } from './shared/application-shared-data';
 
@@ -32,27 +31,14 @@ export class AppComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
 
-    sideNavNodes: NavigationNode[] = [
-        {
-            'id': MenuItemIds.Chiusure,
-            'title': 'Chiusure annuale',
-            'tooltip': 'Chiusure annuale'
-        },
-        {
-            'id': MenuItemIds.Presenze,
-            'title': 'Periodi presenze obbligatorie',
-            'tooltip': 'Periodi presenze obbligatorie',
-        }];
+    sideNavNodes = sideNavNodes;
 
     fabToolTipMsg: string;
     fabLeavesIcon: boolean;
 
-    appTitle: string;
-
     leavesPlanTooltip = 'Piano Ferie';
     yearCoverageTooltip = 'Copertura annuale';
-    leaveTitle = 'Piani Ferie';
-    mainTitle = 'Copertura - Piani Ferie';
+    showCoverageTitle = false;
 
     ApplicationSharedData = ApplicationSharedData;
 
@@ -74,15 +60,15 @@ export class AppComponent implements OnInit {
         this.loggedEmploye = e;
         this.isManager = e ? (this.loggedEmploye.profile === Profile.Manager) : false;
         ApplicationSharedData.getInstance().loggedEmploye = e;
-        if (e &&  this.isManager) {
+        if (e && this.isManager) {
             ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
-            this.appTitle = this.mainTitle;
+            this.showCoverageTitle = true;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.displayLeavesPlanDownload = true;
             this.fabToolTipMsg = this.leavesPlanTooltip;
             this.fabLeavesIcon = true;
         } else if (e && !this.isManager) {
-            this.appTitle = this.leaveTitle;
+            this.showCoverageTitle = false;
             this.currentView = FullYearLeavesComponent;
         } else {
             this.currentView = AccessDeniedComponent;
@@ -93,13 +79,13 @@ export class AppComponent implements OnInit {
 
     private toggleLeavesCoverage(): void {
         if (this.currentView === FullYearLeavesOverlapsComponent) {
-            this.appTitle = this.leaveTitle;
+            this.showCoverageTitle = false;
             this.currentView = FullYearLeavesComponent;
             this.fabToolTipMsg = this.yearCoverageTooltip;
             this.fabLeavesIcon = false;
             this.displayLeavesPlanDownload = false;
         } else {
-            this.appTitle = this.mainTitle;
+            this.showCoverageTitle = true;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.fabToolTipMsg = this.leavesPlanTooltip;
             this.fabLeavesIcon = true;
