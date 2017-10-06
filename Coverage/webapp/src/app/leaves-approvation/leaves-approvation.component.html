@@ -2,13 +2,13 @@
     <mat-list-item>
         <span matLine>
             <span class="align-bottom">{{ employeleaves.fullName}}</span>
-            <!-- <span class="mx-sm-3">
-                <mat-select floatPlaceholder="true" [(ngModel)]="item.employes[0].id" name="employe">
-                    <mat-option *ngFor="let employe of item.employes" [value]="employe.id">
-                        <span [ngClass]="getStateColor(employe)"> {{ employe.surname}} {{employe.name}}</span>
+            <span class="ml-sm-5">
+                <mat-select placeholder="Richieste da approvare">
+                    <mat-option *ngFor="let leave of employeleaves.leaves" [value]="leave">
+                        {{ leave }}
                     </mat-option>
                 </mat-select>
-            </span> -->
+            </span>
         </span>
         <span ngbTooltip="Approva">
             <button mat-icon-button (click)="update()">

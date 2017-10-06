@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Response, ResponseContentType } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
-import { format } from 'date-fns';
+import { format, isSameDay, addDays } from 'date-fns';
 
 import { BaseService } from './base.service';
 import { FullDayLeave } from '../shared/dto/leave';
@@ -11,6 +11,7 @@ import { LeaveState, LeaveUri } from '../shared/enums';
 import { LeavesPlanUpdate } from '../shared/dto/Leaves-plan-update';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
 import { EmployeLeaves } from '../shared/dto/employe-leaves';
+import { Utils } from '../shared/utils';
 
 @Injectable()
 export class LeaveService extends BaseService {
@@ -75,9 +76,59 @@ export class LeaveService extends BaseService {
         employe = new EmployeLeaves(l.employe.id, l.employe.surname.concat(' ', l.employe.name));
         employeLeaves.push(employe);
       }
-      employe.leaves.push(format(l.date, 'DD/MM/YYYY'));
+      employe.leaves.push(format(l.date, 'YYYY-MM-DD'));
     });
+    return this.concatDates(employeLeaves);
+  }
+
+  private concatDates(employeLeaves: EmployeLeaves[]): EmployeLeaves[] {
+    employeLeaves.forEach(el => {
+      const leavesInterval = new Array<string>();
+      let tempDate = addDays(el.leaves[0], -1);
+      let lastDate = new Date(el.leaves[0]);
+      let currentDate: Date;
+      let nextDay: Date;
+      let lastCurrentDate: Date;
+      el.leaves.forEach(l => {
+        currentDate = new Date(l);
+        tempDate = this.forwardNonWorkongDays(tempDate);
+        nextDay = addDays(tempDate, 1);
+        if (isSameDay(nextDay, currentDate) || Utils.isHolidayDay(nextDay)) {
+          tempDate = currentDate;
+        } else {
+          tempDate = Utils.isHolidayDay(tempDate) ? this.backwardNonWorkongDays(tempDate) : tempDate;
+          lastCurrentDate = tempDate;
+          leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
+          lastDate = tempDate = currentDate;
+        }
+      });
+      if (currentDate !== lastCurrentDate) {
+        leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
+      }
+      el.leaves = leavesInterval;
+    });
+
     return employeLeaves;
+  }
+
+  private forwardNonWorkongDays(from: Date): Date {
+    const nextDay = addDays(from, 1);
+    if (Utils.isHolidayDay(nextDay)) {
+      from = this.forwardNonWorkongDays(nextDay);
+    }
+    return from;
+  }
+
+  private backwardNonWorkongDays(from: Date): Date {
+    from = addDays(from, -1);
+    if (Utils.isHolidayDay(from)) {
+      from = this.backwardNonWorkongDays(from);
+    }
+    return from;
+  }
+
+  private formatDateInterval(from: Date, to: Date): string {
+    return isSameDay(from, to) ? format(from, 'DD-MM-YYYY') : `${format(from, 'DD-MM-YYYY')} - ${format(to, 'DD-MM-YYYY')}`;
   }
 
   private getEmployeIdParam(employeId: number): string {

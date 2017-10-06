@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FabComponent } from './fab.component';
@@ -13,8 +12,8 @@ import { UsedMaterialModule } from '../shared/used-material.module';
   ],
   imports: [
     CommonModule,
-    UsedMaterialModule,
-    NgbModule
+    NgbModule,
+    UsedMaterialModule
   ],
   exports: [
     FabComponent
