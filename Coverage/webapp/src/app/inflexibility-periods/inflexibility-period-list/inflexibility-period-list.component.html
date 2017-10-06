@@ -6,11 +6,11 @@
     <hr class="dotted text-primary">
     <div *ngIf="(inflexibilityPeriods && inflexibilityPeriods.length > 0); then notEmpty else empty"></div>
     <ng-template #notEmpty>
-      <md-list>
+      <mat-list>
         <h3>Presenze obbligatorie programmate</h3>
         <app-inflexibility-period *ngFor="let inflexibilityPeriod of inflexibilityPeriods;" [item]="inflexibilityPeriod" (updateRequest)="editInflexibilityPeriod(inflexibilityPeriod) "
           (deleteRequest)="deleteInflexibilityPeriod(inflexibilityPeriod) "></app-inflexibility-period>
-      </md-list>
+      </mat-list>
     </ng-template>
     <ng-template #empty>
       <h3>Non ci sono periodi di presenze obbligatorie.</h3>
@@ -60,13 +60,13 @@
         </app-employe-autocomplete>
       </div>
       <div class="col-12">
-        <md-chip-list selectable="false" placeholder="Dipendenti" required>
-          <md-chip *ngFor="let employe of inflexibilityPeriodModel.employes;" (remove)="removeChip(employe)" color="primary" [ngClass]="getChipColor(employe)"
+        <mat-chip-list selectable="false" placeholder="Dipendenti" required>
+          <mat-chip *ngFor="let employe of inflexibilityPeriodModel.employes;" (remove)="removeChip(employe)" color="primary" [ngClass]="getChipColor(employe)"
             selected="false">
             {{ employe?.surname}} {{employe?.name}}
-            <md-icon mdChipRemove class="employe-chip-remove">cancel</md-icon>
-          </md-chip>
-        </md-chip-list>
+            <mat-icon matChipRemove class="employe-chip-remove">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
       </div>
     </div>
     <ul *ngIf="isFormInvalid()" class="col list-group">

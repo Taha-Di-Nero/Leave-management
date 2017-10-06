@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { NavigationNode } from '../nav-menu/nav-menu.model';
-import { MdIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -23,7 +23,7 @@ export class NavItemComponent implements OnChanges {
   classes: { [index: string]: boolean };
   nodeChildren: NavigationNode[];
 
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'keyboard-arrow-right',
       sanitizer.bypassSecurityTrustResourceUrl('assets/images/keyboard-arrow-right.svg'));
@@ -59,7 +59,7 @@ export class NavItemComponent implements OnChanges {
     this.setClasses();
   }
 
-  nodeClicked() {
-    this.action.emit(this.node);
+  nodeClicked(node: NavigationNode) {
+    this.action.emit(!!node ? node : this.node);
   }
 }

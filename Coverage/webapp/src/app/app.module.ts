@@ -30,6 +30,7 @@ import { InflexibilityPeriodListModule } from './inflexibility-periods/inflexibi
 import { CoverageService } from './service/coverage.service';
 import { SecurityService } from './service/security.service';
 import { LeaveService } from './service/leave.service';
+import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { LeaveService } from './service/leave.service';
     BlockUIModule,
     HolidayShutdownListModule,
     InflexibilityPeriodListModule,
+    LeavesApprovationModule,
     AppRoutingModule
   ],
   providers: [SecurityService, CoverageService, LeaveService],

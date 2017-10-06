@@ -7,10 +7,10 @@
     <div *ngIf="(holidayShutdowns && holidayShutdowns.length > 0); then notEmpty else empty"></div>
     <ng-template #notEmpty>
       <h3>Chiusure programmate</h3>
-      <md-list>
+      <mat-list>
         <app-holiday-shutdown *ngFor="let holidayShutdown of holidayShutdowns;" [item]="holidayShutdown" (updateRequest)="editHolidayShutdown(holidayShutdown) "
           (deleteRequest)="deleteHolidayShutdown(holidayShutdown) "></app-holiday-shutdown>
-      </md-list>
+      </mat-list>
     </ng-template>
     <ng-template #empty>
       <h3>Non ci sono chiusure programmate</h3>

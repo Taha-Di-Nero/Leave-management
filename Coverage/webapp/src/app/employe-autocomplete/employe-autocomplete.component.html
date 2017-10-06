@@ -1,12 +1,12 @@
-<md-form-field>
-    <input mdInput [ngClass]="employeStateColor" [placeholder]="placeholder" aria-label="Dipendente" [mdAutocomplete]="employesList"
+<mat-form-field>
+    <input matInput [ngClass]="employeStateColor" [placeholder]="placeholder" aria-label="Dipendente" [matAutocomplete]="employesList"
         [formControl]="employeCtrl">
-    <md-icon mdSuffix class="align-middle btn-pointer-cursor" (click)="resetSearch()" ngbTooltip="Resetta">close</md-icon>
-    <md-autocomplete #employesList="mdAutocomplete" (optionSelected)="selectEmploye()">
-        <md-option *ngFor="let employe of filteredEmployes | async" [value]="employe.surname.concat(' ', employe.name)">
+    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="resetSearch()" ngbTooltip="Resetta">close</mat-icon>
+    <mat-autocomplete #employesList="matAutocomplete" (optionSelected)="selectEmploye()">
+        <mat-option *ngFor="let employe of filteredEmployes | async" [value]="employe.surname.concat(' ', employe.name)">
             <span *ngIf="!showLeaves" [ngClass]="getStateClass(employe, 'employe-dot')"></span>
             <span *ngIf="showLeaves" [ngClass]="getStateClass(employe, 'badge rounded')">{{employe.currentYearLeaves}}</span>
             <span> {{ employe.surname}} {{employe.name}}</span>
-        </md-option>
-    </md-autocomplete>
-</md-form-field>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
