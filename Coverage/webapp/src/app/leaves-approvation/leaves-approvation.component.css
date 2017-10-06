@@ -1,4 +1,8 @@
 
 /deep/ .mat-select {
-    min-width: 11rem !important;
+    max-width: 11rem !important;
+}
+
+/deep/ .cdk-overlay-container {
+    z-index: 1051;
 }
