@@ -5,15 +5,15 @@
 </div>
 
 <div *ngIf="node.children">
-  <a href="#" [ngClass]="classes" (click)="nodeClicked()" ngbTooltip="{{node.tooltip}}" placement="right" container="body"
+  <a href="#" [ngClass]="classes" ngbTooltip="{{node.tooltip}}" placement="right" container="body"
     (click)="headerClicked()" class="vertical-menu-item heading">
     {{node.title}}
-    <md-icon class="rotating-icon" svgIcon="keyboard-arrow-right"></md-icon>
+    <mat-icon class="rotating-icon" svgIcon="keyboard-arrow-right"></mat-icon>
   </a>
 
   <div class="heading-children" [ngClass]="classes">
     <app-nav-item *ngFor="let node of nodeChildren" [level]="level + 1" [isWide]="isWide" [isParentExpanded]="isExpanded" [node]="node"
-      [selectedNodes]="selectedNodes">
+      [selectedNodes]="selectedNodes" (action)="nodeClicked($event)">
     </app-nav-item>
   </div>
 </div>

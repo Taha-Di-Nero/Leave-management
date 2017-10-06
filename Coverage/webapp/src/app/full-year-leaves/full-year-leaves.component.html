@@ -3,7 +3,7 @@
     <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
   </div>
 </ng-template>
-<md-card>
+<mat-card>
   <div class="row text-center vertical-align">
     <div class="col-12">
       <div *ngIf="ApplicationSharedData.getInstance().loggedEmploye?.profile === Profile.Manager" class="float-left" style="width: 18rem;">
@@ -59,4 +59,4 @@
     </div>
     <div class="col-md-2 col-sm-12"></div>
   </div>
-</md-card>
+</mat-card>

@@ -2,22 +2,22 @@
 <ng-template #manager>
   <div *ngIf="loggedEmploye">
     <block-ui>
-      <md-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
-        <button md-button (click)="sidenav.toggle()">
-          <md-icon>menu</md-icon>
+      <mat-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
+        <button mat-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
         </button>
         <ng-container *ngTemplateOutlet="logoUsername"></ng-container>
         <div *ngIf="displayLeavesPlanDownload" class="btn btn-primary" (click)="downloadLeavesPlan()" ngbTooltip="Piano ferie {{ApplicationSharedData.getInstance().currentYear}}"
           placement="bottom"><i class="fa fa-download" aria-hidden="true" style="font-size:24px"></i></div>
         <div class="btn btn-primary" (click)="logout()" ngbTooltip="Log out" placement="bottom"><i class="fa fa-sign-out" aria-hidden="true" style="font-size:24px"></i></div>
-      </md-toolbar>
+      </mat-toolbar>
 
-      <md-sidenav-container class="sidenav-container" role="main">
-        <md-sidenav mode="side" class="sidenav" #sidenav>
+      <mat-sidenav-container class="sidenav-container" role="main">
+        <mat-sidenav mode="side" class="sidenav" #sidenav>
           <app-nav-menu [nodes]="sideNavNodes" (action)="openNodeModal($event)"></app-nav-menu>
-        </md-sidenav>
+        </mat-sidenav>
         <ng-container *ngTemplateOutlet="content"></ng-container>
-      </md-sidenav-container>
+      </mat-sidenav-container>
       <app-fab (click)="toggleLeavesCoverage()" [tooltipMsg]="fabToolTipMsg" [leavesIcon]="fabLeavesIcon"></app-fab>
     </block-ui>
   </div>
@@ -25,10 +25,10 @@
 
 <ng-template #normal>
   <div *ngIf="loggedEmploye">
-    <md-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
+    <mat-toolbar color="primary" layout="row" layout-align="center center" class="app-toolbar">
       <ng-container *ngTemplateOutlet="logoUsername"></ng-container>
       <div class="btn btn-primary" (click)="logout()" ngbTooltip="Log out" placement="bottom"><i class="fa fa-sign-out" aria-hidden="true" style="font-size:24px"></i></div>
-    </md-toolbar>
+    </mat-toolbar>
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
 </ng-template>
@@ -68,6 +68,18 @@
   </div>
   <div class="modal-body">
     <app-inflexibility-period-list></app-inflexibility-period-list>
+  </div>
+  <div class="modal-footer modal-header-primary">
+  </div>
+</ng-template>
+
+<ng-template #approvationModal let-close="close">
+  <div class="modal-header modal-header-primary">
+    <span *ngIf="requestedApprovationMode === ApprovationMode.Remove"  class="modal-title">Ferie rimosse da approvare</span>
+    <span *ngIf="requestedApprovationMode === ApprovationMode.Add"  class="modal-title">Ferie aggiunte da approvare</span>
+  </div>
+  <div class="modal-body">
+    <app-leaves-approvation [mode]="requestedApprovationMode"></app-leaves-approvation>
   </div>
   <div class="modal-footer modal-header-primary">
   </div>

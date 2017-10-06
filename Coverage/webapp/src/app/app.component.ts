@@ -11,7 +11,7 @@ import { FullYearLeavesComponent } from './full-year-leaves/full-year-leaves.com
 import { FullYearLeavesOverlapsComponent } from './full-year-leaves-overlaps/full-year-leaves-overlaps.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { Profile, MenuItemIds } from './shared/enums';
+import { ApprovationMode, MenuItemIds, Profile } from './shared/enums';
 import { LeaveService } from './service/leave.service';
 import { NavigationNode } from './layout/nav-menu/nav-menu.model';
 import { sideNavNodes } from './layout/nav-menu/menu-nodes';
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
 
     @ViewChild('shutDownModal') shutDownModal: TemplateRef<any>;
     @ViewChild('inflexibilityPeriodModal') inflexibilityPeriodModal: TemplateRef<any>;
+    @ViewChild('approvationModal') approvationModal: TemplateRef<any>;
 
     @BlockUI() blockUI: NgBlockUI;
 
@@ -41,6 +42,8 @@ export class AppComponent implements OnInit {
     showCoverageTitle = false;
 
     ApplicationSharedData = ApplicationSharedData;
+    ApprovationMode = ApprovationMode;
+    requestedApprovationMode: ApprovationMode;
 
     title = 'Flessibiltà';
 
@@ -125,6 +128,14 @@ export class AppComponent implements OnInit {
                 break;
             case MenuItemIds.Presenze:
                 this.modal.open(this.inflexibilityPeriodModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
+                break;
+            case MenuItemIds.AddedLeaves:
+                this.requestedApprovationMode = ApprovationMode.Add;
+                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
+                break;
+            case MenuItemIds.RemovedLeaves:
+                this.requestedApprovationMode = ApprovationMode.Remove;
+                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
                 break;
         }
     }

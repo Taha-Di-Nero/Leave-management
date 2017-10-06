@@ -1,15 +1,15 @@
-<md-list-item>
-    <span md-line>
+<mat-list-item>
+    <span matLine>
         Dal {{item.from | date: 'dd/MM/yyyy'}} al {{item.to | date: 'dd/MM/yyyy'}}
     </span>
     <span ngbTooltip="Modifica">
-        <button md-icon-button (click)="update()">
-            <md-icon class="md-24">edit</md-icon>
+        <button mat-icon-button (click)="update()">
+            <mat-icon class="md-24">edit</mat-icon>
         </button>
     </span>
     <span ngbTooltip="Elimina">
-        <button md-icon-button (click)="delete()">
-            <md-icon class="md-24">delete</md-icon>
+        <button mat-icon-button (click)="delete()">
+            <mat-icon class="md-24">delete</mat-icon>
         </button>
     </span>
-</md-list-item>
+</mat-list-item>

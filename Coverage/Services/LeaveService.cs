@@ -35,6 +35,15 @@ namespace Seac.Coverage.Services
             return leavesDto;
         }
 
+        public IEnumerable<LeaveDto> GetLeavesByState(LeaveState state)
+        {
+            var leaves = _leaveRepository.GetLeavesRangeBySate(state);
+
+            IEnumerable<LeaveDto> leavesDto = _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(leaves);
+
+            return leavesDto;
+        }
+
         public IEnumerable<LeaveDto> GetYearLeaves(int year)
         {
             var yearInit = new DateTime(year, 1, 1);

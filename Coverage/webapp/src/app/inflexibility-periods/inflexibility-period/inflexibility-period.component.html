@@ -1,25 +1,25 @@
-<md-list-item>
-    <span md-line>
+<mat-list-item>
+    <span matLine>
         <span class="align-bottom">Dal {{item.from | date: 'dd/MM/yyyy'}} al {{item.to | date: 'dd/MM/yyyy'}} per:</span>
         <span class="mx-sm-3">
-            <md-select floatPlaceholder="true" [(ngModel)]="item.employes[0].id" name="employe">
-                <md-option *ngFor="let employe of item.employes" [value]="employe.id">
+            <mat-select floatPlaceholder="true" [(ngModel)]="item.employes[0].id" name="employe">
+                <mat-option *ngFor="let employe of item.employes" [value]="employe.id">
                     <span [ngClass]="getStateColor(employe)"> {{ employe.surname}} {{employe.name}}</span>
-                </md-option>
-            </md-select>
+                </mat-option>
+            </mat-select>
         </span>
         <span class="mx-sm-3 align-bottom">
             Motivo:&nbsp;&nbsp;{{item.inflexibilityPeriodMotivation.description}}
         </span>
     </span>
     <span ngbTooltip="Modifica">
-        <button md-icon-button (click)="update()">
-            <md-icon class="md-24">edit</md-icon>
+        <button mat-icon-button (click)="update()">
+            <mat-icon class="md-24">edit</mat-icon>
         </button>
     </span>
     <span ngbTooltip="Elimina">
-        <button md-icon-button (click)="delete()">
-            <md-icon class="md-24">delete</md-icon>
+        <button mat-icon-button (click)="delete()">
+            <mat-icon class="md-24">delete</mat-icon>
         </button>
     </span>
-</md-list-item>
+</mat-list-item>

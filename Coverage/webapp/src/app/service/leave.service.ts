@@ -1,3 +1,4 @@
+import { Employe } from '../shared/dto/employe';
 import { Injectable } from '@angular/core';
 import { Response, ResponseContentType } from '@angular/http';
 
@@ -6,15 +7,16 @@ import { format } from 'date-fns';
 
 import { BaseService } from './base.service';
 import { FullDayLeave } from '../shared/dto/leave';
-import { LeaveUri } from '../shared/enums';
+import { LeaveState, LeaveUri } from '../shared/enums';
 import { LeavesPlanUpdate } from '../shared/dto/Leaves-plan-update';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
+import { EmployeLeaves } from '../shared/dto/employe-leaves';
 
 @Injectable()
 export class LeaveService extends BaseService {
 
   getLeaves(fromDate: string, toDate: string, employeId: number): Promise<FullDayLeave[]> {
-    const uri = `${LeaveUri.GetLeaves}${fromDate}/${toDate}${this.getEmployeIdParam(employeId)}`;
+    const uri = `${LeaveUri.GetLeavesByEmploye}${fromDate}/${toDate}${this.getEmployeIdParam(employeId)}`;
     return this.get(uri)
       .toPromise()
       .then((response) => {
@@ -22,12 +24,23 @@ export class LeaveService extends BaseService {
       })
       .catch(this.handleError);
   }
+
   getYearLeaves(year: number): Promise<FullDayLeave[]> {
     const uri = `${LeaveUri.GetYearLeaves}${year}`;
     return this.get(uri)
       .toPromise()
       .then((response) => {
         return response.json() as FullDayLeave[];
+      })
+      .catch(this.handleError);
+  }
+
+  getLeavesByState(state: LeaveState): Promise<EmployeLeaves[]> {
+    const uri = `${LeaveUri.GetLeavesByState}${state}`;
+    return this.get(uri)
+      .toPromise()
+      .then((response) => {
+        return this.toEmployeLeaves(response.json() as FullDayLeave[]);
       })
       .catch(this.handleError);
   }
@@ -53,7 +66,21 @@ export class LeaveService extends BaseService {
       .catch(this.handleError);
   }
 
+  private toEmployeLeaves(leaves: FullDayLeave[]): EmployeLeaves[] {
+    const employeLeaves = new Array<EmployeLeaves>();
+    let employe: EmployeLeaves;
+    leaves.forEach(l => {
+      employe = employeLeaves.find(el => el.id === l.employe.id);
+      if (!employe) {
+        employe = new EmployeLeaves(l.employe.id, l.employe.surname.concat(' ', l.employe.name));
+        employeLeaves.push(employe);
+      }
+      employe.leaves.push(format(l.date, 'DD/MM/YYYY'));
+    });
+    return employeLeaves;
+  }
+
   private getEmployeIdParam(employeId: number): string {
-    return employeId ? `?employeId=${employeId}` : '';
+    return !!employeId ? `?employeId=${employeId}` : '';
   }
 }

@@ -23,6 +23,8 @@ export enum LeaveState { Approved, ToAdd, ToRemove }
 
 export enum ViewMode { Employe, Area }
 
+export enum ApprovationMode { Add, Remove }
+
 export enum LeaveOverlapsUri {
   ByEmploye = <any>'coverage/overlaps/employe/',
   ByArea = <any>'coverage/overlaps/area/',
@@ -35,7 +37,8 @@ export enum SecurityUri {
 }
 
 export enum LeaveUri {
-   GetLeaves = <any>'leave/employe/',
+   GetLeavesByEmploye = <any>'leave/employe/',
+   GetLeavesByState = <any>'leave/state/',
    GetYearLeaves = <any>'leave/plan/',
    LeavesEmployePlanUpdate = <any>'leave/employe/plan',
    LeavesPlan = <any>'leave/plan/export/'

@@ -1,12 +1,12 @@
-<md-form-field  style="width: 100%">
-    <input mdInput [placeholder]="placeholder" aria-label="motivo" [mdAutocomplete]="motivationsList"
+<mat-form-field  style="width: 100%">
+    <input matInput [placeholder]="placeholder" aria-label="motivo" [matAutocomplete]="motivationsList"
         [formControl]="motivationCtrl">
-    <md-icon mdSuffix class="align-middle btn-pointer-cursor" (click)="resetSearch()" ngbTooltip="Resetta">close</md-icon>
-    <md-icon mdSuffix class="align-middle btn-pointer-cursor" (click)="addMotivation($event)" ngbTooltip="Aggiungi motivo">note_add</md-icon>
-    <md-icon mdSuffix class="align-middle btn-pointer-cursor" (click)="deleteMotivation()" ngbTooltip="Elimina Motivo">delete</md-icon>
-    <md-autocomplete #motivationsList="mdAutocomplete" (optionSelected)="selectMotivation()">
-        <md-option *ngFor="let motivation of filteredMotivations | async" [value]="motivation.description">
+    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="resetSearch()" ngbTooltip="Resetta">close</mat-icon>
+    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="addMotivation($event)" ngbTooltip="Aggiungi motivo">note_add</mat-icon>
+    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="deleteMotivation()" ngbTooltip="Elimina Motivo">delete</mat-icon>
+    <mat-autocomplete #motivationsList="matAutocomplete" (optionSelected)="selectMotivation()">
+        <mat-option *ngFor="let motivation of filteredMotivations | async" [value]="motivation.description">
             <span> {{ motivation.description}}</span>
-        </md-option>
-    </md-autocomplete>
-</md-form-field>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

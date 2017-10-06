@@ -12,6 +12,7 @@ using Seac.Coverage.Export;
 using Seac.Coverage.Attributes;
 using Seac.Coverage.Services;
 using Seac.Coverage.Dto;
+using Seac.Coverage.Enum;
 
 using static Seac.Coverage.Utils.GeneralConstants;
 
@@ -33,6 +34,9 @@ namespace Seac.Coverage.Controllers
 
         [HttpGet("employe/{from}/{to}")]
         public IEnumerable<LeaveDto> GetLeavesByEmploye(string from, string to, string employeId) => _leaveService.GetLeavesByEmploye(GetDateParam(from), GetDateParam(to), GetEmployeId(employeId));
+
+        [HttpGet("state/{state}")]
+        public IEnumerable<LeaveDto> GetLeavesByEmploye(LeaveState state) => _leaveService.GetLeavesByState(state);
 
         [HttpGet("plan/{year}")]
         public IEnumerable<LeaveDto> GetYearLeaves(int year) => _leaveService.GetYearLeaves(year);
