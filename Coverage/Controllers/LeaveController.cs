@@ -53,6 +53,7 @@ namespace Seac.Coverage.Controllers
             var xlsxFilePath = Path.GetTempFileName();
 
             var leaves = _leaveService.GetLeavesRange(yearInit, yearEnd);
+            leaves = leaves.Where(l => l.State == LeaveState.Approved);
             var employes = _employeService.GetAll();
 
             var leavesPlanExporter = new LeavesPlanExporter(leaves.ToList(), employes.ToList());

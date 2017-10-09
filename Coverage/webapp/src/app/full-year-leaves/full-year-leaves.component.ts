@@ -1,10 +1,10 @@
 import {
-  ApplicationInitStatus,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
+    AfterViewInit,
+    ApplicationInitStatus,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ViewChild,
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -38,7 +38,7 @@ import { CoverageService } from '../service/coverage.service';
     useClass: CustomDateFormatter
   }],
 })
-export class FullYearLeavesComponent implements OnInit {
+export class FullYearLeavesComponent implements AfterViewInit {
 
   @ViewChild('employeAutocomplete') employeAutocomplete: EmployeAutocompleteComponent;
 
@@ -70,7 +70,7 @@ export class FullYearLeavesComponent implements OnInit {
     private toastr: ToastrService, private ref: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.fetchLeaves();
   }
 
@@ -137,40 +137,41 @@ export class FullYearLeavesComponent implements OnInit {
   }
 
   dayClicked(event: MouseEvent, day: CalendarMonthViewDay): void {
-    let initLeaves = new Date(day.date);
-    let endLeaves = event.shiftKey && this.lastEnteredLeave ? new Date(this.lastEnteredLeave) : initLeaves;
-    let isSecondShift = false;
+    if (day.inMonth && !Utils.isHolidayDay(day.date)) {
+      let initLeaves = new Date(day.date);
+      let endLeaves = event.shiftKey && this.lastEnteredLeave ? new Date(this.lastEnteredLeave) : initLeaves;
+      let isSecondShift = false;
 
-    if (initLeaves > endLeaves) {
-      const tmp = endLeaves;
-      endLeaves = initLeaves;
-      initLeaves = tmp;
+      if (initLeaves > endLeaves) {
+        const tmp = endLeaves;
+        endLeaves = initLeaves;
+        initLeaves = tmp;
+      }
+      if (!this.lastEnteredLeave && event.shiftKey) {
+        this.lastEnteredLeave = new Date(day.date);
+        day.cssClass = 'cal-cell-top cal-cell-leave-period';
+        return;
+      } else if (event.shiftKey) {
+        isSecondShift = true;
+      }
+
+      this.lastEnteredLeave = undefined;
+
+      this.addRemoveLeaves(initLeaves, endLeaves, isSecondShift);
     }
-    if (!this.lastEnteredLeave && event.shiftKey) {
-      this.lastEnteredLeave = new Date(day.date);
-      day.cssClass = 'cal-cell-top cal-cell-leave-period';
-      return;
-    } else if (event.shiftKey) {
-      isSecondShift = true;
-    }
-
-    this.lastEnteredLeave = undefined;
-
-    this.addRemoveLeaves(initLeaves, endLeaves, isSecondShift);
-
   }
 
   private addRemoveLeaves(initLeaves: Date, endLeaves: Date, isSecondShift: boolean): void {
     const leavesDays: Date[] = eachDay(initLeaves, endLeaves);
     const addedLeaves: FullDayLeave[] = [];
-    const removededLeaves: FullDayLeave[] = [];
+    const removedLeaves: FullDayLeave[] = [];
     for (let i = 0; i < leavesDays.length; i++) {
       const leavesDay = this.yearAllDay.find(d => isSameDay(d.date, leavesDays[i]));
       if (leavesDay && leavesDay.inMonth && !Utils.isHolidayDay(leavesDay.date)) {
         const index = this.leavesDates.findIndex(leave => isSameDay(leave.date, leavesDay.date));
         if (index > -1) {
           leavesDay.cssClass = 'cal-cell-top cal-cell-normal';
-          removededLeaves.push(this.leavesDates[index]);
+          removedLeaves.push(this.leavesDates[index]);
         } else {
           leavesDay.cssClass = 'cal-cell-top cal-cell-leave-period';
           const leave = new FullDayLeave();
@@ -179,11 +180,11 @@ export class FullYearLeavesComponent implements OnInit {
         }
       }
     }
-    this.updateLeaves(addedLeaves, removededLeaves);
+    this.updateLeaves(addedLeaves, removedLeaves);
   }
 
-  private updateLeaves(addedLeaves: FullDayLeave[], removededLeaves: FullDayLeave[]): void {
-    this.leaveService.updateLeavesPlan(addedLeaves, removededLeaves, this.getSelectedEmployeId())
+  private updateLeaves(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[]): void {
+    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, this.getSelectedEmployeId())
       .then(resp => this.updateLeavesPlanResponse(resp))
       .catch(error => this.updateLeavesPlanFailure(error));
   }
@@ -233,15 +234,17 @@ export class FullYearLeavesComponent implements OnInit {
   }
 
   updateLeavesPlanResponse(response: UpdatePlanResponse): void {
-    const lineBreak = (response.savedDates && response.removedDates) ? '<br/>' : '';
-    let succesMsg = response.savedDates ? `le seguente date sono state aggiunte correttamente:<br/><div class=\"toast-dates\">${response.savedDates}.</div>${lineBreak}` : '';
-    succesMsg += response.removedDates ? `le seguente date sono state rimosse correttamente:<br/><div class=\"toast-dates\">${response.removedDates}.</div>` : '';
+    const lineBreak = (response.savedDates.length > 0 && response.removedDates.length > 0) ? '<br/>' : '';
+    let succesMsg = response.savedDates.length > 0 ?
+      `le seguente date sono state aggiunte correttamente:<br/><div class=\"toast-dates\">${response.savedDates.join(',<br\>')}.</div>${lineBreak}` : '';
+    succesMsg += response.removedDates.length > 0 ?
+      `le seguente date sono state rimosse correttamente:<br/><div class=\"toast-dates\">${response.removedDates.join(',<br\>')}.</div>` : '';
     if (!!succesMsg) {
       this.toastr.success(succesMsg);
     }
-    if (response.rejectedDates) {
+    if (response.rejectedDates.length > 0) {
       this.toastr.error(
-        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates}.</div>`);
+        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates.join(',<br\>')}.</div>`, '');
     }
     this.fetchLeaves();
   }

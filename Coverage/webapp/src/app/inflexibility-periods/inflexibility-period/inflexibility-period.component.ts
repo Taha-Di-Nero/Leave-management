@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { InflexibilityPeriod } from '../../shared/dto/inflexibility-period';
 import { EmployeState } from '../../shared/enums';
@@ -18,7 +19,7 @@ export class InflexibilityPeriodComponent {
 
   EmployeState = EmployeState;
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     this.updateRequest = new EventEmitter<void>();
     this.deleteRequest = new EventEmitter<void>();
   }
@@ -40,6 +41,11 @@ export class InflexibilityPeriodComponent {
       case EmployeState.Indifferent:
         return 'indifferent-text font-weight-bolder';
     }
+  }
+
+  private getTitleValue(employesNumber: number): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml( ` <span>Dipendenti coinvolti&nbsp;</span>
+    <span class="badge rounded app-badge">${employesNumber}</span>`);
   }
 
 }

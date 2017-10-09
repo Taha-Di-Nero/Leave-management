@@ -1,5 +1,15 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,7 +25,7 @@ import { ApplicationSharedData } from '../shared/application-shared-data';
   templateUrl: './employe-autocomplete.component.html',
   styleUrls: ['./employe-autocomplete.component.css']
 })
-export class EmployeAutocompleteComponent implements OnInit, OnDestroy {
+export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() placeholder = 'Ricerca dipendente';
   @Input() showLeaves = false;
@@ -24,6 +34,8 @@ export class EmployeAutocompleteComponent implements OnInit, OnDestroy {
   @Output() reset: EventEmitter<any> = new EventEmitter();
 
   employeFlexibilitySubscription: Subscription;
+
+  injectSearchSubscription: Subscription;
 
   employes: Employe[] = [];
   filteredEmployes: Observable<Employe[]>;
@@ -38,7 +50,7 @@ export class EmployeAutocompleteComponent implements OnInit, OnDestroy {
       flex => {
         this.employes.splice(0);
         flex.getAll().forEach(e => this.employes.push(e));
-        if (this.employeCtrl) {
+        if (!!this.employeCtrl) {
           this.employeCtrl.setValue('');
         }
         this.ref.markForCheck();
@@ -48,8 +60,20 @@ export class EmployeAutocompleteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.employeCtrl = new FormControl();
+
     this.filteredEmployes = this.employeCtrl.valueChanges.startWith(null)
       .map(searchTerm => searchTerm ? this.filterEmployes(searchTerm) : this.employes.slice());
+  }
+
+  ngAfterViewInit(): void {
+    this.injectSearchSubscription = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().subscribe(
+      searchTerm => {
+        this.employeCtrl.setValue(searchTerm);
+        if (!!this.employeCtrl.value) {
+          this.selectEmploye();
+        }
+      }
+    );
   }
 
   private filterEmployes(searchTerm: string): Employe[] {
@@ -107,6 +131,10 @@ export class EmployeAutocompleteComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.employeFlexibilitySubscription) {
       this.employeFlexibilitySubscription.unsubscribe();
+    }
+    if (this.injectSearchSubscription) {
+      this.injectSearchSubscription.unsubscribe();
+      ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch('');
     }
   }
 }

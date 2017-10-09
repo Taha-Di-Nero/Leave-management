@@ -1,5 +1,6 @@
 export class UpdatePlanResponse {
-    public savedDates: string;
-    public removedDates: string;
-    public rejectedDates: string;
+
+    constructor(public savedDates = new Array<string>(), public removedDates = new Array<string>(),
+        public rejectedDates = new Array<string>()) { }
+
 }
