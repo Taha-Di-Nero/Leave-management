@@ -17,6 +17,7 @@ import { NavigationNode } from './layout/nav-menu/nav-menu.model';
 import { sideNavNodes } from './layout/nav-menu/menu-nodes';
 import { CoverageService } from './service/coverage.service';
 import { ApplicationSharedData } from './shared/application-shared-data';
+import { EmployeLeaves } from './shared/dto/employe-leaves';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -97,6 +98,18 @@ export class AppComponent implements OnInit {
         this.ref.markForCheck();
     }
 
+    private goToEmploeLeaves(employeleaves: EmployeLeaves): void {
+        ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch(employeleaves.fullName);
+        if (this.currentView === FullYearLeavesOverlapsComponent) {
+            this.showCoverageTitle = false;
+            this.currentView = FullYearLeavesComponent;
+            this.fabToolTipMsg = this.yearCoverageTooltip;
+            this.fabLeavesIcon = false;
+            this.displayLeavesPlanDownload = false;
+        }
+        this.ref.markForCheck();
+    }
+
     private downloadLeavesPlan(): void {
         this.blockUI.start('Attendere prego...');
         this.leaveService.getLeavesPlan(ApplicationSharedData.getInstance().currentYear)
@@ -131,11 +144,11 @@ export class AppComponent implements OnInit {
                 break;
             case MenuItemIds.AddedLeaves:
                 this.requestedApprovationMode = ApprovationMode.Add;
-                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
+                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
                 break;
             case MenuItemIds.RemovedLeaves:
                 this.requestedApprovationMode = ApprovationMode.Remove;
-                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
+                this.modal.open(this.approvationModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
                 break;
         }
     }

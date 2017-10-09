@@ -79,7 +79,7 @@
     <span *ngIf="requestedApprovationMode === ApprovationMode.Add"  class="modal-title">Ferie aggiunte da approvare</span>
   </div>
   <div class="modal-body">
-    <app-leaves-approvation [mode]="requestedApprovationMode"></app-leaves-approvation>
+    <app-leaves-approvation [mode]="requestedApprovationMode" (showLeaves)="goToEmploeLeaves($event)"></app-leaves-approvation>
   </div>
   <div class="modal-footer modal-header-primary">
   </div>

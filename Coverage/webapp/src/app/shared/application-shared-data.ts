@@ -14,9 +14,12 @@ export class ApplicationSharedData {
 
     loggedEmploye: Employe;
 
-    private selectedDate: Date = new Date();
-    private loadedYears: any = {};
-    private loadedMonths: any = {};
+    private _selectedDate: Date = new Date();
+    private _loadedYears: any = {};
+    private _loadedMonths: any = {};
+
+
+    private _empAutoCompInjectSearch = new ReplaySubject<string>(1);
 
     private employesFlexibility = new ReplaySubject<EmployesFlexibility>(1);
 
@@ -36,11 +39,11 @@ export class ApplicationSharedData {
     }
 
     public setSelectedDate(value: Date): void {
-        this.selectedDate = value;
+        this._selectedDate = value;
     }
 
     public getSelectedDate(): Date {
-        return this.selectedDate;
+        return this._selectedDate;
     }
 
     public getEmployesFlexibility(): ReplaySubject<EmployesFlexibility> {
@@ -70,24 +73,32 @@ export class ApplicationSharedData {
 
     public addLoadedYear(year: number, gaps: CalendarEvent[]): void {
         this.yearsCoverage.next(gaps);
-        this.loadedYears[year] = gaps;
+        this._loadedYears[year] = gaps;
     }
 
     public getLoadedYear(year: number): CalendarEvent[] {
-        this.yearsCoverage.next(this.loadedYears[year]);
-        return this.loadedYears[year];
+        this.yearsCoverage.next(this._loadedYears[year]);
+        return this._loadedYears[year];
     }
 
     public addLoadedMonth(mode: ViewMode, month: Date, gaps: CalendarEvent[]): void {
         const clone = new Date(month.getTime());
         clone.setDate(1);
-        this.loadedMonths[mode.toString() + clone.getTime()] = gaps;
+        this._loadedMonths[mode.toString() + clone.getTime()] = gaps;
     }
 
     public getLoadedMonth(mode: ViewMode, month: Date): CalendarEvent[] {
         const clone = new Date(month.getTime());
         clone.setDate(1);
-        return this.loadedMonths[mode.toString() + clone.getTime()];
+        return this._loadedMonths[mode.toString() + clone.getTime()];
+    }
+
+    public setEmpAutoCompInjectSearch(value: string): void {
+        this._empAutoCompInjectSearch.next(value);
+    }
+
+    public getEmpAutoCompInjectSearch(): ReplaySubject<string> {
+        return this._empAutoCompInjectSearch;
     }
 
 }

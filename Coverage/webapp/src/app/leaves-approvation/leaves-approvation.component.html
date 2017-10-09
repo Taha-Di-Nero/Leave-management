@@ -1,24 +1,39 @@
-<mat-list *ngFor="let employeleaves of employesleaves;">
-    <mat-list-item>
-        <span matLine>
-            <span class="align-bottom">{{ employeleaves.fullName}}</span>
-            <span class="ml-sm-5">
-                <mat-select placeholder="Richieste da approvare">
-                    <mat-option *ngFor="let leave of employeleaves.leaves" [value]="leave">
-                        {{ leave }}
-                    </mat-option>
-                </mat-select>
+<div *ngIf="(employesleaves && employesleaves.length > 0); then notEmpty else empty"></div>
+<ng-template #notEmpty>
+    <mat-list *ngFor="let employeleaves of employesleaves;">
+        <mat-list-item>
+            <span matLine>
+                <span class="align-bottom">{{ employeleaves.fullName}}</span>
+                <span class="ml-sm-5">
+                    <mat-select value="title" #select="matSelect">
+                        <mat-select-trigger [innerHTML]="getTitleValue(employeleaves.leavesNumber)"></mat-select-trigger>
+                        <mat-option value="title" [innerHTML]="getTitleValue(employeleaves.leavesNumber)">
+                        </mat-option>
+                        <mat-option *ngFor="let leave of employeleaves.leavesIntervals" [value]="leave" disabled class="app-select-item">
+                            {{ leave }}
+                        </mat-option>
+                    </mat-select>
+                </span>
             </span>
-        </span>
-        <span ngbTooltip="Approva">
-            <button mat-icon-button (click)="update()">
-                <mat-icon class="md-24">check</mat-icon>
-            </button>
-        </span>
-        <span ngbTooltip="Respinga">
-            <button mat-icon-button (click)="delete()">
-                <mat-icon class="md-24">delete</mat-icon>
-            </button>
-        </span>
-    </mat-list-item>
-</mat-list>
+            <span ngbTooltip="Approva">
+                <button mat-icon-button (click)="approve(employeleaves)">
+                    <mat-icon class="md-24">check</mat-icon>
+                </button>
+            </span>
+            <span ngbTooltip="Respinga">
+                <button mat-icon-button (click)="reject(employeleaves)">
+                    <mat-icon class="md-24">delete</mat-icon>
+                </button>
+            </span>
+            <span ngbTooltip="Dettagli">
+                <button mat-icon-button (click)="details(employeleaves)">
+                    <mat-icon class="md-24">forward</mat-icon>
+                </button>
+            </span>
+        </mat-list-item>
+    </mat-list>
+</ng-template>
+
+<ng-template #empty>
+    <h3>Non ci sono richieste da approvare</h3>
+</ng-template>

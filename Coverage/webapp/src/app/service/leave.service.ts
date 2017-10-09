@@ -46,14 +46,14 @@ export class LeaveService extends BaseService {
       .catch(this.handleError);
   }
 
-  updateLeavesPlan(addedLeaves: FullDayLeave[], removededLeaves: FullDayLeave[], employeId: number): Promise<UpdatePlanResponse> {
+  updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number): Promise<UpdatePlanResponse> {
     const uri = LeaveUri.LeavesEmployePlanUpdate;
     const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })),
-      removededLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
+      removedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
     return this.post(`${uri}${this.getEmployeIdParam(employeId)}`, update)
       .toPromise()
       .then((response) => {
-        return response.json() as UpdatePlanResponse;
+        return this.concatUpdatePlanResponseDates(response.json() as UpdatePlanResponse);
       })
       .catch(this.handleError);
   }
@@ -74,41 +74,50 @@ export class LeaveService extends BaseService {
       employe = employeLeaves.find(el => el.id === l.employe.id);
       if (!employe) {
         employe = new EmployeLeaves(l.employe.id, l.employe.surname.concat(' ', l.employe.name));
+        employe.leaves = leaves;
         employeLeaves.push(employe);
       }
-      employe.leaves.push(format(l.date, 'YYYY-MM-DD'));
+      employe.leavesIntervals.push(format(l.date, 'YYYY-MM-DD'));
     });
-    return this.concatDates(employeLeaves);
-  }
-
-  private concatDates(employeLeaves: EmployeLeaves[]): EmployeLeaves[] {
     employeLeaves.forEach(el => {
-      const leavesInterval = new Array<string>();
-      let tempDate = addDays(el.leaves[0], -1);
-      let lastDate = new Date(el.leaves[0]);
-      let currentDate: Date;
-      let nextDay: Date;
-      let lastCurrentDate: Date;
-      el.leaves.forEach(l => {
-        currentDate = new Date(l);
-        tempDate = this.forwardNonWorkongDays(tempDate);
-        nextDay = addDays(tempDate, 1);
-        if (isSameDay(nextDay, currentDate) || Utils.isHolidayDay(nextDay)) {
-          tempDate = currentDate;
-        } else {
-          tempDate = Utils.isHolidayDay(tempDate) ? this.backwardNonWorkongDays(tempDate) : tempDate;
-          lastCurrentDate = tempDate;
-          leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
-          lastDate = tempDate = currentDate;
-        }
-      });
-      if (currentDate !== lastCurrentDate) {
-        leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
-      }
-      el.leaves = leavesInterval;
+      el.leavesNumber = el.leavesIntervals.length;
+      el.leavesIntervals = this.concatDates(el.leavesIntervals);
     });
 
     return employeLeaves;
+  }
+
+  private concatUpdatePlanResponseDates(updatePlanResponse: UpdatePlanResponse): UpdatePlanResponse {
+    updatePlanResponse.savedDates = this.concatDates(updatePlanResponse.savedDates);
+    updatePlanResponse.removedDates = this.concatDates(updatePlanResponse.removedDates);
+    updatePlanResponse.rejectedDates = this.concatDates(updatePlanResponse.rejectedDates);
+    return updatePlanResponse;
+  }
+
+  private concatDates(leavesDates: string[]): string[] {
+    const leavesInterval = new Array<string>();
+    let tempDate = addDays(leavesDates[0], -1);
+    let lastDate = new Date(leavesDates[0]);
+    let currentDate: Date;
+    let nextDay: Date;
+    let lastCurrentDate: Date;
+    leavesDates.forEach(l => {
+      currentDate = new Date(l);
+      tempDate = this.forwardNonWorkongDays(tempDate);
+      nextDay = addDays(tempDate, 1);
+      if (isSameDay(nextDay, currentDate) || Utils.isHolidayDay(nextDay)) {
+        tempDate = currentDate;
+      } else {
+        tempDate = Utils.isHolidayDay(tempDate) ? this.backwardNonWorkongDays(tempDate) : tempDate;
+        lastCurrentDate = tempDate;
+        leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
+        lastDate = tempDate = currentDate;
+      }
+    });
+    if (currentDate !== lastCurrentDate) {
+      leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
+    }
+    return leavesInterval;
   }
 
   private forwardNonWorkongDays(from: Date): Date {
@@ -128,7 +137,7 @@ export class LeaveService extends BaseService {
   }
 
   private formatDateInterval(from: Date, to: Date): string {
-    return isSameDay(from, to) ? format(from, 'DD-MM-YYYY') : `${format(from, 'DD-MM-YYYY')} - ${format(to, 'DD-MM-YYYY')}`;
+    return isSameDay(from, to) ? `Il ${format(from, 'DD/MM/YYYY')}` : `Dal ${format(from, 'DD/MM/YYYY')} al ${format(to, 'DD/MM/YYYY')}`;
   }
 
   private getEmployeIdParam(employeId: number): string {

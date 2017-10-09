@@ -2,8 +2,8 @@
 {
     public class UpdatePlanResponse
     {
-        public string SavedDates { get; set; }
-        public string RemovedDates { get; set; }
-        public string RejectedDates { get; set; }
+        public string[] SavedDates { get; set; } = new string[0];
+        public string[] RemovedDates { get; set; } = new string[0];
+        public string[] RejectedDates { get; set; } = new string[0];
     }
 }

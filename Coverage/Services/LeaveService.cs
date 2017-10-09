@@ -58,17 +58,18 @@ namespace Seac.Coverage.Services
 
             if (loggedOne.Profile == EmployeProfile.Manager)
             {
-                _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye, LeaveState.Approved));
-                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovededLeaves, currentEmploye, LeaveState.Approved));
+                _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.Approved));
+                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.AddedLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.Approved));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.removedLeaves, currentEmploye, LeaveState.Approved));
             }
             else
             {
                 _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye, LeaveState.ToAdd));
-                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovededLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.ToRemove));
-                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.RemovededLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.ToRemove));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.removedLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.ToRemove));
+                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.removedLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.ToRemove));
             }
 
-            SetUpdatedDatesMessage(leaves.AddedLeaves, leaves.RemovededLeaves, response);
+            SetUpdatedDatesMessage(leaves.AddedLeaves, leaves.removedLeaves, response);
             return response;
         }
 
@@ -86,17 +87,17 @@ namespace Seac.Coverage.Services
                 daysToRemove = daysToRemove.Where(day => leaves.Any(l => l.Date == day)).ToList();
                 if (daysToRemove?.Count > 0)
                 {
-                    response.RejectedDates = String.Join(", ", daysToRemove.Select(d => d.ToString(DateParamFormat)));
+                    response.RejectedDates = daysToRemove.Select(d => d.ToString(DateIsoFormat)).ToArray();
                     daysToRemove.ForEach(day => leaves.Remove(leaves.Where(l => l.Date == day).FirstOrDefault()));
                 }
             }
             return response;
         }
 
-        private void SetUpdatedDatesMessage(IList<LeaveDto> addedLeaves, IList<LeaveDto> removededLeaves, UpdatePlanResponse response)
+        private void SetUpdatedDatesMessage(IList<LeaveDto> addedLeaves, IList<LeaveDto> removedLeaves, UpdatePlanResponse response)
         {
-            response.SavedDates = (addedLeaves.Count > 0) ? String.Join(", ", addedLeaves.Select(d => d.Date.ToString(DateParamFormat))) : null;
-            response.RemovedDates += (removededLeaves.Count > 0) ? String.Join(", ", removededLeaves.Select(d => d.Date.ToString(DateParamFormat))) : null;
+            response.SavedDates = (addedLeaves.Count > 0) ? addedLeaves.Select(d => d.Date.ToString(DateIsoFormat)).ToArray() : new string[0];
+            response.RemovedDates = (removedLeaves.Count > 0) ? removedLeaves.Select(d => d.Date.ToString(DateIsoFormat)).ToArray() : new string[0];
         }
 
         private IList<Leave> GetLeavesEntity(IEnumerable<LeaveDto> leaves, Employe currentEmploye, LeaveState state)

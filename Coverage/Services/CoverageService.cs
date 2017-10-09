@@ -120,7 +120,7 @@ namespace Seac.Coverage.Services
         private void CreateEmployeCoverageGaps(IList<EmployesCoverageGaps> employeLeaveOverlaps, AreaDto a, AreaCoverageGaps areaCoverageGaps)
         {
 
-    
+
             foreach (DayCoverageGaps gaps in areaCoverageGaps.Gaps)
             {
                 List<EmployesCoverageGaps> temp = employeLeaveOverlaps.Where(e => e.Date == gaps.Date).ToList();
@@ -187,6 +187,10 @@ namespace Seac.Coverage.Services
         {
             List<AreaDto> areas = employeId > 0 ? _areaService.FindByEmployeId(employeId).ToList() : _areaService.GetAllWithEmploye().ToList();
             List<LeaveDto> leaves = _leaveService.GetLeavesRange(fromDate, toDate).ToList();
+            if (employeId <= 0)
+            {
+                leaves = leaves.Where(l => l.State == LeaveState.Approved).ToList();
+            }
 
             foreach (AreaDto a in areas)
             {
