@@ -52,18 +52,18 @@ export class LeavesApprovationComponent implements OnInit {
 
   approve(employeleaves: EmployeLeaves): void {
     if (this.mode === ApprovationMode.Add) {
-      this.approveLeaves(employeleaves.leaves, [], employeleaves.id);
+      this.approveLeaves(employeleaves.leaves, [], employeleaves);
     } else {
-      this.approveLeaves([], employeleaves.leaves, employeleaves.id);
+      this.approveLeaves([], employeleaves.leaves, employeleaves);
     }
   }
 
   reject(employeleaves: EmployeLeaves): void {
     if (this.mode === ApprovationMode.Add) {
-      this.approveLeaves(new Array<FullDayLeave>(), employeleaves.leaves, employeleaves.id);
+      this.approveLeaves(new Array<FullDayLeave>(), employeleaves.leaves, employeleaves);
     } else {
       employeleaves.leaves.forEach(l => l.state = LeaveState.ToAdd);
-      this.approveLeaves(employeleaves.leaves, [], employeleaves.id);
+      this.approveLeaves(employeleaves.leaves, [], employeleaves);
     }
   }
 
@@ -71,10 +71,12 @@ export class LeavesApprovationComponent implements OnInit {
     this.showLeaves.emit(employeleaves);
   }
 
-  private approveLeaves(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number): void {
-    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeId)
-      .then(resp => this.approveLeavesSuccess(resp))
-      .catch(error => this.approveLeavesFailure(error));
+  private approveLeaves(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeleaves: EmployeLeaves): void {
+    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id)
+      .then(resp => {
+        this.details(employeleaves);
+        this.approveLeavesSuccess(resp);
+      }).catch(error => this.approveLeavesFailure(error));
   }
 
   approveLeavesSuccess(response: UpdatePlanResponse): void {

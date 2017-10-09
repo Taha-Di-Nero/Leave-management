@@ -74,9 +74,9 @@ export class LeaveService extends BaseService {
       employe = employeLeaves.find(el => el.id === l.employe.id);
       if (!employe) {
         employe = new EmployeLeaves(l.employe.id, l.employe.surname.concat(' ', l.employe.name));
-        employe.leaves = leaves;
         employeLeaves.push(employe);
       }
+      employe.leaves.push(l);
       employe.leavesIntervals.push(format(l.date, 'YYYY-MM-DD'));
     });
     employeLeaves.forEach(el => {
