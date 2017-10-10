@@ -1,4 +1,4 @@
-import { gapsMock } from '../shared/tests-mocks/mocks';
+import { gapsByAreaMock } from '../shared/tests-mocks/mocks';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -48,7 +48,7 @@ describe('LeavesOverlapsComponent', () => {
         component.mode = ViewMode.Area;
         component.viewDate = new Date(2017, 7, 10);
         const spyOverlaps = spyOn(coverageService, 'searchGaps')
-            .and.returnValue(Promise.resolve(gapsMock));
+            .and.returnValue(Promise.resolve(gapsByAreaMock));
         fixture.detectChanges();
     });
 
