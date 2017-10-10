@@ -1,3 +1,4 @@
+import { EmployeLeaves } from './shared/dto/employe-leaves';
 import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,6 +36,8 @@ import { Employe } from './shared/dto/employe';
 import { FullDayLeave } from './shared/dto/leave';
 import { EmployesFlexibility } from './shared/dto/employes-flexibility';
 import { EmployeAutocompleteModule } from './employe-autocomplete/employe-autocomplete.module';
+import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
+import { ApplicationSharedData } from './shared/application-shared-data';
 
 const employe = new Employe();
 employe.id = 12;
@@ -83,6 +86,7 @@ describe('AppComponent', () => {
         BlockUIModule,
         HolidayShutdownListModule,
         InflexibilityPeriodListModule,
+        LeavesApprovationModule,
         AppRoutingModule
       ],
     });
@@ -175,6 +179,25 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(app.currentView).toBe(AccessDeniedComponent, 'Accces denied created not created');
+    });
+  }));
+
+  it('Current view should be FullYearLeavesComponent and fire search empploye', async(() => {
+    const employeLeaves = new EmployeLeaves(2, 'surname name');
+    const sub = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().subscribe(searchTerm => {
+      expect(searchTerm).toBe(employeLeaves.fullName, 'Employe search not fired');
+      sub.unsubscribe();
+      ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch(null);
+    });
+
+    employe.profile = Profile.Manager;
+    const spy = spyOn(securityService, 'getLoggedEmploye').and.returnValue(Promise.resolve(employe));
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      app['goToEmploeLeaves'].call(app, employeLeaves);
+      fixture.detectChanges();
+      expect(app.currentView).toBe(FullYearLeavesComponent, 'Current view is FullYearLeavesComponent');
     });
   }));
 

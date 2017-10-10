@@ -66,14 +66,14 @@ export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngAfterViewInit(): void {
-    this.injectSearchSubscription = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().subscribe(
-      searchTerm => {
+    this.injectSearchSubscription = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().filter(searchTerm => !!searchTerm)
+      .subscribe(searchTerm => {
         this.employeCtrl.setValue(searchTerm);
         if (!!this.employeCtrl.value) {
           this.selectEmploye();
         }
       }
-    );
+      );
   }
 
   private filterEmployes(searchTerm: string): Employe[] {

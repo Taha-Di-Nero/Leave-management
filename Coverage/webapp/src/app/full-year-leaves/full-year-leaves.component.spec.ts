@@ -25,6 +25,10 @@ employe.surname = 'surname';
 employe.profile = Profile.Normal;
 employe.currentYearLeaves = 12;
 
+const leaves = [{ id: 1, date: new Date(2017, 10, 3), state: 0 },
+{ id: 1, date: new Date(2017, 10, 4), state: 1 },
+{ id: 1, date: new Date(2017, 10, 5), state: 2 }];
+
 let coverageService: CoverageService;
 let leaveService: LeaveService;
 
@@ -61,7 +65,7 @@ describe('FullYearLeavesComponent', () => {
 
     ApplicationSharedData.getInstance().loggedEmploye = employe;
     const spyLeaves = spyOn(leaveService, 'getLeaves')
-      .and.returnValue(Promise.resolve(new Array<FullDayLeave>()));
+      .and.returnValue(Promise.resolve(leaves));
 
     fixture.detectChanges();
   });
@@ -73,7 +77,7 @@ describe('FullYearLeavesComponent', () => {
   it('Trigger day click.', () => {
     fixture.detectChanges();
     expect(function () {
-      component['dayClicked'].call(component, new MouseEvent('click'), { date: new Date(2017, 7, 10) });
+      component['dayClicked'].call(component, new MouseEvent('click'), { date: new Date(2017, 10, 10), inMonth: true });
     }).not.toThrow();
   });
 });
