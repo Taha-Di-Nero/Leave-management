@@ -45,9 +45,9 @@ import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 1200000,
-      extendedTimeOut: 2000,
+      timeOut: 20000,
       progressBar: true,
+      progressAnimation: 'decreasing',
       closeButton: true,
       enableHtml: true,
       positionClass: 'toast-bottom-center'

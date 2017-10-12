@@ -43,8 +43,8 @@ export class InflexibilityPeriodComponent {
     }
   }
 
-  private getTitleValue(employesNumber: number): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml( ` <span>Dipendenti coinvolti&nbsp;</span>
+  getTitleValue(employesNumber: number): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(` <span>Dipendenti coinvolti&nbsp;</span>
     <span class="badge rounded app-badge">${employesNumber}</span>`);
   }
 
