@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 import { LeaveService } from '../service/leave.service';
-import { ApprovationMode, LeaveState } from '../shared/enums';
+import { ApprovationMode, LeaveState, ApprovationExit } from '../shared/enums';
 import { EmployeLeaves } from '../shared/dto/employe-leaves';
 import { FullDayLeave } from '../shared/dto/leave';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
@@ -25,7 +25,7 @@ export class LeavesApprovationComponent implements OnInit {
 
   @Output() showLeaves = new EventEmitter<EmployeLeaves>();
 
-  private employesleaves: EmployeLeaves[] = new Array<EmployeLeaves>();
+  employesleaves: EmployeLeaves[] = new Array<EmployeLeaves>();
 
   private tostPos = { positionClass: 'toast-top-center' };
 
@@ -52,18 +52,18 @@ export class LeavesApprovationComponent implements OnInit {
 
   approve(employeleaves: EmployeLeaves): void {
     if (this.mode === ApprovationMode.Add) {
-      this.approveLeaves(employeleaves.leaves, [], employeleaves);
+      this.updateLeavesPlan(employeleaves.leaves, [], employeleaves, ApprovationExit.Approved);
     } else {
-      this.approveLeaves([], employeleaves.leaves, employeleaves);
+      this.updateLeavesPlan([], employeleaves.leaves, employeleaves, ApprovationExit.Approved);
     }
   }
 
   reject(employeleaves: EmployeLeaves): void {
     if (this.mode === ApprovationMode.Add) {
-      this.approveLeaves(new Array<FullDayLeave>(), employeleaves.leaves, employeleaves);
+      this.updateLeavesPlan(new Array<FullDayLeave>(), employeleaves.leaves, employeleaves, ApprovationExit.Rejected);
     } else {
       employeleaves.leaves.forEach(l => l.state = LeaveState.ToAdd);
-      this.approveLeaves(employeleaves.leaves, [], employeleaves);
+      this.updateLeavesPlan(employeleaves.leaves, [], employeleaves, ApprovationExit.Rejected);
     }
   }
 
@@ -71,8 +71,9 @@ export class LeavesApprovationComponent implements OnInit {
     this.showLeaves.emit(employeleaves);
   }
 
-  private approveLeaves(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeleaves: EmployeLeaves): void {
-    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id)
+  private updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[],
+    employeleaves: EmployeLeaves, approvationExit: ApprovationExit): void {
+    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id, approvationExit)
       .then(resp => {
         this.details(employeleaves);
         this.approveLeavesSuccess(resp);

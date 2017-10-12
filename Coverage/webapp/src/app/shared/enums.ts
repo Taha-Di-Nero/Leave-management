@@ -25,6 +25,8 @@ export enum ViewMode { Employe, Area }
 
 export enum ApprovationMode { Add, Remove }
 
+export enum ApprovationExit { None, Approved, Rejected }
+
 export enum LeaveOverlapsUri {
   ByEmploye = <any>'coverage/overlaps/employe/',
   ByArea = <any>'coverage/overlaps/area/',

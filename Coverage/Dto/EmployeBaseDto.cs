@@ -8,6 +8,7 @@ namespace Seac.Coverage.Dto
         public long Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
         public EmployeProfile Profile { get; set; }
         public EmployeState State { get; set; } = EmployeState.Indifferent;
 

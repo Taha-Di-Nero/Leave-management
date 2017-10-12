@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,7 @@ using Seac.Coverage.Dto;
 using Seac.Coverage.Enum;
 
 using static Seac.Coverage.Utils.GeneralConstants;
+using static Seac.Coverage.Mail.MailManager;
 
 namespace Seac.Coverage.Controllers
 {
@@ -42,7 +45,19 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<LeaveDto> GetYearLeaves(int year) => _leaveService.GetYearLeaves(year);
 
         [HttpPost("employe/plan")]
-        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId) => _leaveService.UpdateLeavesPlan(_coverageService, leaves, GetEmployeId(employeId), GetLoggedEmploye());
+        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId, NotificationType notificationType)
+        {
+            var loggedEmploye = GetLoggedEmploye();
+            var targetEmploye = _employeService.GetWithArea(GetEmployeId(employeId));
+
+            var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye);
+            if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
+            {
+                SendMail(notificationType, GetSender(loggedEmploye), new MailAddress[] { GetRecipients(targetEmploye) }, GetServerUrl()).ConfigureAwait(false);
+            }
+
+            return response;
+        }
 
         [HttpGet("plan/export/{year}")]
         [DeleteFileAttribute]
@@ -63,8 +78,20 @@ namespace Seac.Coverage.Controllers
             return PhysicalFile(xlsxFilePath, MediaTypeNames.Application.Octet);
         }
 
-        private long GetEmployeId(string employeId) {
-            return employeId != null ? Convert.ToInt64(employeId) : GetLoggedEmploye().Id;
+        private bool SendNotification(NotificationType notificationType, EmployeDto loggedEmploye, EmployeDto targetEmploye, UpdatePlanResponse response)
+        {
+            bool send = notificationType == NotificationType.Approved || notificationType == NotificationType.Rejected;
+            send &= (response.RemovedDates.Length > 0 || response.SavedDates.Length > 0);
+            send &= loggedEmploye.Profile == EmployeProfile.Manager && loggedEmploye.Id != targetEmploye.Id;
+            return send;
         }
+
+        private MailAddress GetSender(EmployeDto sender) => new MailAddress(sender.Email, string.Concat(sender.Surname, " ", sender.Name));
+
+        private MailAddress GetRecipients(EmployeDto recipient) => new MailAddress(recipient.Email, string.Concat(recipient.Surname, " ", recipient.Name));
+
+        private string GetServerUrl() => string.Format("{0}://{1}", Request.Scheme, Request.Host);
+
+        private long GetEmployeId(string employeId) => employeId != null ? Convert.ToInt64(employeId) : GetLoggedEmploye().Id;
     }
 }

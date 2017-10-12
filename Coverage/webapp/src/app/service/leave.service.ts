@@ -7,7 +7,7 @@ import { format, isSameDay, addDays } from 'date-fns';
 
 import { BaseService } from './base.service';
 import { FullDayLeave } from '../shared/dto/leave';
-import { LeaveState, LeaveUri } from '../shared/enums';
+import { LeaveState, LeaveUri, ApprovationExit } from '../shared/enums';
 import { LeavesPlanUpdate } from '../shared/dto/Leaves-plan-update';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
 import { EmployeLeaves } from '../shared/dto/employe-leaves';
@@ -17,7 +17,7 @@ import { Utils } from '../shared/utils';
 export class LeaveService extends BaseService {
 
   getLeaves(fromDate: string, toDate: string, employeId: number): Promise<FullDayLeave[]> {
-    const uri = `${LeaveUri.GetLeavesByEmploye}${fromDate}/${toDate}${this.getEmployeIdParam(employeId)}`;
+    const uri = `${LeaveUri.GetLeavesByEmploye}${fromDate}/${toDate}${this.getQueryString(employeId)}`;
     return this.get(uri)
       .toPromise()
       .then((response) => {
@@ -46,11 +46,11 @@ export class LeaveService extends BaseService {
       .catch(this.handleError);
   }
 
-  updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number): Promise<UpdatePlanResponse> {
+  updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number, approvationExit?: ApprovationExit): Promise<UpdatePlanResponse> {
     const uri = LeaveUri.LeavesEmployePlanUpdate;
     const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })),
       removedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
-    return this.post(`${uri}${this.getEmployeIdParam(employeId)}`, update)
+    return this.post(`${uri}${this.getQueryString(employeId, approvationExit)}`, update)
       .toPromise()
       .then((response) => {
         return this.concatUpdatePlanResponseDates(response.json() as UpdatePlanResponse);
@@ -140,7 +140,10 @@ export class LeaveService extends BaseService {
     return isSameDay(from, to) ? `Il ${format(from, 'DD/MM/YYYY')}` : `Dal ${format(from, 'DD/MM/YYYY')} al ${format(to, 'DD/MM/YYYY')}`;
   }
 
-  private getEmployeIdParam(employeId: number): string {
-    return !!employeId ? `?employeId=${employeId}` : '';
+  private getQueryString(employeId: number, approvationExit?: ApprovationExit): string {
+    let queryString = !!employeId ? `?employeId=${employeId}` : '';
+    queryString += !!queryString ? '&' : '?';
+    queryString += !!approvationExit ? `notificationType=${approvationExit}` : '';
+    return queryString;
   }
 }
