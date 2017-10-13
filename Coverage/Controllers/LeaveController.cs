@@ -15,9 +15,11 @@ using Seac.Coverage.Attributes;
 using Seac.Coverage.Services;
 using Seac.Coverage.Dto;
 using Seac.Coverage.Enum;
+using Seac.Coverage.Mail;
 
 using static Seac.Coverage.Utils.GeneralConstants;
 using static Seac.Coverage.Mail.MailManager;
+using static Seac.Coverage.Utils.Utils;
 
 namespace Seac.Coverage.Controllers
 {
@@ -53,7 +55,8 @@ namespace Seac.Coverage.Controllers
             var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye);
             if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
             {
-                SendMail(notificationType, GetSender(loggedEmploye), new MailAddress[] { GetRecipients(targetEmploye) }, GetServerUrl()).ConfigureAwait(false);
+                var param = new ApprovationMailParams(notificationType, GetSender(loggedEmploye), new MailAddress[] { GetRecipients(targetEmploye) }, GetServerUrl(), GetNotificationMessage(notificationType, response));
+                SendMail(param).ConfigureAwait(false);
             }
 
             return response;
@@ -84,6 +87,15 @@ namespace Seac.Coverage.Controllers
             send &= (response.RemovedDates.Length > 0 || response.SavedDates.Length > 0);
             send &= loggedEmploye.Profile == EmployeProfile.Manager && loggedEmploye.Id != targetEmploye.Id;
             return send;
+        }
+
+        private string GetNotificationMessage(NotificationType notificationType, UpdatePlanResponse response)
+        {
+            var msg = "Le date:<blockquote>{0}</blockquote>sono state {1}.";
+            var days = ConcatDays(response.SavedDates.Length > 0 ? response.SavedDates : response.RemovedDates);
+               
+            var intervals = string.Join(",<br>", days);
+            return string.Format(msg, intervals, response.SavedDates.Length > 0 ? "aggiunte" : "rimosse");
         }
 
         private MailAddress GetSender(EmployeDto sender) => new MailAddress(sender.Email, string.Concat(sender.Surname, " ", sender.Name));

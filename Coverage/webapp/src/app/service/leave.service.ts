@@ -103,12 +103,12 @@ export class LeaveService extends BaseService {
     let lastCurrentDate: Date;
     leavesDates.forEach(l => {
       currentDate = new Date(l);
-      tempDate = this.forwardNonWorkongDays(tempDate);
+      tempDate = this.forwardNonWorkingDays(tempDate);
       nextDay = addDays(tempDate, 1);
       if (isSameDay(nextDay, currentDate) || Utils.isHolidayDay(nextDay)) {
         tempDate = currentDate;
       } else {
-        tempDate = Utils.isHolidayDay(tempDate) ? this.backwardNonWorkongDays(tempDate) : tempDate;
+        tempDate = Utils.isHolidayDay(tempDate) ? this.backwardNonWorkingDays(tempDate) : tempDate;
         lastCurrentDate = tempDate;
         leavesInterval.push(this.formatDateInterval(lastDate, tempDate));
         lastDate = tempDate = currentDate;
@@ -120,18 +120,18 @@ export class LeaveService extends BaseService {
     return leavesInterval;
   }
 
-  private forwardNonWorkongDays(from: Date): Date {
+  private forwardNonWorkingDays(from: Date): Date {
     const nextDay = addDays(from, 1);
     if (Utils.isHolidayDay(nextDay)) {
-      from = this.forwardNonWorkongDays(nextDay);
+      from = this.forwardNonWorkingDays(nextDay);
     }
     return from;
   }
 
-  private backwardNonWorkongDays(from: Date): Date {
+  private backwardNonWorkingDays(from: Date): Date {
     from = addDays(from, -1);
     if (Utils.isHolidayDay(from)) {
-      from = this.backwardNonWorkongDays(from);
+      from = this.backwardNonWorkingDays(from);
     }
     return from;
   }

@@ -76,22 +76,21 @@ export class LeavesApprovationComponent implements OnInit {
     this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id, approvationExit)
       .then(resp => {
         this.details(employeleaves);
-        this.approveLeavesSuccess(resp);
+        this.approveLeavesSuccess(resp, approvationExit);
       }).catch(error => this.approveLeavesFailure(error));
   }
 
-  approveLeavesSuccess(response: UpdatePlanResponse): void {
-    const lineBreak = (response.savedDates.length > 0 && response.removedDates.length > 0) ? '<br/>' : '';
-    let succesMsg = response.savedDates.length > 0 ?
-      `le seguente date sono state aggiunte correttamente:<br/><div class=\"toast-dates\">${response.savedDates.join(',<br\>')}.</div>${lineBreak}` : '';
-    succesMsg += response.removedDates.length > 0 ?
-      `le seguente date sono state rimosse correttamente:<br/><div class=\"toast-dates\">${response.removedDates.join(',<br\>')}.</div>` : '';
+  approveLeavesSuccess(response: UpdatePlanResponse, approvationExit: ApprovationExit): void {
+    let succesMsg = '';
+    if(response.savedDates.length > 0 || response.removedDates.length > 0){
+      succesMsg = `La richiesta è stata ${approvationExit === ApprovationExit.Approved ? 'approvata' : 'respinta'} correttamente.`;
+    }
     if (!!succesMsg) {
-      this.toastr.success(succesMsg);
+      this.toastr.success(succesMsg, '', this.tostPos);
     }
     if (response.rejectedDates.length > 0) {
       this.toastr.error(
-        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates.join(',<br\>')}.</div>`, '');
+        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates.join(',<br\>')}.</div>`,  '', this.tostPos);
     }
     this.fetchLeaves();
   }

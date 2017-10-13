@@ -8,7 +8,6 @@ using Seac.Coverage.Repositories;
 using Seac.Coverage.Models;
 using Seac.Coverage.Dto;
 using Seac.Coverage.Enum;
-using Seac.Coverage.Mail;
 
 using static Seac.Coverage.Utils.GeneralConstants;
 
