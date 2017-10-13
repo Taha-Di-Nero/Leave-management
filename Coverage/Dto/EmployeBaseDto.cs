@@ -19,6 +19,7 @@ namespace Seac.Coverage.Dto
             Id = employe.Id;
             Name = employe.Name;
             Surname = employe.Surname;
+            Email = employe.Email;
             Profile = employe.Profile;
         }
         public override bool Equals(object obj)

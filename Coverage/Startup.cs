@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Seac.Coverage.Extensions.Startup;
+using Seac.Coverage.Quartz;
 
 namespace Coverage
 {
@@ -35,6 +36,7 @@ namespace Coverage
             services.AddGzipCompression();
 
             services.AddMvc();
+            services.AddQuartz(typeof(NotificationsJob));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

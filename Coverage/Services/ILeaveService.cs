@@ -12,6 +12,8 @@ namespace Seac.Coverage.Services
 
         IEnumerable<LeaveDto> GetLeavesByState(LeaveState state);
 
+        IEnumerable<LeaveDto> GetNotApprovedLeaves();
+
         IEnumerable<LeaveDto> GetYearLeaves(int year);
 
         UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne);

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Seac.Coverage.Models;
 using Seac.Coverage.Models.Context;
 using Seac.Coverage.Repositories.Base;
+using Seac.Coverage.Enum;
 
 namespace Seac.Coverage.Repositories
 {
@@ -37,6 +38,11 @@ namespace Seac.Coverage.Repositories
         public Employe FindByFullName(string fullName)
         {
             return Context.Set<Employe>().Where(e => (e.Surname + " " + e.Name) == fullName).Include(e => e.EmployeArea).ThenInclude(ea => ea.Area).SingleOrDefault();
+        }
+
+        public IEnumerable<Employe> GetManagers()
+        {
+            return Context.Set<Employe>().Where(e => e.Profile == EmployeProfile.Manager).ToList();
         }
     }
 }

@@ -37,7 +37,16 @@ namespace Seac.Coverage.Services
 
         public IEnumerable<LeaveDto> GetLeavesByState(LeaveState state)
         {
-            var leaves = _leaveRepository.GetLeavesRangeBySate(state);
+            var leaves = _leaveRepository.GetLeavesBySate(state);
+
+            IEnumerable<LeaveDto> leavesDto = _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(leaves);
+
+            return leavesDto;
+        }
+
+        public IEnumerable<LeaveDto> GetNotApprovedLeaves()
+        {
+            var leaves = _leaveRepository.GetNotApprovedLeaves();
 
             IEnumerable<LeaveDto> leavesDto = _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(leaves);
 
