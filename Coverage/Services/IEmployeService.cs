@@ -11,5 +11,7 @@ namespace Seac.Coverage.Services
         IEnumerable<EmployeDto> GetAll();
         IEnumerable<EmployeDto> GetAllWithAreaNotNull();
         IEnumerable<EmployeDto> GetAllWithAreaNull();
+        IEnumerable<EmployeDto> GetManagers();
+
     }
 }

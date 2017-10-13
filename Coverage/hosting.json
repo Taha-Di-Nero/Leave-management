@@ -6,6 +6,7 @@
     }
   },
   "Server": {
+    "name": "dnrtha",
     "Endpoints": {
       "Http": {
         "Port": "8080"

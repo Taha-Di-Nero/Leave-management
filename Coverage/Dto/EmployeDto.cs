@@ -18,16 +18,13 @@ namespace Seac.Coverage.Dto
             Id = employe.Id;
             Name = employe.Name;
             Surname = employe.Surname;
+            Email = employe.Email;
             Profile = employe.Profile;
             State = employe.State;
         }
 
-        public EmployeDto(Employe employe, EmployeState state)
+        public EmployeDto(Employe employe, EmployeState state) : base(employe)
         {
-            Id = employe.Id;
-            Name = employe.Name;
-            Surname = employe.Surname;
-            Profile = employe.Profile;
             State = state;
         }
 

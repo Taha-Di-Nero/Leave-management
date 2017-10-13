@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Seac.Coverage.Enum;
 using Seac.Coverage.Models;
-
 using Seac.Coverage.Repositories.Base;
-using Seac.Coverage.Enum;
+using System;
+using System.Collections.Generic;
 
 namespace Seac.Coverage.Repositories
 {
@@ -13,6 +12,8 @@ namespace Seac.Coverage.Repositories
 
         IEnumerable<Leave> GetLeavesRangeByEmploye(long id, DateTime init, DateTime end);
 
-        IEnumerable<Leave> GetLeavesRangeBySate(LeaveState state);
+        IEnumerable<Leave> GetLeavesBySate(LeaveState state);
+
+        IEnumerable<Leave> GetNotApprovedLeaves();
     }
 }

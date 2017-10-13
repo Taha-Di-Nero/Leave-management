@@ -28,5 +28,7 @@ namespace Seac.Coverage.Services
         public IEnumerable<EmployeDto> GetAllWithAreaNotNull() => _mapper.Map<IEnumerable<Employe>, IEnumerable<EmployeDto>>(_employeRepository.GetAllWithAreaNotNull());
 
         public IEnumerable<EmployeDto> GetAllWithAreaNull() => _mapper.Map<IEnumerable<Employe>, IEnumerable<EmployeDto>>(_employeRepository.GetAllWithAreaNull());
+
+        public IEnumerable<EmployeDto> GetManagers() => _mapper.Map<IEnumerable<Employe>, IEnumerable<EmployeDto>>(_employeRepository.GetManagers());
     }
 }

@@ -12,5 +12,6 @@ namespace Seac.Coverage.Repositories
         IEnumerable<Employe> GetAllWithAreaNotNull();
         IEnumerable<Employe> GetAllWithAreaNull();
         Employe FindByFullName(string fullName);
+        IEnumerable<Employe> GetManagers();
     }
 }
