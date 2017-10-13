@@ -11,6 +11,7 @@ namespace Seac.Coverage.Utils
 
         public static readonly string AttachmentFileName = "attachment; filename=\"piano_ferie.xlsx\"";
 
+        public static readonly string DateMsgFormat = "dd/MM/yyyy";
         public static readonly string DateParamFormat = "dd-MM-yyyy";
         public static readonly string DateIsoFormat = "yyyy-MM-dd";
     }
