@@ -57,6 +57,8 @@ namespace Coverage
             app.UseStaticFiles();
             app.UseBasicAuthentication();
             app.UseMvc();
+
+            app.StartQuartz();
         }
     }
 }
