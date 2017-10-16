@@ -6,3 +6,4 @@ wwwroot
 /Coverage/webapp/node/npm.cmd
 coverage
 /.vs/config/applicationhost.config
+node
