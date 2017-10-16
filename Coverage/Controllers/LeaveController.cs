@@ -55,7 +55,7 @@ namespace Seac.Coverage.Controllers
             var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye);
             if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
             {
-                var param = new ApprovationMailParams(notificationType, GetSender(loggedEmploye), new MailAddress[] { GetRecipients(targetEmploye) }, GetServerUrl(), GetNotificationMessage(notificationType, response));
+                var param = new ApprovationMailParams(notificationType, GetServerUrl(), new MailAddress[] { GetRecipients(targetEmploye) }, GetSender(loggedEmploye), GetNotificationMessage(notificationType, response));
                 SendMail(param).ConfigureAwait(false);
             }
 

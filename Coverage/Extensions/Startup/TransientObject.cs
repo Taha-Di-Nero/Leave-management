@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
+using Seac.Coverage.Quartz;
 using Seac.Coverage.Repositories;
 using Seac.Coverage.Services;
 
@@ -15,6 +16,8 @@ namespace Seac.Coverage.Extensions.Startup
             services.AddTransient<IHolidayShutdownRepository, HolidayShutdownRepository>();
             services.AddTransient<IInflexibilityPeriodRepository, InflexibilityPeriodRepository>();
             services.AddTransient<IInflexibilityPeriodMotivationRepository, InflexibilityPeriodMotivationRepository>();
+
+            services.AddTransient<IJobRepository, JobRepository>();
 
             services.AddTransient<IAreaService, AreaService>();
             services.AddTransient<ICoverageService, CoverageService>();
