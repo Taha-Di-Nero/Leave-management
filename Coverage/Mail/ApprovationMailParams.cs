@@ -12,7 +12,7 @@ namespace Seac.Coverage.Mail
         public string ServerUrl { get; set; }		
         public string Message { get; set; }
 
-        public ApprovationMailParams(NotificationType type, string serverUrl, MailAddress[] recipients, MailAddress sender = null, string message = "") {
+        public ApprovationMailParams(NotificationType type, string serverUrl, MailAddress[] recipients, string message = "", MailAddress sender = null) {
             Type = type;
             Sender = sender;
             Recipients = recipients;
