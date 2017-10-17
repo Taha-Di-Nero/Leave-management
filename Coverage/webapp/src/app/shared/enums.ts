@@ -28,29 +28,29 @@ export enum ApprovationMode { Add, Remove }
 export enum ApprovationExit { None, Approved, Rejected }
 
 export enum LeaveOverlapsUri {
-  ByEmploye = <any>'coverage/overlaps/employe/',
-  ByArea = <any>'coverage/overlaps/area/',
-  ByFlexibility = <any>'coverage/employe/flexibility/'
+  ByEmploye = 'coverage/overlaps/employe/',
+  ByArea = 'coverage/overlaps/area/',
+  ByFlexibility = 'coverage/employe/flexibility/'
 }
 
 export enum SecurityUri {
-  LoggedEmploye = <any>'security/logged/employe/',
-  Logout = <any>'security/logout/'
+  LoggedEmploye = 'security/logged/employe/',
+  Logout = 'security/logout/'
 }
 
 export enum LeaveUri {
-   GetLeavesByEmploye = <any>'leave/employe/',
-   GetLeavesByState = <any>'leave/state/',
-   GetYearLeaves = <any>'leave/plan/',
-   LeavesEmployePlanUpdate = <any>'leave/employe/plan',
-   LeavesPlan = <any>'leave/plan/export/'
+   GetLeavesByEmploye = 'leave/employe/',
+   GetLeavesByState = 'leave/state/',
+   GetYearLeaves = 'leave/plan/',
+   LeavesEmployePlanUpdate = 'leave/employe/plan',
+   LeavesPlan = 'leave/plan/export/'
 }
 
 export enum HolidayShutdownsUri {
-  HolidayShutdownsBase = <any>'holidayShutdowns/'
+  HolidayShutdownsBase = 'holidayShutdowns/'
 }
 
 export enum InflexibilityPeriodsUri {
-  InflexibilityPeriodsBase = <any>'inflexibilityPeriods/',
-  InflexibilityPeriodMotivationsBase = <any>'inflexibilityPeriods/motivation/'
+  InflexibilityPeriodsBase = 'inflexibilityPeriods/',
+  InflexibilityPeriodMotivationsBase = 'inflexibilityPeriods/motivation/'
 }
