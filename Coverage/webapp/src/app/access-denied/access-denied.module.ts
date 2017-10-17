@@ -13,6 +13,9 @@ import { AccessDeniedComponent } from './access-denied.component';
   ],
   exports: [
     AccessDeniedComponent
+  ],
+  entryComponents: [
+    AccessDeniedComponent
   ]
 })
 export class AccessDeniedModule { }

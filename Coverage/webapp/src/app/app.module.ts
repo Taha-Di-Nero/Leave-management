@@ -25,18 +25,17 @@ import { AccessDeniedModule } from './access-denied/access-denied.module';
 import { FabModule } from './fab/fab.module';
 import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 import { NavItemComponent } from './layout/nav-item/nav-item.component';
-import { HolidayShutdownListModule } from './holiday-shutdowns/holiday-shutdown-list/holiday-shutdown-list.module';
-import { InflexibilityPeriodListModule } from './inflexibility-periods/inflexibility-period-list/inflexibility-period-list.module';
+import { HolidayShutdownsModule } from './holiday-shutdowns/holiday-shutdowns.module';
+import { InflexibilityPeriodsModule } from './inflexibility-periods/inflexibility-periods.module';
 import { CoverageService } from './service/coverage.service';
 import { SecurityService } from './service/security.service';
 import { LeaveService } from './service/leave.service';
 import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavMenuComponent,
-    NavItemComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -53,24 +52,25 @@ import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation
       positionClass: 'toast-bottom-center'
     }),
     UsedMaterialModule,
+    LayoutModule,
     FullYearLeavesOverlapsModule,
     FullYearLeavesModule,
     NotFoundModule,
     AccessDeniedModule,
     FabModule,
     BlockUIModule,
-    HolidayShutdownListModule,
-    InflexibilityPeriodListModule,
+    HolidayShutdownsModule,
+    InflexibilityPeriodsModule,
     LeavesApprovationModule,
     AppRoutingModule
   ],
-  providers: [SecurityService, CoverageService, LeaveService],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    FullYearLeavesOverlapsComponent,
-    FullYearLeavesComponent,
-    NotFoundComponent,
-    AccessDeniedComponent
+  providers: [
+    SecurityService,
+    CoverageService,
+    LeaveService
+  ],
+  bootstrap: [
+    AppComponent
   ]
 })
 export class AppModule { }
