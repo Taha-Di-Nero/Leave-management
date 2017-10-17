@@ -20,7 +20,7 @@ namespace Seac.Coverage.Mail
         private static string _approvedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "approvation-email.html");
         private static string _rejectedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
 
-        private static string _notifySubject = "Piano ferie modifcato";
+        private static string _notifySubject = "Ci sono modifiche del piano ferie da approvare.";
         private static string _approvedRejectedSubject = "Piano ferie";
 
         private static string _notifyEmail = "piani.ferie@seac.it";
@@ -53,7 +53,7 @@ namespace Seac.Coverage.Mail
             var body = "";
             if (type == NotificationType.Alert)
             {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, serverUrl);
+                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverUrl);
             }
             else
             {

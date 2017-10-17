@@ -45,7 +45,7 @@ namespace Seac.Coverage.Quartz
                 if (leaves.Count() > 0)
                 {
                     var managers = _jobRepository.GetManagers();
-                    var param = new ApprovationMailParams(NotificationType.Alert, GetServerUrl(), GetRecipients(managers));
+                    var param = new ApprovationMailParams(NotificationType.Alert, GetServerUrl(), GetRecipients(managers), GetNotificationMessage(leaves));
                     await SendMail(param);
                 }
 
@@ -62,5 +62,15 @@ namespace Seac.Coverage.Quartz
         }
 
         private string GetServerUrl() => string.Format("http://{0}:{1}", _configuration[ServerName], _configuration[ServerHttpPort]);
+
+
+        private string GetNotificationMessage(IEnumerable<Leave> leaves)
+        {
+            var msg = "<blockquote>{0}</blockquote>";
+            var leavesEmployes = leaves.Select(l => string.Concat(l.Employe.Surname, " ", l.Employe.Name)).Distinct().ToList();
+            leavesEmployes.Sort();
+            var employeList = string.Join(",<br>", leavesEmployes);
+            return string.Format(msg, employeList);
+        }
     }
 }
