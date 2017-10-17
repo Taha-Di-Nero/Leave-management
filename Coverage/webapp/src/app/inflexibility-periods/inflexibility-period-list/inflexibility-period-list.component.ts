@@ -1,16 +1,13 @@
-import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';
-import {
-    InflexibilityPeriodMotivationComponent,
-} from '../inflexibility-period-motivation/inflexibility-period-motivation.component';
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
-
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { InflexibilityPeriod } from '../../shared/dto/inflexibility-period';
 import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
+import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';
+import { InflexibilityPeriodMotivationComponent, } from '../inflexibility-period-motivation/inflexibility-period-motivation.component';
 import { Employe } from '../../shared/dto/employe';
 import { arrayNotEmpty, dateBeforeThan } from '../../shared/validators';
 import { EmployeAutocompleteComponent } from '../../employe-autocomplete/employe-autocomplete.component';

@@ -1,10 +1,12 @@
-import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';
+import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
 
 
 @Component({
@@ -26,7 +28,9 @@ export class InflexibilityPeriodMotivationComponent implements OnInit {
 
   motivationCtrl: FormControl;
 
-  constructor(private service: InflexibilityPeriodsService, private ref: ChangeDetectorRef) {
+  private tostPos = { positionClass: 'toast-top-center' };
+
+  constructor(private service: InflexibilityPeriodsService, private toastr: ToastrService, private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -60,7 +64,7 @@ export class InflexibilityPeriodMotivationComponent implements OnInit {
       this.service.addMotivation(newMotivation).then(motivation => {
         this.selected.emit(motivation);
         this.updateControl();
-      });
+      }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
     }
     event.preventDefault();
   }
@@ -71,7 +75,7 @@ export class InflexibilityPeriodMotivationComponent implements OnInit {
       this.service.deleteMotivation(selectedMotivation.id).then(resp => {
         this.resetSearch();
         this.updateControl();
-      });
+      }).catch(err => this.toastr.error('Motivo già legato ad un periodo', '', this.tostPos));
     }
   }
 

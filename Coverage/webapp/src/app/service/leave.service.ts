@@ -83,8 +83,7 @@ export class LeaveService extends BaseService {
       el.leavesNumber = el.leavesIntervals.length;
       el.leavesIntervals = this.concatDates(el.leavesIntervals);
     });
-
-    return employeLeaves;
+    return employeLeaves.sort(function (a, b) { return (a.fullName > b.fullName) ? 1 : ((b.fullName > a.fullName) ? -1 : 0); });
   }
 
   private concatUpdatePlanResponseDates(updatePlanResponse: UpdatePlanResponse): UpdatePlanResponse {

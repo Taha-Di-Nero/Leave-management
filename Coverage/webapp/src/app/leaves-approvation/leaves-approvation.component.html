@@ -3,7 +3,7 @@
     <mat-list *ngFor="let employeleaves of employesleaves;">
         <mat-list-item>
             <span matLine>
-                <span class="align-bottom">{{ employeleaves.fullName}}</span>
+                <span class="align-bottom" style="min-width: 12.5rem !important;display: inline-block;">{{ employeleaves.fullName }}</span>
                 <span class="ml-sm-5">
                     <mat-select value="title" #select="matSelect">
                         <mat-select-trigger [innerHTML]="getTitleValue(employeleaves.leavesNumber)"></mat-select-trigger>
