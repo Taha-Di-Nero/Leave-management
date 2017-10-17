@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -13,6 +13,8 @@ import { arrayNotEmpty, dateBeforeThan } from '../../shared/validators';
 import { EmployeAutocompleteComponent } from '../../employe-autocomplete/employe-autocomplete.component';
 import { EmployeState } from '../../shared/enums';
 import { after } from '../../shared/utils';
+import { ApplicationSharedData } from '../../shared/application-shared-data';
+
 
 enum FormErrors { None, startDate, EndDate, DateBeforeThan, MotivationEmpty, EmployeArrayEmpty }
 
@@ -37,6 +39,8 @@ export class InflexibilityPeriodListComponent implements AfterViewInit, OnDestro
     inflexibilityPeriodModel = new InflexibilityPeriod();
 
     editMode = false;
+
+    ApplicationSharedData = ApplicationSharedData;
 
     constructor(private inflexibilityPeriodsService: InflexibilityPeriodsService, private fb: FormBuilder, private ref: ChangeDetectorRef) {
         this.employesArrayToValidate.push(this.inflexibilityPeriodModel.employes);

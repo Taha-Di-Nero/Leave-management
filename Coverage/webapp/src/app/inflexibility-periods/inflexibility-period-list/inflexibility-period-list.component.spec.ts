@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgbModule, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { UsedMaterialModule } from '../../shared/used-material.module';
 import { InflexibilityPeriodListComponent } from './inflexibility-period-list.component';
@@ -17,6 +18,7 @@ import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
 import { Employe } from '../../shared/dto/employe';
 import { EmployeState, Profile } from '../../shared/enums';
 import { InflexibilityPeriodMotivationModule } from '../inflexibility-period-motivation/inflexibility-period-motivation.module';
+import { ApplicationSharedData } from '../../shared/application-shared-data';
 
 let inflexibilityPeriodsService: InflexibilityPeriodsService;
 const inflexibilityPeriod = inflexibilityPeriodListMock[0];
@@ -29,6 +31,7 @@ describe('InflexibilityPeriodListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
+        ToastrService,
         InflexibilityPeriodsService,
         { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
         I18n,
@@ -41,6 +44,7 @@ describe('InflexibilityPeriodListComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         NgbModule.forRoot(),
+        ToastrModule.forRoot(),
         InflexibilityPeriodModule,
         EmployeAutocompleteModule,
         InflexibilityPeriodMotivationModule,
@@ -64,13 +68,12 @@ describe('InflexibilityPeriodListComponent', () => {
       .and.returnValue(Promise.resolve(inflexibilityPeriod));
     const spyGetInflexibilityPeriodsMot = spyOn(inflexibilityPeriodsService, 'getMotivations')
       .and.returnValue(Promise.resolve([inflexibilityPeriod.inflexibilityPeriodMotivation]));
-
     fixture.detectChanges();
-    component.employeAutocomplete.employes = employes;
+    component.employeAutocomplete.employesSubject.next(employes);
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should be created', async () => {
     expect(component).toBeTruthy();
   });
 

@@ -6,6 +6,7 @@ import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { InflexibilityPeriodMotivationComponent } from './inflexibility-period-motivation.component';
 import { UsedMaterialModule } from '../../shared/used-material.module';
@@ -21,7 +22,7 @@ describe('InflexibilityPeriodMotivationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [InflexibilityPeriodsService],
+      providers: [InflexibilityPeriodsService, ToastrService],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
@@ -29,6 +30,7 @@ describe('InflexibilityPeriodMotivationComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         NgbModule.forRoot(),
+        ToastrModule.forRoot(),
         UsedMaterialModule
       ],
       declarations: [InflexibilityPeriodMotivationComponent]

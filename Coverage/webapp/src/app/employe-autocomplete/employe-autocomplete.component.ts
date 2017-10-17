@@ -12,12 +12,11 @@ import {
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Employe } from '../shared/dto/employe';
 import { EmployeState } from '../shared/enums';
-import { ApplicationSharedData } from '../shared/application-shared-data';
-
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,13 +26,15 @@ import { ApplicationSharedData } from '../shared/application-shared-data';
 })
 export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @Input() employesSubject: Observable<Employe[]>;
+  @Input() injectSearch: Observable<string>;
   @Input() placeholder = 'Ricerca dipendente';
   @Input() showLeaves = false;
 
   @Output() selected: EventEmitter<Employe> = new EventEmitter();
   @Output() reset: EventEmitter<any> = new EventEmitter();
 
-  employeFlexibilitySubscription: Subscription;
+  employesSubscription: Subscription;
 
   injectSearchSubscription: Subscription;
 
@@ -45,28 +46,27 @@ export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
   EmployeState = EmployeState;
 
-  constructor(private ref: ChangeDetectorRef) {
-    this.employeFlexibilitySubscription = ApplicationSharedData.getInstance().getEmployesFlexibility().filter(flex => !!flex).subscribe(
-      flex => {
+  constructor(private ref: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.employesSubscription = this.employesSubject.filter(employes => !!employes).subscribe(
+      employes => {
         this.employes.splice(0);
-        flex.getAll().forEach(e => this.employes.push(e));
+        employes.forEach(e => this.employes.push(e));
         if (!!this.employeCtrl) {
           this.employeCtrl.setValue('');
         }
         this.ref.markForCheck();
       }
     );
-  }
 
-  ngOnInit() {
     this.employeCtrl = new FormControl();
-
     this.filteredEmployes = this.employeCtrl.valueChanges.startWith(null)
       .map(searchTerm => searchTerm ? this.filterEmployes(searchTerm) : this.employes.slice());
   }
 
   ngAfterViewInit(): void {
-    this.injectSearchSubscription = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().filter(searchTerm => !!searchTerm)
+    this.injectSearchSubscription = this.injectSearch.filter(searchTerm => !!searchTerm)
       .subscribe(searchTerm => {
         this.employeCtrl.setValue(searchTerm);
         if (!!this.employeCtrl.value) {
@@ -129,12 +129,12 @@ export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnDestroy() {
-    if (this.employeFlexibilitySubscription) {
-      this.employeFlexibilitySubscription.unsubscribe();
+    if (this.employesSubscription) {
+      this.employesSubscription.unsubscribe();
     }
     if (this.injectSearchSubscription) {
       this.injectSearchSubscription.unsubscribe();
-      ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch('');
+      this.injectSearch.next('');
     }
   }
 }
