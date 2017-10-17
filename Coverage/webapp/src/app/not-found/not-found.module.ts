@@ -13,6 +13,9 @@ import { UsedMaterialModule } from '../shared/used-material.module';
   ],
   exports: [
     NotFoundComponent
+  ],
+  entryComponents: [
+    NotFoundComponent
   ]
 })
 export class NotFoundModule { }

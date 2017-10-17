@@ -26,8 +26,8 @@ import { EmployeState } from '../shared/enums';
 })
 export class EmployeAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() employesSubject: Observable<Employe[]>;
-  @Input() injectSearch: Observable<string>;
+  @Input() employesSubject: Subject<Employe[]>;
+  @Input() injectSearch: Subject<string>;
   @Input() placeholder = 'Ricerca dipendente';
   @Input() showLeaves = false;
 

@@ -31,7 +31,8 @@ import { UsedMaterialModule } from '../shared/used-material.module';
   ],
   exports: [
     FullYearLeavesOverlapsComponent
-  ]
+  ],
+  entryComponents: [FullYearLeavesOverlapsComponent]
 })
 
 export class FullYearLeavesOverlapsModule { }

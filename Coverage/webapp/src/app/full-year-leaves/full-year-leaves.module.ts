@@ -31,6 +31,9 @@ import { EmployeAutocompleteModule } from '../employe-autocomplete/employe-autoc
   ],
   exports: [
     FullYearLeavesComponent
+  ],
+  entryComponents: [
+    FullYearLeavesComponent
   ]
 })
 
