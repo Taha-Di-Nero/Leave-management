@@ -22,13 +22,14 @@ export class ApplicationSharedData {
     private _empAutoCompInjectSearch = new ReplaySubject<string>(1);
 
     private employesFlexibility = new ReplaySubject<EmployesFlexibility>(1);
+    private employes = new ReplaySubject<Employe[]>(1);
 
     private yearsCoverage = new ReplaySubject<CalendarEvent[]>(1);
 
     currentYear = new Date().getFullYear();
 
     constructor() {
-        if (ApplicationSharedData.instance) {
+        if (!!ApplicationSharedData.instance) {
             throw new Error('Error: Instantiation failed: Use LeavesOverlapsModel.getInstance() instead of new.');
         }
         ApplicationSharedData.instance = this;
@@ -50,6 +51,10 @@ export class ApplicationSharedData {
         return this.employesFlexibility;
     }
 
+    public getEmployes(): ReplaySubject<Employe[]> {
+        return this.employes;
+    }
+
     public setFlexibilityComposition(coverageService: CoverageService, leaveService: LeaveService): void {
         coverageService.searchFlexibility()
             .then(employesFlexibility => leaveService.getYearLeaves(ApplicationSharedData.getInstance().currentYear)
@@ -62,9 +67,11 @@ export class ApplicationSharedData {
             const employeLeaves = leaves.filter(l => l.employe.id === e.id);
             e.currentYearLeaves = employeLeaves ? employeLeaves.filter(l => l.state === LeaveState.Approved).length : 0;
         });
-        const employe = employesFlexibility.getAll().find(e => e.id === ApplicationSharedData.instance.loggedEmploye.id);
-        ApplicationSharedData.instance.loggedEmploye = employe;
-        ApplicationSharedData.instance.getEmployesFlexibility().next(employesFlexibility);
+        const employes = employesFlexibility.getAll();
+        this.employes.next(employes);
+        const employe = employes.find(e => e.id === this.loggedEmploye.id);
+        this.loggedEmploye = employe;
+        this.getEmployesFlexibility().next(employesFlexibility);
     }
 
     public getYearsCoverage(): ReplaySubject<CalendarEvent[]> {

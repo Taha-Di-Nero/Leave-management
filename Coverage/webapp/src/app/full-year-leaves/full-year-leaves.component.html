@@ -15,7 +15,8 @@
         <div class="btn btn-primary" (click)="nextYear()" ngbTooltip="Anno seguente"><i class="fa fa-forward" aria-hidden="true"></i></div>
       </div>
       <div *ngIf="ApplicationSharedData.getInstance().loggedEmploye?.profile === Profile.Manager" class="float-right">
-        <app-employe-autocomplete #employeAutocomplete (selected)="fetchLeaves()" (reset)="fetchLeaves()" showLeaves="true">
+        <app-employe-autocomplete #employeAutocomplete (selected)="fetchLeaves()" (reset)="fetchLeaves()" showLeaves="true" [employesSubject]="ApplicationSharedData.getInstance().getEmployes()"
+          [injectSearch]="ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch()">
         </app-employe-autocomplete>
       </div>
     </div>

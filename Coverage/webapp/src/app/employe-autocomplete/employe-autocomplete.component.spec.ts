@@ -31,6 +31,7 @@ employeInd.name = 'indName';
 employeInd.surname = 'indSurname';
 employeInd.state = EmployeState.Flexible;
 employeInd.currentYearLeaves = 3;
+const employes = [employef, employeInf, employeInd];
 
 describe('EmployeAutocompleteComponent', () => {
   let component: EmployeAutocompleteComponent;
@@ -54,11 +55,14 @@ describe('EmployeAutocompleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EmployeAutocompleteComponent);
     component = fixture.componentInstance;
-    component.employes = [employef, employeInf, employeInd];
+    component.employesSubject = ApplicationSharedData.getInstance().getEmployes();
+    component.injectSearch = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch();
+    component.employesSubject.next(employes);
     fixture.detectChanges();
   });
 
   it('should be created', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
@@ -108,8 +112,8 @@ describe('EmployeAutocompleteComponent', () => {
 
   it('Update employes array from subscription', () => {
     fixture.detectChanges();
-    const employesFlexibility = new EmployesFlexibility({ 'flexible': [employef], 'inflexible': [], 'indifferent': [] });
-    ApplicationSharedData.getInstance().getEmployesFlexibility().next(employesFlexibility);
+    const employes = [employef];
+    ApplicationSharedData.getInstance().getEmployes().next(employes);
     fixture.whenStable().then(() => {
       expect(component.employes.length).toBe(1, 'Employes array not contains the right elts');
       expect(component.employes[0].id).toBe(1, 'Id is not expecte done.');
