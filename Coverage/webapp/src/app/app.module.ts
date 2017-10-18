@@ -14,8 +14,6 @@ import { AppComponent } from './app.component';
 import { FullYearLeavesOverlapsModule } from './full-year-leaves-overlaps/full-year-leaves-overlaps.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UsedMaterialModule } from './shared/used-material.module';
-import { FlexibilityPieModule } from './dashboard/flexibility-pie/flexibility-pie.module';
-import { YearsCoverageModule } from './dashboard/years-coverage/years-coverage.module';
 import { FabComponent } from './fab/fab.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { FullYearLeavesOverlapsComponent } from './full-year-leaves-overlaps/full-year-leaves-overlaps.component';
