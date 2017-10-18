@@ -9,11 +9,7 @@ import { CalendarModule, CalendarEvent } from 'angular-calendar';
 
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { LeavesTabSetModule } from '../leaves-tab-set/leave-tab-set.module';
 import { LeavesOverlapsComponent } from './leaves-overlaps.component';
-import { FlexibilityPieModule } from '../dashboard/flexibility-pie/flexibility-pie.module';
-import { YearsCoverageModule } from '../dashboard/years-coverage/years-coverage.module';
-import { UsedMaterialModule } from '../shared/used-material.module';
 import { CoverageService } from '../service/coverage.service';
 import { ViewMode } from '../shared/enums';
 
@@ -54,5 +50,12 @@ describe('LeavesOverlapsComponent', () => {
 
     it('should be created', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('Trigger day click.', () => {
+        fixture.detectChanges();
+        expect(function () {
+            component['dayClicked'].call(component, new MouseEvent('click'), { date: new Date(2017, 10, 10), inMonth: true });
+        }).not.toThrow();
     });
 });

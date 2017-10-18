@@ -1,6 +1,6 @@
 // import global themes
-@import '~@angular/material/theming';
-@import './coverage-theme';
+@import '~@angular/material/_theming.scss';
+@import './coverage-theme.scss';
 
 // import global variables
 @import './constants';

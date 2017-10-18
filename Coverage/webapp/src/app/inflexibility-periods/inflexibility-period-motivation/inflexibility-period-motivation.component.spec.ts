@@ -85,7 +85,7 @@ describe('InflexibilityPeriodMotivationComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      component['addMotivation'].call(component);
+      component['addMotivation'].call(component, new MouseEvent('click'));
       fixture.detectChanges();
     });
   });

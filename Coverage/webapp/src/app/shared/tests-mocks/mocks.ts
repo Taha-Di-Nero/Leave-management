@@ -1,4 +1,6 @@
 import { InflexibilityPeriod } from '../dto/inflexibility-period';
+import { CalendarEvent } from 'angular-calendar';
+import { EmployesFlexibility } from '../dto/employes-flexibility';
 
 export const inflexibilityPeriodListMock = [
     {
@@ -2088,6 +2090,8 @@ export const flexibilityCompositionMock = {
     ]
 };
 
+export const flexibilityCompositionObj = new EmployesFlexibility(flexibilityCompositionMock);
+
 export const gapsByEmployeMock = [
     {
         'date': '2017-04-11',
@@ -2177,1189 +2181,1189 @@ export const gapsByEmployeMock = [
                         'state': 2
                     }
                 ],
-             'id': 19,
-             'description': 'Suite Gestionale'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+                'id': 19,
+                'description': 'Suite Gestionale'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-12',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 6,
-             'name': 'Stefano',
-             'surname': 'Bertoldi',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 24,
-             'description': 'Annuale Iva'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 186,
-             'description': 'Costi Ricavi Farmacia'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 26,
-             'description': 'Intrastat'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 49,
-             'description': 'Magazzino gestionale'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 185,
-             'description': 'Mandati e reversali'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 19,
-             'description': 'Suite Gestionale'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-12',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 6,
+                'name': 'Stefano',
+                'surname': 'Bertoldi',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 24,
+                'description': 'Annuale Iva'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 186,
+                'description': 'Costi Ricavi Farmacia'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 26,
+                'description': 'Intrastat'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 49,
+                'description': 'Magazzino gestionale'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 185,
+                'description': 'Mandati e reversali'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 19,
+                'description': 'Suite Gestionale'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-13',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 6,
-             'name': 'Stefano',
-             'surname': 'Bertoldi',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 24,
-             'description': 'Annuale Iva'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 186,
-             'description': 'Costi Ricavi Farmacia'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 26,
-             'description': 'Intrastat'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 49,
-             'description': 'Magazzino gestionale'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 185,
-             'description': 'Mandati e reversali'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 19,
-             'description': 'Suite Gestionale'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-13',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 6,
+                'name': 'Stefano',
+                'surname': 'Bertoldi',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 24,
+                'description': 'Annuale Iva'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 186,
+                'description': 'Costi Ricavi Farmacia'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 26,
+                'description': 'Intrastat'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 49,
+                'description': 'Magazzino gestionale'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 185,
+                'description': 'Mandati e reversali'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 19,
+                'description': 'Suite Gestionale'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-14',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 6,
-             'name': 'Stefano',
-             'surname': 'Bertoldi',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 24,
-             'description': 'Annuale Iva'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 186,
-             'description': 'Costi Ricavi Farmacia'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 26,
-             'description': 'Intrastat'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 49,
-             'description': 'Magazzino gestionale'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 185,
-             'description': 'Mandati e reversali'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 19,
-             'description': 'Suite Gestionale'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-14',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 6,
+                'name': 'Stefano',
+                'surname': 'Bertoldi',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 24,
+                'description': 'Annuale Iva'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 186,
+                'description': 'Costi Ricavi Farmacia'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 26,
+                'description': 'Intrastat'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 49,
+                'description': 'Magazzino gestionale'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 185,
+                'description': 'Mandati e reversali'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 19,
+                'description': 'Suite Gestionale'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-18',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 6,
-             'name': 'Stefano',
-             'surname': 'Bertoldi',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 24,
-             'description': 'Annuale Iva'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 186,
-             'description': 'Costi Ricavi Farmacia'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 26,
-             'description': 'Intrastat'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 49,
-             'description': 'Magazzino gestionale'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 185,
-             'description': 'Mandati e reversali'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 19,
-             'description': 'Suite Gestionale'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-18',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 6,
+                'name': 'Stefano',
+                'surname': 'Bertoldi',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 24,
+                'description': 'Annuale Iva'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 186,
+                'description': 'Costi Ricavi Farmacia'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 26,
+                'description': 'Intrastat'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 49,
+                'description': 'Magazzino gestionale'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 185,
+                'description': 'Mandati e reversali'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 19,
+                'description': 'Suite Gestionale'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-14',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 6,
-             'name': 'Stefano',
-             'surname': 'Bertoldi',
-             'profile': 1,
-             'state': 2
-          },
-          {
-             'id': 74,
-             'name': 'Andrea',
-             'surname': 'Zendri',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                },
-                {
-                   'id': 74,
-                   'name': 'Andrea',
-                   'surname': 'Zendri',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 111,
-             'description': 'Anagrafe tributaria'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 6,
-                   'name': 'Stefano',
-                   'surname': 'Bertoldi',
-                   'profile': 1,
-                   'state': 2
-                },
-                {
-                   'id': 74,
-                   'name': 'Andrea',
-                   'surname': 'Zendri',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 139,
-             'description': 'Fidi'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-14',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 6,
+                'name': 'Stefano',
+                'surname': 'Bertoldi',
+                'profile': 1,
+                'state': 2
+            },
+            {
+                'id': 74,
+                'name': 'Andrea',
+                'surname': 'Zendri',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    },
+                    {
+                        'id': 74,
+                        'name': 'Andrea',
+                        'surname': 'Zendri',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 111,
+                'description': 'Anagrafe tributaria'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 6,
+                        'name': 'Stefano',
+                        'surname': 'Bertoldi',
+                        'profile': 1,
+                        'state': 2
+                    },
+                    {
+                        'id': 74,
+                        'name': 'Andrea',
+                        'surname': 'Zendri',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 139,
+                'description': 'Fidi'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-18',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 15,
-             'name': 'Luca',
-             'surname': 'Dalessandro',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 154,
-             'description': 'assistenza.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 151,
-             'description': 'Cefor Play'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 166,
-             'description': 'E-commerce Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 161,
-             'description': 'Website archiviazione.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 184,
-             'description': 'Website caf50epiu.seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 153,
-             'description': 'Website Cefor'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 165,
-             'description': 'Website Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 167,
-             'description': 'Website Seac Assicurazioni'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-18',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 15,
+                'name': 'Luca',
+                'surname': 'Dalessandro',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 154,
+                'description': 'assistenza.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 151,
+                'description': 'Cefor Play'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 166,
+                'description': 'E-commerce Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 161,
+                'description': 'Website archiviazione.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 184,
+                'description': 'Website caf50epiu.seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 153,
+                'description': 'Website Cefor'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 165,
+                'description': 'Website Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 167,
+                'description': 'Website Seac Assicurazioni'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-19',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 15,
-             'name': 'Luca',
-             'surname': 'Dalessandro',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 154,
-             'description': 'assistenza.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 151,
-             'description': 'Cefor Play'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 166,
-             'description': 'E-commerce Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 161,
-             'description': 'Website archiviazione.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 184,
-             'description': 'Website caf50epiu.seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 153,
-             'description': 'Website Cefor'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 165,
-             'description': 'Website Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 167,
-             'description': 'Website Seac Assicurazioni'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-19',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 15,
+                'name': 'Luca',
+                'surname': 'Dalessandro',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 154,
+                'description': 'assistenza.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 151,
+                'description': 'Cefor Play'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 166,
+                'description': 'E-commerce Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 161,
+                'description': 'Website archiviazione.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 184,
+                'description': 'Website caf50epiu.seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 153,
+                'description': 'Website Cefor'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 165,
+                'description': 'Website Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 167,
+                'description': 'Website Seac Assicurazioni'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-20',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 15,
-             'name': 'Luca',
-             'surname': 'Dalessandro',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 154,
-             'description': 'assistenza.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 151,
-             'description': 'Cefor Play'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 166,
-             'description': 'E-commerce Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 161,
-             'description': 'Website archiviazione.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 184,
-             'description': 'Website caf50epiu.seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 153,
-             'description': 'Website Cefor'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 165,
-             'description': 'Website Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 167,
-             'description': 'Website Seac Assicurazioni'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-20',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 15,
+                'name': 'Luca',
+                'surname': 'Dalessandro',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 154,
+                'description': 'assistenza.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 151,
+                'description': 'Cefor Play'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 166,
+                'description': 'E-commerce Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 161,
+                'description': 'Website archiviazione.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 184,
+                'description': 'Website caf50epiu.seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 153,
+                'description': 'Website Cefor'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 165,
+                'description': 'Website Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 167,
+                'description': 'Website Seac Assicurazioni'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-21',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 15,
-             'name': 'Luca',
-             'surname': 'Dalessandro',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 154,
-             'description': 'assistenza.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 151,
-             'description': 'Cefor Play'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 166,
-             'description': 'E-commerce Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 161,
-             'description': 'Website archiviazione.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 184,
-             'description': 'Website caf50epiu.seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 153,
-             'description': 'Website Cefor'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 165,
-             'description': 'Website Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 167,
-             'description': 'Website Seac Assicurazioni'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-21',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 15,
+                'name': 'Luca',
+                'surname': 'Dalessandro',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 154,
+                'description': 'assistenza.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 151,
+                'description': 'Cefor Play'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 166,
+                'description': 'E-commerce Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 161,
+                'description': 'Website archiviazione.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 184,
+                'description': 'Website caf50epiu.seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 153,
+                'description': 'Website Cefor'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 165,
+                'description': 'Website Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 167,
+                'description': 'Website Seac Assicurazioni'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-24',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 15,
-             'name': 'Luca',
-             'surname': 'Dalessandro',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 154,
-             'description': 'assistenza.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 151,
-             'description': 'Cefor Play'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 166,
-             'description': 'E-commerce Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 161,
-             'description': 'Website archiviazione.seac.it'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 184,
-             'description': 'Website caf50epiu.seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 153,
-             'description': 'Website Cefor'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 165,
-             'description': 'Website Seac'
-          },
-          {
-             'employeList': [
-                {
-                   'id': 15,
-                   'name': 'Luca',
-                   'surname': 'Dalessandro',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 167,
-             'description': 'Website Seac Assicurazioni'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-24',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 15,
+                'name': 'Luca',
+                'surname': 'Dalessandro',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 154,
+                'description': 'assistenza.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 151,
+                'description': 'Cefor Play'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 166,
+                'description': 'E-commerce Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 161,
+                'description': 'Website archiviazione.seac.it'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 184,
+                'description': 'Website caf50epiu.seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 153,
+                'description': 'Website Cefor'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 165,
+                'description': 'Website Seac'
+            },
+            {
+                'employeList': [
+                    {
+                        'id': 15,
+                        'name': 'Luca',
+                        'surname': 'Dalessandro',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 167,
+                'description': 'Website Seac Assicurazioni'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     },
     {
-       'date': '2017-04-14',
-       'areaNumber': 69,
-       'employes': [
-          {
-             'id': 74,
-             'name': 'Andrea',
-             'surname': 'Zendri',
-             'profile': 1,
-             'state': 2
-          }
-       ],
-       'areas': [
-          {
-             'employeList': [
-                {
-                   'id': 74,
-                   'name': 'Andrea',
-                   'surname': 'Zendri',
-                   'profile': 1,
-                   'state': 2
-                }
-             ],
-             'id': 81,
-             'description': 'Gestionale (versione 2)'
-          }
-       ],
-       'dayGaps': [
-          {
-             'initTime': '08:30',
-             'endTime': '12:30'
-          },
-          {
-             'initTime': '14:00',
-             'endTime': '18:00'
-          }
-       ]
+        'date': '2017-04-14',
+        'areaNumber': 69,
+        'employes': [
+            {
+                'id': 74,
+                'name': 'Andrea',
+                'surname': 'Zendri',
+                'profile': 1,
+                'state': 2
+            }
+        ],
+        'areas': [
+            {
+                'employeList': [
+                    {
+                        'id': 74,
+                        'name': 'Andrea',
+                        'surname': 'Zendri',
+                        'profile': 1,
+                        'state': 2
+                    }
+                ],
+                'id': 81,
+                'description': 'Gestionale (versione 2)'
+            }
+        ],
+        'dayGaps': [
+            {
+                'initTime': '08:30',
+                'endTime': '12:30'
+            },
+            {
+                'initTime': '14:00',
+                'endTime': '18:00'
+            }
+        ]
     }
- ];
+];
 
 export const gapsByAreaMock = [
     {
@@ -17074,5 +17078,168 @@ export const gapsByAreaMock = [
                 ]
             }
         ]
+    }
+];
+
+export const events: any[] = [
+    {
+        'start': new Date('2017-07-09T22:00:00.000Z'),
+        'end': new Date('2017-07-10T21:59:59.999Z'),
+        'title': 'Riscossione Quote: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Riscossione Quote',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Riscossione Quote',
+            'list': 'Serra Marco'
+        }
+    },
+    {
+        'start': new Date('2017-08-27T22:00:00.000Z'),
+        'end': new Date('2017-08-28T21:59:59.999Z'),
+        'title': 'Riscossione Quote: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Riscossione Quote',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Riscossione Quote',
+            'list': 'Serra Marco'
+        }
+    },
+    {
+        'start': new Date('2017-04-11T22:00:00.000Z'),
+        'end': new Date('2017-04-12T21:59:59.999Z'),
+        'title': 'Suite Gestionale: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Suite Gestionale',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Suite Gestionale',
+            'list': 'Bertoldi Stefano'
+        }
+    },
+    {
+        'start': new Date('2017-08-24T22:00:00.000Z'),
+        'end': new Date('2017-08-25T21:59:59.999Z'),
+        'title': 'Suite Gestionale: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Suite Gestionale',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Suite Gestionale',
+            'list': 'Bertoldi Stefano'
+        }
+    },
+    {
+        'start': new Date('2017-08-24T22:00:00.000Z'),
+        'end': new Date('2017-08-25T21:59:59.999Z'),
+        'title': 'Annuale Iva: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Annuale Iva',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Annuale Iva',
+            'list': 'Bertoldi Stefano'
+        }
+    },
+    {
+        'start': new Date('2017-04-11T22:00:00.000Z'),
+        'end': new Date('2017-04-12T21:59:59.999Z'),
+        'title': 'Intrastat: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Intrastat',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Intrastat',
+            'list': 'Bertoldi Stefano'
+        }
+    },
+    {
+        'start': new Date('2017-07-09T22:00:00.000Z'),
+        'end': new Date('2017-07-10T21:59:59.999Z'),
+        'title': 'Gestione Pratiche: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Gestione Pratiche',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Gestione Pratiche',
+            'list': 'Serra Marco'
+        }
+    },
+    {
+        'start': new Date('2017-07-10T22:00:00.000Z'),
+        'end': new Date('2017-07-11T21:59:59.999Z'),
+        'title': 'Gestione Pratiche: [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Gestione Pratiche',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Gestione Pratiche',
+            'list': 'Serra Marco'
+        }
+    },
+    {
+        'start': new Date('2017-08-24T22:00:00.000Z'),
+        'end': new Date('2017-08-25T21:59:59.999Z'),
+        'title': 'Fatturazione 50&Piu’ Fenacom (versione 2): [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Fatturazione 50&Piu’ Fenacom (versione 2)',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Fatturazione 50&Piu’ Fenacom (versione 2)',
+            'list': 'Serra Marco'
+        }
+    },
+    {
+        'start': new Date('2017-08-27T22:00:00.000Z'),
+        'end': new Date('2017-08-28T21:59:59.999Z'),
+        'title': 'Fatturazione 50&Piu’ Fenacom (versione 2): [08:30, 12:30], [14:00, 18:00]',
+        'color': {
+            'primary': '#ad2121',
+            'secondary': '#FAE3E3'
+        },
+        'meta': {
+            'area': 'Fatturazione 50&Piu’ Fenacom (versione 2)',
+            'employesNumer': 1,
+            'type': 'danger',
+            'modalTitle': 'Dipendenti assegnati a Fatturazione 50&Piu’ Fenacom (versione 2)',
+            'list': 'Serra Marco'
+        }
     }
 ];
