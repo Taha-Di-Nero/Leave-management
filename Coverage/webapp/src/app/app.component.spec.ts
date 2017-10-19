@@ -135,7 +135,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('Current view should be FullYearLeavesComponent', async(() => {
+  it('Current view should be FullYearLeavesComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
@@ -143,9 +143,9 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       expect(app.currentView).toBe(FullYearLeavesComponent, 'View for normal user created!');
     });
-  }));
+  });
 
-  it('Current view should be FullYearLeavesOverlapsComponent', async(() => {
+  it('Current view should be FullYearLeavesOverlapsComponent', () => {
     employe.profile = Profile.Manager;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -153,9 +153,9 @@ describe('AppComponent', () => {
     fixture.whenStable().then(() => {
       expect(app.currentView).toBe(FullYearLeavesOverlapsComponent, 'View for manager user created!');
     });
-  }));
+  });
 
-  it('Toggle change view to FullYearLeavesComponent', async(() => {
+  it('Toggle change view to FullYearLeavesComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
@@ -164,9 +164,9 @@ describe('AppComponent', () => {
       app['toggleLeavesCoverage'].call(app);
       expect(app.currentView).toBe(FullYearLeavesComponent, 'Toggle to leave view');
     });
-  }));
+  });
 
-  it('Toggle change view to FullYearLeavesOverlapsComponent', async(() => {
+  it('Toggle change view to FullYearLeavesOverlapsComponent', () => {
     employe.profile = Profile.Normal;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -176,18 +176,18 @@ describe('AppComponent', () => {
       app['toggleLeavesCoverage'].call(app);
       expect(app.currentView).toBe(FullYearLeavesOverlapsComponent, 'Toggle to leaveoverlaps view');
     });
-  }));
+  });
 
-  it('Current view should be AccessDeniedComponent', async(() => {
+  it('Current view should be AccessDeniedComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(undefined));
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(app.currentView).toBe(AccessDeniedComponent, 'Accces denied created not created');
     });
-  }));
+  });
 
-  it('Current view should be FullYearLeavesComponent and fire search empploye', async(() => {
+  it('Current view should be FullYearLeavesComponent and fire search empploye', () => {
     const employeLeaves = new EmployeLeaves(2, 'surname name');
     const sub = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().subscribe(searchTerm => {
       expect(searchTerm).toBe(employeLeaves.fullName, 'Employe search not fired');
@@ -198,15 +198,14 @@ describe('AppComponent', () => {
     employe.profile = Profile.Manager;
     const spy = spyOn(securityService, 'getLoggedEmploye').and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
-
     fixture.whenStable().then(() => {
       app['goToEmploeLeaves'].call(app, employeLeaves);
       fixture.detectChanges();
       expect(app.currentView).toBe(FullYearLeavesComponent, 'Current view is FullYearLeavesComponent');
     });
-  }));
+  });
 
-  it('Current view should be undefined after logout', async(() => {
+  it('Current view should be undefined after logout', () => {
     employe.profile = Profile.Normal;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -217,5 +216,5 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       expect(app.currentView).toBe(undefined, 'Current view is not undefined after logout');
     });
-  }));
+  });
 });
