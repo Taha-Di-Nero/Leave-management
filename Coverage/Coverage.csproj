@@ -6,7 +6,9 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>	
     <RootNamespace>Seac.Coverage</RootNamespace>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <Version>1.1.0</Version>
+    <Version>1.2.7</Version>
+    <AssemblyVersion>1.2.7.0</AssemblyVersion>
+    <Description>Leave management</Description>
   </PropertyGroup>
 
   <ItemGroup>
