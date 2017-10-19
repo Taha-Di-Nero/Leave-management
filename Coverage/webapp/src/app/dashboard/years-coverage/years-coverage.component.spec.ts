@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { YearsCoverageComponent } from './years-coverage.component';
+import { ApplicationSharedData } from '../../shared/application-shared-data';
+import { events } from '../../shared/tests-mocks/mocks';
 
 describe('YearsCoverageComponent', () => {
   let component: YearsCoverageComponent;
@@ -26,6 +28,8 @@ describe('YearsCoverageComponent', () => {
     fixture = TestBed.createComponent(YearsCoverageComponent);
     component = fixture.componentInstance;
     fixture.componentInstance.yearsMonths = getYearMonths();
+    fixture.detectChanges();
+    ApplicationSharedData.getInstance().getYearsCoverage().next(events);
     fixture.detectChanges();
   });
 

@@ -9,15 +9,14 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { UsedMaterialModule } from '../../shared/used-material.module';
 import { InflexibilityPeriodListComponent } from './inflexibility-period-list.component';
-import { InflexibilityPeriodModule } from '../inflexibility-period/inflexibility-period.module';
+import { InflexibilityPeriodsModule } from '../inflexibility-periods.module';
 import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
-import { NgbDateFRParserFormatter } from '../../shared/ngb-date-fr-parser-formatter';
+import { NgbDateITParserFormatter } from '../../shared/ngb-date-it-parser-formatter';
 import { I18n, ItalianDatepickerI18n } from '../../shared/italianDatepickerI18n';
 import { EmployeAutocompleteModule } from '../../employe-autocomplete/employe-autocomplete.module';
 import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
 import { Employe } from '../../shared/dto/employe';
 import { EmployeState, Profile } from '../../shared/enums';
-import { InflexibilityPeriodMotivationModule } from '../inflexibility-period-motivation/inflexibility-period-motivation.module';
 import { ApplicationSharedData } from '../../shared/application-shared-data';
 
 let inflexibilityPeriodsService: InflexibilityPeriodsService;
@@ -33,7 +32,7 @@ describe('InflexibilityPeriodListComponent', () => {
       providers: [
         ToastrService,
         InflexibilityPeriodsService,
-        { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
+        { provide: NgbDateParserFormatter, useClass: NgbDateITParserFormatter },
         I18n,
         { provide: NgbDatepickerI18n, useClass: ItalianDatepickerI18n }
       ],
@@ -45,12 +44,10 @@ describe('InflexibilityPeriodListComponent', () => {
         ReactiveFormsModule,
         NgbModule.forRoot(),
         ToastrModule.forRoot(),
-        InflexibilityPeriodModule,
         EmployeAutocompleteModule,
-        InflexibilityPeriodMotivationModule,
+        InflexibilityPeriodsModule,
         UsedMaterialModule,
-      ],
-      declarations: [InflexibilityPeriodListComponent]
+      ]
     })
       .compileComponents();
   }));
@@ -75,6 +72,16 @@ describe('InflexibilityPeriodListComponent', () => {
 
   it('should be created', async () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Trigger form validation.', () => {
+    component.inflexibilityPeriodForm.markAsTouched();
+    fixture.detectChanges();
+    const response = component['isFormInvalid'].call(component);
+    fixture.detectChanges();
+    expect(response).toBe(true, 'Form validation should return true');
+    expect(component.inflexibilityPeriodForm.errors.arrayEmpty).toBe(true, 'Form validation should generate array empty error');
+    expect(component.inflexibilityPeriodForm.errors.motivationEmpty).toBe(true, 'Form validation should generate motivationEmpty error');
   });
 
   it('Trigger inflexibilityPeriod edit.', () => {

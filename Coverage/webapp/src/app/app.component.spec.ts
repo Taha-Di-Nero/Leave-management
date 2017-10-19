@@ -15,8 +15,7 @@ import { AppComponent } from './app.component';
 import { FullYearLeavesOverlapsModule } from './full-year-leaves-overlaps/full-year-leaves-overlaps.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UsedMaterialModule } from './shared/used-material.module';
-import { FlexibilityPieModule } from './dashboard/flexibility-pie/flexibility-pie.module';
-import { YearsCoverageModule } from './dashboard/years-coverage/years-coverage.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { LeavesTabSetModule } from './leaves-tab-set/leave-tab-set.module';
 import { FabComponent } from './fab/fab.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
@@ -27,8 +26,8 @@ import { AccessDeniedModule } from './access-denied/access-denied.module';
 import { FabModule } from './fab/fab.module';
 import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 import { NavItemComponent } from './layout/nav-item/nav-item.component';
-import { HolidayShutdownListModule } from './holiday-shutdowns/holiday-shutdown-list/holiday-shutdown-list.module';
-import { InflexibilityPeriodListModule } from './inflexibility-periods/inflexibility-period-list/inflexibility-period-list.module';
+import { HolidayShutdownsModule } from './holiday-shutdowns/holiday-shutdowns.module';
+import { InflexibilityPeriodsModule } from './inflexibility-periods/inflexibility-periods.module';
 import { SecurityService } from './service/security.service';
 import { CoverageService } from './service/coverage.service';
 import { LeaveService } from './service/leave.service'; import { EmployeState, Profile } from './shared/enums';
@@ -38,6 +37,13 @@ import { EmployesFlexibility } from './shared/dto/employes-flexibility';
 import { EmployeAutocompleteModule } from './employe-autocomplete/employe-autocomplete.module';
 import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
 import { ApplicationSharedData } from './shared/application-shared-data';
+import { leaves2018mocks, flexibilityCompositionObj } from './shared/tests-mocks/mocks';
+
+/*jasmine.getEnv().addReporter({
+  specStarted: function(result) {
+      console.log(result.fullName);
+  }
+});*/
 
 const employe = new Employe();
 employe.id = 12;
@@ -79,13 +85,12 @@ describe('AppComponent', () => {
         }),
         UsedMaterialModule,
         LeavesTabSetModule,
-        YearsCoverageModule,
-        FlexibilityPieModule,
+        DashboardModule,
         EmployeAutocompleteModule,
         FabModule,
         BlockUIModule,
-        HolidayShutdownListModule,
-        InflexibilityPeriodListModule,
+        HolidayShutdownsModule,
+        InflexibilityPeriodsModule,
         LeavesApprovationModule,
         AppRoutingModule
       ],
@@ -111,16 +116,16 @@ describe('AppComponent', () => {
     leaveService = fixture.debugElement.injector.get(LeaveService);
 
     const spyFlexibility = spyOn(coverageService, 'searchFlexibility')
-      .and.returnValue(Promise.resolve(new EmployesFlexibility({ 'flexible': [], 'inflexible': [], 'indifferent': [] })));
+      .and.returnValue(Promise.resolve(flexibilityCompositionObj));
 
     const spyOverlaps = spyOn(coverageService, 'searchGaps')
       .and.returnValue(Promise.resolve(new Array<CalendarEvent>()));
 
     const spyYearLeave = spyOn(leaveService, 'getYearLeaves')
-      .and.returnValue(Promise.resolve(new Array<FullDayLeave>()));
+      .and.returnValue(Promise.resolve(leaves2018mocks));
 
     const spyLeaves = spyOn(leaveService, 'getLeaves')
-      .and.returnValue(Promise.resolve(new Array<FullDayLeave>()));
+      .and.returnValue(Promise.resolve(leaves2018mocks));
 
     const spyLogout = spyOn(securityService, 'logout')
       .and.returnValue(Promise.resolve({}));
@@ -130,7 +135,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('Current view should be FullYearLeavesComponent', async(() => {
+  it('Current view should be FullYearLeavesComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
@@ -138,9 +143,9 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       expect(app.currentView).toBe(FullYearLeavesComponent, 'View for normal user created!');
     });
-  }));
+  });
 
-  it('Current view should be FullYearLeavesOverlapsComponent', async(() => {
+  it('Current view should be FullYearLeavesOverlapsComponent', () => {
     employe.profile = Profile.Manager;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -148,9 +153,9 @@ describe('AppComponent', () => {
     fixture.whenStable().then(() => {
       expect(app.currentView).toBe(FullYearLeavesOverlapsComponent, 'View for manager user created!');
     });
-  }));
+  });
 
-  it('Toggle change view to FullYearLeavesComponent', async(() => {
+  it('Toggle change view to FullYearLeavesComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
@@ -159,9 +164,9 @@ describe('AppComponent', () => {
       app['toggleLeavesCoverage'].call(app);
       expect(app.currentView).toBe(FullYearLeavesComponent, 'Toggle to leave view');
     });
-  }));
+  });
 
-  it('Toggle change view to FullYearLeavesOverlapsComponent', async(() => {
+  it('Toggle change view to FullYearLeavesOverlapsComponent', () => {
     employe.profile = Profile.Normal;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -171,18 +176,18 @@ describe('AppComponent', () => {
       app['toggleLeavesCoverage'].call(app);
       expect(app.currentView).toBe(FullYearLeavesOverlapsComponent, 'Toggle to leaveoverlaps view');
     });
-  }));
+  });
 
-  it('Current view should be AccessDeniedComponent', async(() => {
+  it('Current view should be AccessDeniedComponent', () => {
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(undefined));
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(app.currentView).toBe(AccessDeniedComponent, 'Accces denied created not created');
     });
-  }));
+  });
 
-  it('Current view should be FullYearLeavesComponent and fire search empploye', async(() => {
+  it('Current view should be FullYearLeavesComponent and fire search empploye', () => {
     const employeLeaves = new EmployeLeaves(2, 'surname name');
     const sub = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch().subscribe(searchTerm => {
       expect(searchTerm).toBe(employeLeaves.fullName, 'Employe search not fired');
@@ -193,15 +198,14 @@ describe('AppComponent', () => {
     employe.profile = Profile.Manager;
     const spy = spyOn(securityService, 'getLoggedEmploye').and.returnValue(Promise.resolve(employe));
     fixture.detectChanges();
-
     fixture.whenStable().then(() => {
       app['goToEmploeLeaves'].call(app, employeLeaves);
       fixture.detectChanges();
       expect(app.currentView).toBe(FullYearLeavesComponent, 'Current view is FullYearLeavesComponent');
     });
-  }));
+  });
 
-  it('Current view should be undefined after logout', async(() => {
+  it('Current view should be undefined after logout', () => {
     employe.profile = Profile.Normal;
     const spy = spyOn(securityService, 'getLoggedEmploye')
       .and.returnValue(Promise.resolve(employe));
@@ -212,5 +216,5 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       expect(app.currentView).toBe(undefined, 'Current view is not undefined after logout');
     });
-  }));
+  });
 });

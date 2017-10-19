@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -17,6 +17,7 @@ import { FullDayLeave } from '../shared/dto/leave';
 import { Employe } from '../shared/dto/employe';
 import { Profile } from '../shared/enums';
 import { ApplicationSharedData } from '../shared/application-shared-data';
+import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
 
 const employe = new Employe();
 employe.id = 12;
@@ -56,7 +57,7 @@ describe('FullYearLeavesComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(async() => {
     fixture = TestBed.createComponent(FullYearLeavesComponent);
     component = fixture.componentInstance;
 
@@ -64,8 +65,10 @@ describe('FullYearLeavesComponent', () => {
     leaveService = fixture.debugElement.injector.get(LeaveService);
 
     ApplicationSharedData.getInstance().loggedEmploye = employe;
-    const spyLeaves = spyOn(leaveService, 'getLeaves')
-      .and.returnValue(Promise.resolve(leaves));
+    ApplicationSharedData.getInstance().currentYear = 2017;
+    const spyLeaves = spyOn(leaveService, 'getLeaves').and.returnValue(Promise.resolve(leaves));
+    const spyYearsLeaves = spyOn(leaveService, 'getYearLeaves').and.returnValue(Promise.resolve(leaves)); const spyUpdateLeaves = spyOn(leaveService, 'updateLeavesPlan')
+    .and.returnValue(Promise.resolve(new UpdatePlanResponse(['01/08/1983'], ['26/01/2006'], ['02/03/2016'])));
 
     fixture.detectChanges();
   });

@@ -8,8 +8,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LeavesTabSetModule } from '../leaves-tab-set/leave-tab-set.module';
 import { FullYearLeavesOverlapsComponent } from './full-year-leaves-overlaps.component';
-import { FlexibilityPieModule } from '../dashboard/flexibility-pie/flexibility-pie.module';
-import { YearsCoverageModule } from '../dashboard/years-coverage/years-coverage.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
 import { UsedMaterialModule } from '../shared/used-material.module';
 
 
@@ -25,8 +24,7 @@ import { UsedMaterialModule } from '../shared/used-material.module';
     NgbModalModule,
     CalendarModule,
     UsedMaterialModule,
-    FlexibilityPieModule,
-    YearsCoverageModule,
+    DashboardModule,
     LeavesTabSetModule
   ],
   exports: [

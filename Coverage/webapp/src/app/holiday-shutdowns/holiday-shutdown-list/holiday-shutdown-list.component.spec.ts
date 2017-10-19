@@ -7,9 +7,9 @@ import { NgbModule, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootst
 
 import { UsedMaterialModule } from '../../shared/used-material.module';
 import { HolidayShutdownListComponent } from './holiday-shutdown-list.component';
-import { HolidayShutdownModule } from '../holiday-shutdown/holiday-shutdown.module';
+import { HolidayShutdownsModule } from '../holiday-shutdowns.module';
 import { HolidayShutdownsService } from '../../service/holiday-shutdowns.service';
-import { NgbDateFRParserFormatter } from '../../shared/ngb-date-fr-parser-formatter';
+import { NgbDateITParserFormatter } from '../../shared/ngb-date-it-parser-formatter';
 import { I18n, ItalianDatepickerI18n } from '../../shared/italianDatepickerI18n';
 import { holidayShutdownsmocks } from '../../shared/tests-mocks/mocks';
 import { HolidayShutdown } from '../../shared/dto/holiday-shutdown';
@@ -24,17 +24,20 @@ describe('HolidayShutdownListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [HolidayShutdownsService],
+      providers: [HolidayShutdownsService,
+        { provide: NgbDateParserFormatter, useClass: NgbDateITParserFormatter },
+        I18n,
+        { provide: NgbDatepickerI18n, useClass: ItalianDatepickerI18n }
+      ],
       imports: [
         CommonModule,
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
         NgbModule.forRoot(),
-        HolidayShutdownModule,
+        HolidayShutdownsModule,
         UsedMaterialModule,
-      ],
-      declarations: [HolidayShutdownListComponent]
+      ]
     })
       .compileComponents();
   }));
@@ -47,9 +50,9 @@ describe('HolidayShutdownListComponent', () => {
     const spyGetHolidayShutdowns = spyOn(holidayShutdownsService, 'getHolidayShutdowns')
       .and.returnValue(Promise.resolve(holidayShutdownsmocks));
     const spySaveHolidayShutdown = spyOn(holidayShutdownsService, 'saveHolidayShutdown')
-    .and.returnValue(Promise.resolve(holidayShutdown));
+      .and.returnValue(Promise.resolve(holidayShutdown));
     const spyDeleteHolidayShutdown = spyOn(holidayShutdownsService, 'deleteHolidayShutdown')
-    .and.returnValue(Promise.resolve(holidayShutdown));
+      .and.returnValue(Promise.resolve(holidayShutdown));
   });
 
   it('should be created', () => {

@@ -10,8 +10,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LeavesTabSetModule } from '../leaves-tab-set/leave-tab-set.module';
 import { FullYearLeavesOverlapsComponent } from './full-year-leaves-overlaps.component';
-import { FlexibilityPieModule } from '../dashboard/flexibility-pie/flexibility-pie.module';
-import { YearsCoverageModule } from '../dashboard/years-coverage/years-coverage.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
 import { UsedMaterialModule } from '../shared/used-material.module';
 import { CoverageService } from '../service/coverage.service';
 
@@ -34,8 +33,7 @@ describe('FullYearLeavesOverlapsComponent', () => {
         NgbModalModule.forRoot(),
         CalendarModule.forRoot(),
         UsedMaterialModule,
-        FlexibilityPieModule,
-        YearsCoverageModule,
+        DashboardModule,
         LeavesTabSetModule
       ],
       declarations: [ FullYearLeavesOverlapsComponent ]
