@@ -1,6 +1,6 @@
 {
   "name": "coverage",
-  "version": "1.1.0",
+  "version": "1.2.7",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -46,7 +46,7 @@
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@angular/cli": "^1.4.8",
+    "@angular/cli": "^1.4.7",
     "@angular/compiler-cli": "^4.4.6",
     "@angular/language-service": "^4.4.6",
     "@types/hammerjs": "^2.0.35",
