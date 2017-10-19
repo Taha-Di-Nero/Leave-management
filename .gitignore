@@ -4,6 +4,6 @@ bin
 wwwroot
 /Coverage/webapp/node/npm
 /Coverage/webapp/node/npm.cmd
-coverage
-/.vs/config/applicationhost.config
+/Coverage/webapp/coverage
+.vs
 node
