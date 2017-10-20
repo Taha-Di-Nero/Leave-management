@@ -27,5 +27,12 @@ namespace Seac.Coverage.Repositories
             return areas;
         }
 
+        public long Add(Area entity)
+        {
+            Insert(entity);
+            return entity.Id;
+        }
+
+
     }
 }

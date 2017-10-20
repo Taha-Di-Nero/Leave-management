@@ -21,7 +21,7 @@ export class AreaComponent implements OnInit {
   @Input() editArea: Area;
 
   @Output() selected: EventEmitter<Area> = new EventEmitter();
-  @Output() reset: EventEmitter<void> = new EventEmitter<void>();
+  @Output() delete: EventEmitter<Area> = new EventEmitter<Area>();
 
   areas: Area[] = [];
   filteredAreas: Observable<Area[]>;
@@ -75,17 +75,14 @@ export class AreaComponent implements OnInit {
       this.service.deleteArea(selectedArea.id).then(resp => {
         this.resetSearch();
         this.updateControl();
+        this.delete.emit(selectedArea);
       }).catch(err => this.toastr.error('Area già legata ad un dipendente', '', this.tostPos));
     }
   }
 
   public resetSearch(): void {
-    const selectedArea = this.getselectedArea();
     this.areaCtrl.reset();
     this.editArea = undefined;
-    if (selectedArea) {
-      this.reset.emit();
-    }
   }
 
   private updateControl(): void {

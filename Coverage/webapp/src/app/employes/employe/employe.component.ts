@@ -3,6 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { Employe } from '../../shared/dto/employe';
 import { EmployeState } from '../../shared/enums';
+import { EmployesDataSource } from '../employes-list/employes-list-datasource';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,22 +13,24 @@ import { EmployeState } from '../../shared/enums';
 })
 export class EmployeComponent {
 
-  @Input() item: Employe;
+  @Input() employes: EmployesDataSource;
 
-  @Output() updateRequest: EventEmitter<void>;
-  @Output() deleteRequest: EventEmitter<void>;
+  @Output() updateRequest: EventEmitter<Employe>;
+  @Output() deleteRequest: EventEmitter<Employe>;
+
+  displayedColumns = ['employeFullName', 'email', 'areas', 'actions'];
 
   constructor(private sanitizer: DomSanitizer) {
-    this.updateRequest = new EventEmitter<void>();
-    this.deleteRequest = new EventEmitter<void>();
+    this.updateRequest = new EventEmitter<Employe>();
+    this.deleteRequest = new EventEmitter<Employe>();
   }
 
-  update(): void {
-    this.updateRequest.emit();
+  update(employe: Employe): void {
+    this.updateRequest.emit(employe);
   }
 
-  delete(): void {
-    this.deleteRequest.emit();
+  delete(employe: Employe): void {
+    this.deleteRequest.emit(employe);
   }
 
   getTitleValue(areasNumber: number): SafeHtml {

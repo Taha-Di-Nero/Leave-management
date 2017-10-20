@@ -1,28 +1,49 @@
-<mat-list-item>
-    <span matLine>
-        <span class="align-bottom">{{ item.surname}} {{item.name}}</span>
-        <span class="mx-sm-3 align-bottom" style="min-width: 15rem !important;display: inline-block;">
-            &nbsp;&nbsp;{{item.area.description}}
-        </span>
-        <span class="ml-sm-5">
-            <mat-select  value="title" #select="matSelect">
-                    <mat-select-trigger [innerHTML]="getTitleValue(item.areas.length)"></mat-select-trigger>
-                    <mat-option value="title" [innerHTML]="getTitleValue(item.areas.length)">
+<div class="filter-container mat-elevation-z8">
+    <div class="filter-header">
+        <mat-form-field floatPlaceholder="never">
+            <input matInput #filter placeholder="Ricerca dipendente">
+        </mat-form-field>
+    </div>
+    <mat-table #table [dataSource]="employes">
+        <ng-container matColumnDef="employeFullName">
+            <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.surname}} {{row.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="areas">
+            <mat-header-cell *matHeaderCellDef> Aree </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-select value="title" #select="matSelect">
+                    <mat-select-trigger [innerHTML]="getTitleValue(row.areaList.length)"></mat-select-trigger>
+                    <mat-option value="title" [innerHTML]="getTitleValue(row.areaList.length)">
                     </mat-option>
-                <mat-option *ngFor="let area of item.areas" [value]="area.id" disabled>
-                    <span> {{ area.description}}</span>
-                </mat-option>
-            </mat-select>
-        </span>
-    </span>
-    <span ngbTooltip="Modifica">
-        <button mat-icon-button (click)="update()">
-            <mat-icon class="md-24">edit</mat-icon>
-        </button>
-    </span>
-    <span ngbTooltip="Elimina">
-        <button mat-icon-button (click)="delete()">
-            <mat-icon class="md-24">delete</mat-icon>
-        </button>
-    </span>
-</mat-list-item>
+                    <mat-option *ngFor="let area of row.areaList" [value]="area.id" disabled>
+                        <span> {{ area.description}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row" style="text-align: right;">
+                <span ngbTooltip="Modifica">
+                    <button mat-icon-button (click)="update(row)">
+                        <mat-icon class="md-24">edit</mat-icon>
+                    </button>
+                </span>
+                <span ngbTooltip="Elimina">
+                    <button mat-icon-button (click)="delete(row)">
+                        <mat-icon class="md-24">delete</mat-icon>
+                    </button>
+                </span>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

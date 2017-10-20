@@ -6,7 +6,7 @@ export class Employe {
   name: string;
   surname: string;
   email: string;
-  areas: Area[];
+  areaList: Area[] = new Array<Area>();
   groups: Array<Array<Employe>>;
   profile: Profile;
   state: EmployeState;

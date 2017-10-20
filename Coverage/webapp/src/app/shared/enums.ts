@@ -57,5 +57,5 @@ export enum InflexibilityPeriodsUri {
 
 export enum EmployesUri {
   EmployesBase = 'employes/',
-  EmployeAreasBase = 'employes/areas/'
+  EmployeAreasBase = 'employes/area/'
 }

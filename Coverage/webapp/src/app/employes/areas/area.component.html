@@ -3,7 +3,7 @@
         [formControl]="areaCtrl">
     <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="resetSearch()" ngbTooltip="Resetta">close</mat-icon>
     <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="addArea($event)" ngbTooltip="Aggiungi area">note_add</mat-icon>
-    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="deleteArea()" ngbTooltip="Elimina area">delete</mat-icon>
+    <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="deleteArea($event)" ngbTooltip="Elimina area">delete</mat-icon>
     <mat-autocomplete #areasList="matAutocomplete" (optionSelected)="selectArea()">
         <mat-option *ngFor="let area of filteredAreas | async" [value]="area.description">
             <span> {{ area.description}}</span>

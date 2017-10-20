@@ -10,5 +10,8 @@ namespace Seac.Coverage.Repositories
         Area GetWithEmploye(long id);
         IEnumerable<Area> GetAllWithEmploye();
         IEnumerable<Area> FindByEmployeId(long employeId);
+
+        long Add(Area entity);
+
     }
 }

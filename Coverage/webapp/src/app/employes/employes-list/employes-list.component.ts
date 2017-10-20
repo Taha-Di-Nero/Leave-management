@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 
 import { Employe } from '../../shared/dto/employe';
@@ -6,6 +6,7 @@ import { EmployesService } from '../../service/employes.service';
 import { Area } from '../../shared/dto/area';
 import { AreaComponent, } from '../areas/area.component';
 import { ApplicationSharedData } from '../../shared/application-shared-data';
+import { EmployesDataSource } from './employes-list-datasource';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,33 +14,31 @@ import { ApplicationSharedData } from '../../shared/application-shared-data';
     templateUrl: './employes-list.component.html',
     styleUrls: ['./employes-list.component.css']
 })
-export class EmployeListComponent implements AfterViewInit {
+export class EmployeListComponent {
 
     @ViewChild('areasAutocomplete') areasAutocomplete: AreaComponent;
 
     employeForm: FormGroup;
 
     employes: Employe[];
+    employesDataSource: EmployesDataSource;
     employeModel = new Employe();
     currentArea: Area;
 
     editMode = false;
 
     constructor(private employesService: EmployesService, private fb: FormBuilder, private ref: ChangeDetectorRef) {
+        this.fetchEmployes();
         this.createForm();
     }
 
-    ngAfterViewInit(): void {
-        this.fetchEmployes();
-    }
-
     fetchEmployes(): void {
-        this.employesService.getEmployes()
-            .then(employes => this.updateEmployesList(employes));
+        this.employesService.getEmployes().then(employes => this.updateEmployesList(employes));
     }
 
     updateEmployesList(employes: Employe[]): void {
         this.employes = employes;
+        this.employesDataSource = new EmployesDataSource(employes);
         this.ref.markForCheck();
     }
 
@@ -62,7 +61,11 @@ export class EmployeListComponent implements AfterViewInit {
     }
 
     editEmploye(employe: Employe): void {
+        this.resetForm();
         this.employeModel = JSON.parse(JSON.stringify(employe));
+        this.surname.setValue(this.employeModel.surname);
+        this.name.setValue(this.employeModel.name);
+        this.email.setValue(this.employeModel.email);
         this.editMode = true;
         this.ref.markForCheck();
     }
@@ -86,25 +89,26 @@ export class EmployeListComponent implements AfterViewInit {
 
     private resetForm(): void {
         this.editMode = false;
+        this.employeForm.reset();
         this.areasAutocomplete.resetSearch();
         this.employeModel = new Employe();
     }
 
     private selectedArea(area: Area): void {
-        const index = this.employeModel.areas.indexOf(area);
+        const index = this.employeModel.areaList.findIndex(a => area.id === a.id || area.description === a.description);
         if (index === -1) {
-            this.employeModel.areas.push(area);
+            this.employeModel.areaList.push(area);
         } else {
-            this.employeModel.areas[index] = area;
+            this.employeModel.areaList[index] = area;
         }
         this.currentArea = area;
         this.ref.markForCheck();
     }
 
     private removeChip(area: Area): void {
-        const index = this.employeModel.areas.indexOf(area);
+        const index = this.employeModel.areaList.findIndex(a => area.id === a.id || area.description === a.description);
         if (index >= 0) {
-            this.employeModel.areas.splice(index, 1);
+            this.employeModel.areaList.splice(index, 1);
         }
     }
 

@@ -14,6 +14,9 @@ namespace Seac.Coverage.Dto
             CreateMap<Area, AreaDto>().ForMember(dto => dto.EmployeList, opt => opt.ResolveUsing(x => x.EmployeArea.Select(y => new EmployeBaseDto(y.Employe)).ToList()));
             CreateMap<AreaDto, Area>();
 
+            CreateMap<Area, AreaBaseDto>();
+            CreateMap<AreaBaseDto, Area>();
+
             CreateMap<Leave, LeaveDto>();
             CreateMap<LeaveDto, Leave>();
 

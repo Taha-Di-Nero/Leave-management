@@ -189,7 +189,7 @@ export class InflexibilityPeriodListComponent implements AfterViewInit, OnDestro
     }
 
     private selectedEmploye(employe: Employe): void {
-        const index = this.inflexibilityPeriodModel.employes.indexOf(employe);
+        const index = this.inflexibilityPeriodModel.employes.findIndex(a => employe.id === a.id);
         if (index === -1) {
             this.inflexibilityPeriodModel.employes.push(this.employeAutocomplete.getselectedEmploye());
             this.employeAutocomplete.resetSearch();
@@ -199,7 +199,7 @@ export class InflexibilityPeriodListComponent implements AfterViewInit, OnDestro
     }
 
     private removeChip(employe: Employe): void {
-        const index = this.inflexibilityPeriodModel.employes.indexOf(employe);
+        const index = this.inflexibilityPeriodModel.employes.findIndex(a => employe.id === a.id);
         if (index >= 0) {
             this.inflexibilityPeriodModel.employes.splice(index, 1);
             this.formValidatorHelper.markAsTouched();

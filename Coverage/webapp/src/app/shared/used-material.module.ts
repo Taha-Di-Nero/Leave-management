@@ -12,7 +12,8 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatChipsModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTableModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,6 +29,7 @@ import {
     MatNativeDateModule,
     MatDatepickerModule,
     MatListModule,
+    MatTableModule,
     MatSelectModule,
     MatChipsModule
   ],
@@ -43,6 +45,7 @@ import {
     MatNativeDateModule,
     MatDatepickerModule,
     MatListModule,
+    MatTableModule,
     MatSelectModule,
     MatChipsModule
   ]

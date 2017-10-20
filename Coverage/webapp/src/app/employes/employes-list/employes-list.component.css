@@ -10,7 +10,11 @@
     opacity: 1;
 }
 
-
+.emp-list {
+    padding: 1rem;
+    overflow-y: scroll;
+    height: 35rem;
+}
 
 .ng-invalid:not(form) {
     border-left: 0px;
