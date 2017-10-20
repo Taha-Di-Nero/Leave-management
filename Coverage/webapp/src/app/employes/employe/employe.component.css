@@ -1,0 +1,11 @@
+.app-select-item {
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/deep/ .app-badge {
+    background-color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/deep/ .mat-select {
+    max-width: 12rem !important;
+}

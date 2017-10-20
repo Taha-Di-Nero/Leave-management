@@ -1,0 +1,28 @@
+<mat-list-item>
+    <span matLine>
+        <span class="align-bottom">{{ item.surname}} {{item.name}}</span>
+        <span class="mx-sm-3 align-bottom" style="min-width: 15rem !important;display: inline-block;">
+            &nbsp;&nbsp;{{item.area.description}}
+        </span>
+        <span class="ml-sm-5">
+            <mat-select  value="title" #select="matSelect">
+                    <mat-select-trigger [innerHTML]="getTitleValue(item.areas.length)"></mat-select-trigger>
+                    <mat-option value="title" [innerHTML]="getTitleValue(item.areas.length)">
+                    </mat-option>
+                <mat-option *ngFor="let area of item.areas" [value]="area.id" disabled>
+                    <span> {{ area.description}}</span>
+                </mat-option>
+            </mat-select>
+        </span>
+    </span>
+    <span ngbTooltip="Modifica">
+        <button mat-icon-button (click)="update()">
+            <mat-icon class="md-24">edit</mat-icon>
+        </button>
+    </span>
+    <span ngbTooltip="Elimina">
+        <button mat-icon-button (click)="delete()">
+            <mat-icon class="md-24">delete</mat-icon>
+        </button>
+    </span>
+</mat-list-item>

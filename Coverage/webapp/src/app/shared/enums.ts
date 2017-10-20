@@ -13,7 +13,7 @@ export const COLORS: any = {
   }
 };
 
-export enum MenuItemIds { Chiusure, Presenze, AddedLeaves, RemovedLeaves }
+export enum MenuItemIds { Employes, Shutdowns, presences, AddedLeaves, RemovedLeaves }
 
 export enum Profile { Manager, Normal }
 
@@ -53,4 +53,9 @@ export enum HolidayShutdownsUri {
 export enum InflexibilityPeriodsUri {
   InflexibilityPeriodsBase = 'inflexibilityPeriods/',
   InflexibilityPeriodMotivationsBase = 'inflexibilityPeriods/motivation/'
+}
+
+export enum EmployesUri {
+  EmployesBase = 'employes/',
+  EmployeAreasBase = 'employes/areas/'
 }

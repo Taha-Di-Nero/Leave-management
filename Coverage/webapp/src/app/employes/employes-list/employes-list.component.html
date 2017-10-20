@@ -1,0 +1,86 @@
+<div *ngIf="editMode; then edit else list"></div>
+<ng-template #list>
+  <div class="container">
+    <h3>Inserisci periodo di presenza</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <hr class="dotted text-primary">
+    <div *ngIf="(employes && employes.length > 0); then notEmpty else empty"></div>
+    <ng-template #notEmpty>
+      <mat-list>
+        <h3>Presenze obbligatorie programmate</h3>
+        <app-employe *ngFor="let employe of employes;" [item]="employe" (updateRequest)="editEmploye(employe) " (deleteRequest)="deleteEmploye(employe) "></app-employe>
+      </mat-list>
+    </ng-template>
+    <ng-template #empty>
+      <h3>Non ci sono dipendenti registrati.</h3>
+    </ng-template>
+    <br>
+  </div>
+</ng-template>
+<ng-template #edit>
+  <div class="container">
+    <h3>Modifica periodo di presenza</h3>
+    <ng-container *ngTemplateOutlet="form"></ng-container>
+    <br>
+  </div>
+</ng-template>
+<ng-template #form>
+  <form class="form" [formGroup]="employeForm" ngNativeValidate>
+    <div class="form-group row">
+      <div class="col input-group">
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="Cognome" formControlName="surname">
+          <mat-error *ngIf="email.invalid">Specificare un cognome.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col input-group">
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="Nome" formControlName="name">
+          <mat-error *ngIf="email.invalid">Specificare un nome.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col input-group">
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="Email" formControlName="email">
+          <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col input-group">
+        <app-area #areasAutocomplete placeholder="Aggiungi area" [editArea]="currentArea" (reset)="resetArea()" (selected)="selectedArea($event)"
+          style="width: 100%">
+        </app-area>
+      </div>
+      <div class="col-12">
+        <mat-chip-list selectable="false" placeholder="Dipendenti" required>
+          <mat-chip *ngFor="let area of employeModel.areas;" (remove)="removeChip(area)" color="primary" class="area-chip" selected="false">
+            {{area?.description}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+    <hr class="dotted text-primary">
+    <div class="form-group row">
+      <div class="col text-left">
+        <span ngbTooltip="Salva">
+          <button class="btn btn-primary" type="button" (click)="saveEmploye()" [disabled]="!employeForm.valid">
+            <i class="fa fa-floppy-o" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+        <span ngbTooltip="Annulla">
+          <button class="btn btn-primary" type="button" (click)="resetView()">
+            <i class="fa fa-times" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
+          </button>
+        </span>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </form>
+</ng-template>

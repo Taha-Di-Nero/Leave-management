@@ -27,6 +27,7 @@ import { EmployeLeaves } from './shared/dto/employe-leaves';
 })
 export class AppComponent implements OnInit {
 
+    @ViewChild('employesModal') employesModal: TemplateRef<any>;
     @ViewChild('shutDownModal') shutDownModal: TemplateRef<any>;
     @ViewChild('inflexibilityPeriodModal') inflexibilityPeriodModal: TemplateRef<any>;
     @ViewChild('approvationModal') approvationModal: TemplateRef<any>;
@@ -136,10 +137,13 @@ export class AppComponent implements OnInit {
 
     openNodeModal(node: NavigationNode): void {
         switch (node.id) {
-            case MenuItemIds.Chiusure:
+            case MenuItemIds.Employes:
+                this.modal.open(this.employesModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
+                break;
+            case MenuItemIds.Shutdowns:
                 this.modal.open(this.shutDownModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
                 break;
-            case MenuItemIds.Presenze:
+            case MenuItemIds.presences:
                 this.modal.open(this.inflexibilityPeriodModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
                 break;
             case MenuItemIds.AddedLeaves:

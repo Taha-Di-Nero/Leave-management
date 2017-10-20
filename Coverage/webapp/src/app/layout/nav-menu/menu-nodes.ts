@@ -3,12 +3,17 @@ import { MenuItemIds } from '../../shared/enums';
 
 export const sideNavNodes: NavigationNode[] = [
     {
-        'id': MenuItemIds.Chiusure,
+        'id': MenuItemIds.Employes,
+        'title': 'Gestione dipendenti',
+        'tooltip': 'Gestione dipendenti'
+    },
+    {
+        'id': MenuItemIds.Shutdowns,
         'title': 'Chiusure annuale',
         'tooltip': 'Chiusure annuale'
     },
     {
-        'id': MenuItemIds.Presenze,
+        'id': MenuItemIds.presences,
         'title': 'Periodi presenze obbligatorie',
         'tooltip': 'Periodi presenze obbligatorie'
     },
