@@ -69,7 +69,7 @@ export class EmployesComponent {
                         this.resetForm();
                         this.fetchEmployes();
                         this.employesListChanged.emit();
-                    }, 50);
+                    }, 10);
                 }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
         }
     }
@@ -98,7 +98,7 @@ export class EmployesComponent {
                 setTimeout(() => {
                     this.fetchEmployes();
                     this.employesListChanged.emit();
-                }, 50);
+                }, 10);
             }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
     }
     getEmailErrorMessage() {
