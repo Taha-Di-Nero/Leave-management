@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Output, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { Employe } from '../../shared/dto/employe';
 import { EmployesService } from '../../service/employes.service';
 import { Area } from '../../shared/dto/area';
@@ -31,8 +33,9 @@ export class EmployesComponent {
 
     insertMode = false;
     insertHeaderClass = 'emp-form-opener emp-form-opener-collapsed';
+    private tostPos = { positionClass: 'toast-top-center' };
 
-    constructor(private employesService: EmployesService, private fb: FormBuilder, private ref: ChangeDetectorRef) {
+    constructor(private employesService: EmployesService, private fb: FormBuilder, private ref: ChangeDetectorRef, private toastr: ToastrService) {
         this.fetchEmployes();
         this.createForm();
     }
@@ -57,12 +60,17 @@ export class EmployesComponent {
 
     saveEmploye(): void {
         if (this.employeModel) {
-            this.employesService.saveEmploye(this.employeModel)
-                .then(hs => {
-                    this.resetForm();
-                    this.fetchEmployes();
-                    this.employesListChanged.emit();
-                });
+            const e = this.employeModel;
+            this.employesService.saveEmploye(e)
+                .then(() => {
+                    const msgEnd = e.id > 0 ? 'aggiornat' : 'creati';
+                    this.toastr.success(`I dati del dipendente ${e.surname} ${e.name} sono stati ${msgEnd}.`, '', this.tostPos);
+                    setTimeout(() => {
+                        this.resetForm();
+                        this.fetchEmployes();
+                        this.employesListChanged.emit();
+                    }, 50);
+                }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
         }
     }
 
@@ -85,10 +93,13 @@ export class EmployesComponent {
     private deleteEmploye(employe: Employe): void {
         this.employesService.deleteEmploye(employe.id)
             .then(() => {
-                this.employes = this.employes.filter(s => s.id !== employe.id);
-                this.fetchEmployes();
-                this.employesListChanged.emit();
-            });
+                const e = employe;
+                this.toastr.success(`I dati del dipendente ${e.surname} ${e.name} sono stati rimossi.`, '', this.tostPos);
+                setTimeout(() => {
+                    this.fetchEmployes();
+                    this.employesListChanged.emit();
+                }, 50);
+            }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
     }
     getEmailErrorMessage() {
         return this.email.hasError('required') ? 'Specificare un email.' :
