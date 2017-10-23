@@ -6,7 +6,7 @@ import { EmployesService } from '../../service/employes.service';
 import { Area } from '../../shared/dto/area';
 import { AreaComponent, } from '../areas/area.component';
 import { ApplicationSharedData } from '../../shared/application-shared-data';
-import { EmployesDataSource } from './employes-list-datasource';
+import { EmployesDataSource } from '../employes-list/employes-list-datasource';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
