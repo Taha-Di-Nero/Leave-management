@@ -58,7 +58,9 @@ export class AreaComponent implements OnInit {
   }
 
   addArea(event: MouseEvent): void {
-    if (!!this.areaCtrl.value) {
+    const selectedArea = this.getselectedArea();
+    const selectedAreaDesc = !!selectedArea ? selectedArea.description : '';
+    if (!!this.areaCtrl.value && this.areaCtrl.value !== selectedAreaDesc) {
       const newArea = new Area();
       newArea.description = this.areaCtrl.value;
       this.service.addArea(newArea).then(area => {

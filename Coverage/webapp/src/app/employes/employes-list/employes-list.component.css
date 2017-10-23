@@ -1,21 +1,37 @@
-.area-chip {
-    color: white !important;
-    margin: 0.1rem !important;
-    font-weight: bolder !important;
-    background-color: #3f51b5 !important;
+.app-select-item {
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 
-/deep/ .mat-chip:not(.mat-basic-chip) .mat-chip-remove {
-    color: white;
-    opacity: 1;
+/deep/ .app-badge {
+    background-color: rgba(0, 0, 0, 0.87) !important;
 }
 
-.emp-list {
-    padding: 1rem;
-    overflow-y: scroll;
-    height: 35rem;
+/deep/ .mat-select {
+    max-width: 12rem !important;
 }
 
-.ng-invalid:not(form) {
-    border-left: 0px;
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+}
+  
+.filter-header {
+    min-height: 64px;
+    display: flex;
+    align-items: baseline;
+    padding: 8px 24px 0;
+    font-size: 20px;
+    justify-content: space-between;
+}
+  
+.mat-form-field {
+    font-size: 14px;
+    flex-grow: 1;
+    margin-left: 32px;
+}
+  
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
 }

@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
         this.isManager = e ? (this.loggedEmploye.profile === Profile.Manager) : false;
         ApplicationSharedData.getInstance().loggedEmploye = e;
         if (e && this.isManager) {
-            ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
+            this.employesListChanged();
             this.showCoverageTitle = true;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.displayLeavesPlanDownload = true;
@@ -118,6 +118,10 @@ export class AppComponent implements OnInit {
                 saveAs(blob, `piano_ferie-${ApplicationSharedData.getInstance().currentYear}.xlsx`);
                 this.stopBlockUI();
             }).catch(error => this.stopBlockUI());
+    }
+
+    private employesListChanged(): void {
+        ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
     }
 
     private stopBlockUI(): void {
