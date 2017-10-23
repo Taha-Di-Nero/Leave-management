@@ -1,9 +1,24 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { Employe } from '../../shared/dto/employe';
 import { EmployeState } from '../../shared/enums';
-import { EmployesDataSource } from '../employes-manager/employes-list-datasource';
+import { EmployesDataSource } from './employes-list-datasource';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,7 +26,11 @@ import { EmployesDataSource } from '../employes-manager/employes-list-datasource
   templateUrl: './employes-list.component.html',
   styleUrls: ['./employes-list.component.css']
 })
-export class EmployesListComponent {
+export class EmployesListComponent implements OnInit, OnDestroy {
+
+  searchSubscription: Subscription;
+
+  @ViewChild('filter') filter: ElementRef;
 
   @Input() employes: EmployesDataSource;
 
@@ -24,7 +43,15 @@ export class EmployesListComponent {
     this.updateRequest = new EventEmitter<Employe>();
     this.deleteRequest = new EventEmitter<Employe>();
   }
-
+  ngOnInit() {
+    this.searchSubscription = Observable.fromEvent(this.filter.nativeElement, 'keyup')
+      .debounceTime(150)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.employes) { return; }
+        this.employes.filter = this.filter.nativeElement.value;
+      });
+  }
   update(employe: Employe): void {
     this.updateRequest.emit(employe);
   }
@@ -37,5 +64,13 @@ export class EmployesListComponent {
     return this.sanitizer.bypassSecurityTrustHtml(` <span>Aree&nbsp;</span>
     <span class="badge rounded app-badge">${areasNumber}</span>`);
   }
+  resetSearch(): void {
+    this.employes.filter = this.filter.nativeElement.value = '';
+  }
 
+  ngOnDestroy() {
+    if (!!this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
 }
