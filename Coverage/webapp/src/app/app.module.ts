@@ -30,6 +30,7 @@ import { SecurityService } from './service/security.service';
 import { LeaveService } from './service/leave.service';
 import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
 import { LayoutModule } from './layout/layout.module';
+import { EmployesModule } from './employes/employes.module';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { LayoutModule } from './layout/layout.module';
     BlockUIModule,
     HolidayShutdownsModule,
     InflexibilityPeriodsModule,
+    EmployesModule,
     LeavesApprovationModule,
     AppRoutingModule
   ],

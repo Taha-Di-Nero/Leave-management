@@ -27,6 +27,7 @@ import { EmployeLeaves } from './shared/dto/employe-leaves';
 })
 export class AppComponent implements OnInit {
 
+    @ViewChild('employesModal') employesModal: TemplateRef<any>;
     @ViewChild('shutDownModal') shutDownModal: TemplateRef<any>;
     @ViewChild('inflexibilityPeriodModal') inflexibilityPeriodModal: TemplateRef<any>;
     @ViewChild('approvationModal') approvationModal: TemplateRef<any>;
@@ -65,7 +66,7 @@ export class AppComponent implements OnInit {
         this.isManager = e ? (this.loggedEmploye.profile === Profile.Manager) : false;
         ApplicationSharedData.getInstance().loggedEmploye = e;
         if (e && this.isManager) {
-            ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
+            this.employesListChanged();
             this.showCoverageTitle = true;
             this.currentView = FullYearLeavesOverlapsComponent;
             this.displayLeavesPlanDownload = true;
@@ -119,6 +120,10 @@ export class AppComponent implements OnInit {
             }).catch(error => this.stopBlockUI());
     }
 
+    private employesListChanged(): void {
+        ApplicationSharedData.getInstance().setFlexibilityComposition(this.coverageService, this.leaveService);
+    }
+
     private stopBlockUI(): void {
         this.blockUI.stop();
         this.ref.markForCheck();
@@ -136,10 +141,13 @@ export class AppComponent implements OnInit {
 
     openNodeModal(node: NavigationNode): void {
         switch (node.id) {
-            case MenuItemIds.Chiusure:
+            case MenuItemIds.Employes:
+                this.modal.open(this.employesModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
+                break;
+            case MenuItemIds.Shutdowns:
                 this.modal.open(this.shutDownModal, { size: 'lg', windowClass: 'animated bounceInLeft' });
                 break;
-            case MenuItemIds.Presenze:
+            case MenuItemIds.presences:
                 this.modal.open(this.inflexibilityPeriodModal, { size: 'lg', windowClass: 'modal-xxl animated bounceInLeft' });
                 break;
             case MenuItemIds.AddedLeaves:

@@ -51,6 +51,17 @@
   </section>
 </ng-template>
 
+<ng-template #employesModal let-close="close">
+  <div class="modal-header modal-header-primary">
+    <span class="modal-title">Gestione dipendenti</span>
+  </div>
+  <div class="modal-body">
+    <app-employes (employesListChanged)="employesListChanged()"></app-employes>
+  </div>
+  <div class="modal-footer modal-header-primary">
+  </div>
+</ng-template>
+
 <ng-template #shutDownModal let-close="close">
   <div class="modal-header modal-header-primary">
     <span class="modal-title">Chiusure annuale</span>

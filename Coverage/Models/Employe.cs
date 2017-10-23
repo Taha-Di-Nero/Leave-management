@@ -13,7 +13,7 @@ namespace Seac.Coverage.Models
         public string Email { get; set; }
 
         public EmployeProfile Profile { get; set; }
-        public IList<EmployeArea> EmployeArea { get; set; }
-        public IList<EmployeInflexibilityPeriod> EmployeInflexibilityPeriod { get; set; }
+        public List<EmployeArea> EmployeArea { get; set; }
+        public List<EmployeInflexibilityPeriod> EmployeInflexibilityPeriod { get; set; }
     }
 }

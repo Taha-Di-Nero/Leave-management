@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,23 @@ namespace Seac.Coverage.Repositories
         {
         }
 
+
+        public void Update(Employe entity, List<EmployeArea> removedAreas)
+        {
+            if (entity == null)
+                throw new ArgumentException("entity is null");
+
+            foreach (EmployeArea employeArea in removedAreas)
+            {
+                Context.Set<EmployeArea>().Remove(employeArea);
+            }
+            Context.Set<Employe>().Update(entity);
+            Context.SaveChanges();
+        }
+
         public Employe GetWithArea(long id)
         {
-            return Context.Set<Employe>().Include(e => e.EmployeArea).ThenInclude(ea => ea.Area).Where(e => e.Id == id).SingleOrDefault();
+            return Context.Set<Employe>().AsNoTracking().Include(e => e.EmployeArea).ThenInclude(ea => ea.Area).Include(e => e.EmployeArea).ThenInclude(ea => ea.Employe).Where(e => e.Id == id).SingleOrDefault();
         }
 
         public IEnumerable<Employe> GetAllWithArea()

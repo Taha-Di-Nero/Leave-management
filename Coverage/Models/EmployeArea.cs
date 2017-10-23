@@ -10,5 +10,15 @@ namespace Seac.Coverage.Models
 
         [ForeignKey("area_id")]
         public Area Area { get; set; }
+
+        public EmployeArea()
+        {
+        }
+
+        public EmployeArea(Area area, Employe employe)
+        {
+            this.Employe = employe;
+            this.Area = area;
+        }
     }
 }
