@@ -150,6 +150,13 @@ export class EmployesComponent {
         this.ref.markForCheck();
     }
 
+    private get toggleFormVisibility() {
+        if(this.insertMode || this.editMode) {
+            return 'form-visible';
+        }
+        return 'form-hidden';
+    }
+
     get name() { return this.employeForm.get('name'); }
     get surname() { return this.employeForm.get('surname'); }
     get email() { return this.employeForm.get('email'); }

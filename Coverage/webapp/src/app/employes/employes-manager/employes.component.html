@@ -19,7 +19,7 @@
   </div>
 </ng-template>
 <ng-template #form>
-  <form class="form" [formGroup]="employeForm" ngNativeValidate [style.display]="(insertMode || editMode) ? 'block' : 'none'">
+  <form class="form" [formGroup]="employeForm" ngNativeValidate [ngClass]="toggleFormVisibility">
     <div class="form-group row">
       <div class="col input-group">
         <mat-form-field style="width: 100%">
