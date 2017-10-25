@@ -56,8 +56,10 @@ export class EmployesListComponent implements OnInit, OnDestroy {
     this.updateRequest.emit(employe);
   }
 
-  delete(employe: Employe): void {
-    this.deleteRequest.emit(employe);
+  delete(confirm: boolean, employe: Employe): void {
+    if (confirm) {
+      this.deleteRequest.emit(employe);
+    }
   }
 
   getTitleValue(areasNumber: number): SafeHtml {

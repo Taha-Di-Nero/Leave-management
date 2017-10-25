@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 import { CalendarModule } from 'angular-calendar';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { BlockUIModule } from 'ng-block-ui';
 
@@ -14,15 +13,9 @@ import { AppComponent } from './app.component';
 import { FullYearLeavesOverlapsModule } from './full-year-leaves-overlaps/full-year-leaves-overlaps.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UsedMaterialModule } from './shared/used-material.module';
-import { FabComponent } from './fab/fab.component';
-import { AccessDeniedComponent } from './access-denied/access-denied.component';
-import { FullYearLeavesOverlapsComponent } from './full-year-leaves-overlaps/full-year-leaves-overlaps.component';
-import { FullYearLeavesComponent } from './full-year-leaves/full-year-leaves.component';
 import { NotFoundModule } from './not-found/not-found.module';
 import { AccessDeniedModule } from './access-denied/access-denied.module';
 import { FabModule } from './fab/fab.module';
-import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
-import { NavItemComponent } from './layout/nav-item/nav-item.component';
 import { HolidayShutdownsModule } from './holiday-shutdowns/holiday-shutdowns.module';
 import { InflexibilityPeriodsModule } from './inflexibility-periods/inflexibility-periods.module';
 import { CoverageService } from './service/coverage.service';

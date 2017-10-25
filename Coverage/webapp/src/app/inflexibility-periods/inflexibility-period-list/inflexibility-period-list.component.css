@@ -3,7 +3,7 @@
     margin: 0.1rem !important;
 }
 
-/deep/ .mat-chip:not(.mat-basic-chip) .mat-chip-remove {
+::ng-deep .mat-chip:not(.mat-basic-chip) .mat-chip-remove {
     color: white;
     opacity: 1;
 }

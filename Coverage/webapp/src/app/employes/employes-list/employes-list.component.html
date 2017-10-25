@@ -36,11 +36,7 @@
                         <mat-icon class="md-24">edit</mat-icon>
                     </button>
                 </span>
-                <span ngbTooltip="Elimina">
-                    <button mat-icon-button (click)="delete(row)">
-                        <mat-icon class="md-24">delete</mat-icon>
-                    </button>
-                </span>
+                <app-delete-button [message]="'Si desidera eliminare '.concat(row.surname,' ', row.name, ' ?')" (confirm)="delete($event, row)"></app-delete-button>
             </mat-cell>
         </ng-container>
 

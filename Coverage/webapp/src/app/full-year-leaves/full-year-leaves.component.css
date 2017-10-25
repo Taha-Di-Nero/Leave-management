@@ -1,14 +1,14 @@
-/deep/ .cal-month-view .cal-cell-top{
+::ng-deep .cal-month-view .cal-cell-top{
     min-height: 3.4375rem;
     min-width: 1rem;
   }
 
-/deep/ .cal-month-view .cal-day-number{
+::ng-deep .cal-month-view .cal-day-number{
   opacity: 1;
   margin-right: 5px;
 }
 
-/deep/ .tooltip-inner{
+::ng-deep .tooltip-inner{
     background-color: rgb(63, 81, 181);
     white-space: nowrap;
 }
