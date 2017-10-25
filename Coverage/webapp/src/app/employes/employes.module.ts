@@ -24,14 +24,14 @@ import { EmployesListComponent } from './employes-list/employes-list.component';
     UsedMaterialModule
   ],
   declarations: [
-    AreaComponent,
     EmployesComponent,
-    EmployesListComponent
+    EmployesListComponent,
+    AreaComponent
   ],
   exports: [
-    AreaComponent,
     EmployesComponent,
-    EmployesListComponent
+    EmployesListComponent,
+    AreaComponent
   ]
 })
 export class EmployesModule { }

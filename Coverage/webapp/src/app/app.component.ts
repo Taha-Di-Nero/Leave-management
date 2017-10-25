@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { saveAs } from 'file-saver';
@@ -55,7 +57,11 @@ export class AppComponent implements OnInit {
     isManager = false;
 
     constructor(private securityService: SecurityService, private leaveService: LeaveService,
-        private coverageService: CoverageService, private ref: ChangeDetectorRef, private modal: NgbModal) { }
+        private coverageService: CoverageService, private ref: ChangeDetectorRef, private modal: NgbModal,
+        iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+        iconRegistry.addSvgIcon('keyboard-arrow-right',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/images/keyboard-arrow-right.svg'));
+    }
 
     ngOnInit() {
         this.securityService.getLoggedEmploye().then(e => this.setLoggedUser(e)).catch(reason => this.setLoggedUser(undefined));

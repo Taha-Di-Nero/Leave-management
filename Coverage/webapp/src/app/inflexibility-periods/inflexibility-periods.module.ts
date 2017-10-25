@@ -37,8 +37,7 @@ import { EmployeAutocompleteModule } from '../employe-autocomplete/employe-autoc
   exports: [
     InflexibilityPeriodListComponent,
     InflexibilityPeriodComponent,
-    InflexibilityPeriodMotivationComponent,
-    InflexibilityPeriodListComponent
+    InflexibilityPeriodMotivationComponent
   ]
 })
 export class InflexibilityPeriodsModule { }

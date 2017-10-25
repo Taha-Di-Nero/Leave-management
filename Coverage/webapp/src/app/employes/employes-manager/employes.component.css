@@ -43,3 +43,11 @@
     transition: transform 150ms, -webkit-transform 150ms;
     transition-timing-function: ease-in-out;
 }
+
+.form-hidden {
+    display: none;
+}
+
+.form-visible {
+    display: block;
+}

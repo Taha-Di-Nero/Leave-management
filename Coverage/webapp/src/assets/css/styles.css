@@ -119,3 +119,7 @@ div {
 .indifferent-text {
     color: green !important;
 }
+
+.badge {
+    color: white !important;
+}

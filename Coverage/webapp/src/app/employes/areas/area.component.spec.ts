@@ -1,28 +1,32 @@
-import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
-import { InflexibilityPeriodMotivationComponent } from './inflexibility-period-motivation.component';
+import { EmployesService } from '../../service/employes.service';
+import { AreaComponent } from './area.component';
 import { UsedMaterialModule } from '../../shared/used-material.module';
-import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
-import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
+import { EmployesModule } from '../employes.module';
+import { areasMock } from '../../shared/tests-mocks/mocks';
+import { Area } from '../../shared/dto/area';
 
-let service: InflexibilityPeriodsService;
-const inflexibilityPeriods = inflexibilityPeriodListMock;
+let service: EmployesService;
+const areas = areasMock;
+const area = new Area();
+area.id = 1;
+area.description = 'addedArea';
 
-describe('InflexibilityPeriodMotivationComponent', () => {
-  let component: InflexibilityPeriodMotivationComponent;
-  let fixture: ComponentFixture<InflexibilityPeriodMotivationComponent>;
+describe('AreaComponent', () => {
+  let component: AreaComponent;
+  let fixture: ComponentFixture<AreaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [InflexibilityPeriodsService, ToastrService],
+      providers: [EmployesService, ToastrService],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
@@ -31,22 +35,22 @@ describe('InflexibilityPeriodMotivationComponent', () => {
         ReactiveFormsModule,
         NgbModule.forRoot(),
         ToastrModule.forRoot(),
+        EmployesModule,
         UsedMaterialModule
-      ],
-      declarations: [InflexibilityPeriodMotivationComponent]
+      ]
     }).compileComponents();
   }));
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(InflexibilityPeriodMotivationComponent);
+    fixture = TestBed.createComponent(AreaComponent);
     component = fixture.componentInstance;
-    service = fixture.debugElement.injector.get(InflexibilityPeriodsService);
+    service = fixture.debugElement.injector.get(EmployesService);
 
-    const spyGetInflexibilityPeriodsMot = spyOn(service, 'getMotivations')
-      .and.returnValue(Promise.resolve([inflexibilityPeriods[0].inflexibilityPeriodMotivation, inflexibilityPeriods[1].inflexibilityPeriodMotivation]));
+    const spyGetInflexibilityPeriodsMot = spyOn(service, 'getAreas')
+      .and.returnValue(Promise.resolve(areas));
 
-    const spyAddInflexibilityPeriodsMot = spyOn(service, 'addMotivation')
-      .and.returnValue(Promise.resolve(inflexibilityPeriods[0].inflexibilityPeriodMotivation));
+    const spyAddInflexibilityPeriodsMot = spyOn(service, 'addArea')
+      .and.returnValue(Promise.resolve(area));
 
     fixture.detectChanges();
   }));
@@ -55,37 +59,34 @@ describe('InflexibilityPeriodMotivationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Filter and select Aggiornamento', () => {
-    component.selected.subscribe((mot) => expect(mot.id).toBe(2, 'Aggiornamento not selected'));
-    component.motivationCtrl.setValue('Agg');
+  it('Filter and select Accentramento Contributivo', () => {
+    component.selected.subscribe((a) => expect(a.id).toBe(75, 'Area not selected'));
+    component.areaCtrl.setValue('Accent');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      component['selectMotivation'].call(component);
+      component['selectArea'].call(component);
       fixture.detectChanges();
     });
   });
 
   it('Reset motivation control control', () => {
-    component.reset.subscribe((mot) => {
-      expect(component.motivationCtrl.value).toBe(null, 'motivationCtrl not reseted');
-    });
-    component.motivationCtrl.setValue('Rila');
+    component.areaCtrl.setValue('Accent');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      fixture.detectChanges();
       component['resetSearch'].call(component);
       fixture.detectChanges();
+      expect(component.areaCtrl.value).toBe(null, 'areaCtrl not reseted');
     });
   });
 
-  it('Add motivation', () => {
-    component.selected.subscribe((mot) => expect(mot.id).toBe(1, 'motivation not saved'));
-    component.motivationCtrl.setValue('Added');
+  it('Add area', () => {
+    component.selected.subscribe((a) => expect(a.id).toBe(1, 'area not saved'));
+    component.areaCtrl.setValue('Added');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      component['addMotivation'].call(component, new MouseEvent('click'));
+      component['addArea'].call(component, new MouseEvent('click'));
       fixture.detectChanges();
     });
   });

@@ -114,8 +114,6 @@ describe('InflexibilityPeriodListComponent', () => {
     });
   });
 
-
-
   it('Select motivation.', () => {
     component.motivationAutocomplete.motivationCtrl.setValue('R');
     fixture.detectChanges();

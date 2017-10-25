@@ -8,34 +8,26 @@ import { NgbModule, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootst
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { UsedMaterialModule } from '../../shared/used-material.module';
-import { InflexibilityPeriodListComponent } from './inflexibility-period-list.component';
-import { InflexibilityPeriodsModule } from '../inflexibility-periods.module';
-import { InflexibilityPeriodsService } from '../../service/inflexibility-periods.service';
-import { NgbDateITParserFormatter } from '../../shared/ngb-date-it-parser-formatter';
-import { I18n, ItalianDatepickerI18n } from '../../shared/italianDatepickerI18n';
-import { EmployeAutocompleteModule } from '../../employe-autocomplete/employe-autocomplete.module';
-import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
+import { EmployesService } from '../../service/employes.service';
 import { Employe } from '../../shared/dto/employe';
-import { EmployeState, Profile } from '../../shared/enums';
-import { ApplicationSharedData } from '../../shared/application-shared-data';
+import { inflexibilityPeriodListMock, areasMock } from '../../shared/tests-mocks/mocks';
+import { EmployesComponent } from './employes.component';
+import { EmployesModule } from '../employes.module';
+import { EmployesDataSource } from '../employes-list/employes-list-datasource';
 
-let inflexibilityPeriodsService: InflexibilityPeriodsService;
-const inflexibilityPeriod = inflexibilityPeriodListMock[0];
+let employeService: EmployesService;
+
 const employes = <Employe[]>inflexibilityPeriodListMock[0].employes.concat(inflexibilityPeriodListMock[1].employes);
+const employe = JSON.parse(JSON.stringify(employes[0]));
+const areas = areasMock;
+employe.areaList = areas;
 
-describe('InflexibilityPeriodListComponent', () => {
-  let component: InflexibilityPeriodListComponent;
-  let fixture: ComponentFixture<InflexibilityPeriodListComponent>;
-
+describe('EmployesComponent', () => {
+  let component: EmployesComponent;
+  let fixture: ComponentFixture<EmployesComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ToastrService,
-        InflexibilityPeriodsService,
-        { provide: NgbDateParserFormatter, useClass: NgbDateITParserFormatter },
-        I18n,
-        { provide: NgbDatepickerI18n, useClass: ItalianDatepickerI18n }
-      ],
+      providers: [EmployesService, ToastrService],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
@@ -44,93 +36,73 @@ describe('InflexibilityPeriodListComponent', () => {
         ReactiveFormsModule,
         NgbModule.forRoot(),
         ToastrModule.forRoot(),
-        EmployeAutocompleteModule,
-        InflexibilityPeriodsModule,
-        UsedMaterialModule,
+        EmployesModule,
+        UsedMaterialModule
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(InflexibilityPeriodListComponent);
+    fixture = TestBed.createComponent(EmployesComponent);
     component = fixture.componentInstance;
-    inflexibilityPeriodsService = fixture.debugElement.injector.get(InflexibilityPeriodsService);
+    employeService = fixture.debugElement.injector.get(EmployesService);
 
-    const spyGetInflexibilityPeriods = spyOn(inflexibilityPeriodsService, 'getInflexibilityPeriods')
-      .and.returnValue(Promise.resolve(inflexibilityPeriodListMock));
-    const spySaveInflexibilityPeriod = spyOn(inflexibilityPeriodsService, 'saveInflexibilityPeriod')
-      .and.returnValue(Promise.resolve(inflexibilityPeriod));
-    const spyDeleteInflexibilityPeriod = spyOn(inflexibilityPeriodsService, 'deleteInflexibilityPeriod')
-      .and.returnValue(Promise.resolve(inflexibilityPeriod));
-    const spyGetInflexibilityPeriodsMot = spyOn(inflexibilityPeriodsService, 'getMotivations')
-      .and.returnValue(Promise.resolve([inflexibilityPeriod.inflexibilityPeriodMotivation]));
+    const spyGetEmployes = spyOn(employeService, 'getEmployes').and.returnValue(Promise.resolve(employes));
+    const spySaveEmploye = spyOn(employeService, 'saveEmploye').and.returnValue(Promise.resolve());
+    const spyDeleteEmploye = spyOn(employeService, 'deleteEmploye').and.returnValue(Promise.resolve());
+    const spyGetEmployesArea = spyOn(employeService, 'getAreas').and.returnValue(Promise.resolve(areas));
     fixture.detectChanges();
-    component.employeAutocomplete.employesSubject.next(employes);
+
+    component.employeModel = employe;
+    employe.areaList = areas;
+    component.areasAutocomplete.areas = areas;
+    component.employesDataSource = new EmployesDataSource(employes);
     fixture.detectChanges();
+  });
+
+  afterEach(function (done) {
+    setTimeout(function () {
+      done();
+    }, 30);
   });
 
   it('should be created', async () => {
     expect(component).toBeTruthy();
   });
 
-  it('Trigger form validation.', () => {
-    component.inflexibilityPeriodForm.markAsTouched();
+  it('Trigger form validation.', async () => {
+    component.employeForm.markAsTouched();
     fixture.detectChanges();
-    const response = component['isFormInvalid'].call(component);
-    fixture.detectChanges();
-    expect(response).toBe(true, 'Form validation should return true');
-    expect(component.inflexibilityPeriodForm.errors.arrayEmpty).toBe(true, 'Form validation should generate array empty error');
-    expect(component.inflexibilityPeriodForm.errors.motivationEmpty).toBe(true, 'Form validation should generate motivationEmpty error');
+    expect(component.employeForm.invalid).toBe(true, 'Form validation should return true');
   });
 
-  it('Trigger inflexibilityPeriod edit.', () => {
+  it('Trigger employe edit.', async () => {
     fixture.detectChanges();
     expect(function () {
-      component['editInflexibilityPeriod'].call(component, inflexibilityPeriod);
+      component['editEmploye'].call(component, employe);
     }).not.toThrow();
   });
 
-  it('Trigger inflexibilityPeriod save.', () => {
+  it('Trigger employe save.', async () => {
     fixture.detectChanges();
     expect(function () {
-      component['saveInflexibilityPeriod'].call(component, inflexibilityPeriod);
+      component['saveEmploye'].call(component, employe);
     }).not.toThrow();
   });
 
-  it('Trigger inflexibilityPeriod delete.', () => {
+  it('Trigger employe delete.', async () => {
     fixture.detectChanges();
     expect(function () {
-      component['deleteInflexibilityPeriod'].call(component, inflexibilityPeriod);
+      component['deleteEmploye'].call(component, employe);
     }).not.toThrow();
   });
 
-  it('Select employe.', () => {
-    component.employeAutocomplete.employeCtrl.setValue('name');
+  it('Select area.', async () => {
     fixture.detectChanges();
-    component['selectedEmploye'].call(component, employes[0]);
+    component['selectedArea'].call(component, areas[0]);
     fixture.whenStable().then(() => {
-      expect(component.inflexibilityPeriodModel.employes.length).toBe(1);
-    });
-  });
-
-
-
-  it('Select motivation.', () => {
-    component.motivationAutocomplete.motivationCtrl.setValue('R');
-    fixture.detectChanges();
-    component['selectedMotivation'].call(component, inflexibilityPeriod.inflexibilityPeriodMotivation);
-    fixture.whenStable().then(() => {
-      expect(component.inflexibilityPeriodModel.inflexibilityPeriodMotivation.description).toBe('Rilascio');
-    });
-  });
-
-  it('Reset motivation.', () => {
-    component.motivationAutocomplete.motivationCtrl.setValue('R');
-    fixture.detectChanges();
-    component['resetMotivation'].call(component);
-    fixture.whenStable().then(() => {
-      expect(component.inflexibilityPeriodModel.inflexibilityPeriodMotivation).toBe(undefined);
+      expect(component.employeModel.areaList[0].id).toBe(75);
     });
   });
 });

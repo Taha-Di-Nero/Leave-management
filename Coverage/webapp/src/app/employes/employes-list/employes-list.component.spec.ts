@@ -2,45 +2,51 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DomSanitizer } from '@angular/platform-browser';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UsedMaterialModule } from '../../shared/used-material.module';
-import { InflexibilityPeriodComponent } from './inflexibility-period.component';
+import { EmployesModule } from '../employes.module';
+import { EmployesListComponent } from './employes-list.component';
 import { Employe } from '../../shared/dto/employe';
-import { InflexibilityPeriod } from '../../shared/dto/inflexibility-period';
+import { EmployesDataSource } from './employes-list-datasource';
+import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
 
-describe('InflexibilityPeriodComponent', () => {
-  let component: InflexibilityPeriodComponent;
-  let fixture: ComponentFixture<InflexibilityPeriodComponent>;
+const employes = <Employe[]>inflexibilityPeriodListMock[0].employes.concat(inflexibilityPeriodListMock[1].employes);
 
-  beforeEach(async(() => {
+let sanitizer: DomSanitizer;
+
+describe('EmployesListComponent', () => {
+  let component: EmployesListComponent;
+  let fixture: ComponentFixture<EmployesListComponent>;
+
+  beforeEach(async (() => {
     TestBed.configureTestingModule({
+      providers: [DomSanitizer],
       imports: [
         CommonModule,
         BrowserAnimationsModule,
         FormsModule,
-        UsedMaterialModule,
-      ],
-      declarations: [InflexibilityPeriodComponent]
+        NgbModule.forRoot(),
+        EmployesModule,
+        UsedMaterialModule
+      ]
     })
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InflexibilityPeriodComponent);
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(EmployesListComponent);
     component = fixture.componentInstance;
-    component.item = new InflexibilityPeriod();
-    component.item.id = 1;
-    component.item.from = new Date();
-    component.item.to = new Date();
-    component.item.inflexibilityPeriodMotivation = {
-      'id': 1,
-      'description': 'Rilascio'
-    };
-    component.item.employes = [new Employe()];
+    sanitizer = fixture.debugElement.injector.get(DomSanitizer);
+
+    fixture.detectChanges();
+    component.employes = new EmployesDataSource(employes);
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should be created', async () => {
     expect(component).toBeTruthy();
   });
 });

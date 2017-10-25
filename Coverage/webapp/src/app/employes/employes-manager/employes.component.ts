@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Output, ViewChild, EventEmitter } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +24,7 @@ import { EmployesDataSource } from '../employes-list/employes-list-datasource';
     templateUrl: './employes.component.html',
     styleUrls: ['./employes.component.css']
 })
-export class EmployesComponent {
+export class EmployesComponent implements OnInit {
 
     @ViewChild('areasAutocomplete') areasAutocomplete: AreaComponent;
 
@@ -36,8 +44,11 @@ export class EmployesComponent {
     private tostPos = { positionClass: 'toast-top-center' };
 
     constructor(private employesService: EmployesService, private fb: FormBuilder, private ref: ChangeDetectorRef, private toastr: ToastrService) {
-        this.fetchEmployes();
         this.createForm();
+    }
+
+    ngOnInit(): void {
+        this.fetchEmployes();
     }
 
     fetchEmployes(): void {
@@ -148,6 +159,13 @@ export class EmployesComponent {
         const index = this.employeModel.areaList.findIndex(a => area.id === a.id || area.description === a.description);
         this.currentArea = this.employeModel.areaList[index];
         this.ref.markForCheck();
+    }
+
+    private get toggleFormVisibility() {
+        if (this.insertMode || this.editMode) {
+            return 'form-visible';
+        }
+        return 'form-hidden';
     }
 
     get name() { return this.employeForm.get('name'); }

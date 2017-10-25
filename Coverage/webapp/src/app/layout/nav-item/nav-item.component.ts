@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { NavigationNode } from '../nav-menu/nav-menu.model';
-import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,10 +21,7 @@ export class NavItemComponent implements OnChanges {
   classes: { [index: string]: boolean };
   nodeChildren: NavigationNode[];
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'keyboard-arrow-right',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/images/keyboard-arrow-right.svg'));
+  constructor() {
   }
   ngOnChanges() {
     this.nodeChildren = this.node && this.node.children ? this.node.children.filter(n => !n.hidden) : [];

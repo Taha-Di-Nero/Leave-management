@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { By, DomSanitizer } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { SimpleChange, SimpleChanges, NO_ERRORS_SCHEMA } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { MatIconRegistry, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
 
 import { NavItemComponent } from './nav-item.component';
 import { NavigationNode } from '../nav-menu/nav-menu.model';
@@ -12,15 +12,13 @@ describe('NavItemComponent', () => {
 
   let component: NavItemComponent;
   let fixture: ComponentFixture<NavItemComponent>;
-  let iconRegistry: MatIconRegistry;
-  let sanitizer: DomSanitizer;
 
 
   describe('(via TestBed)', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        providers: [MatIconRegistry, DomSanitizer, { provide: APP_BASE_HREF, useValue: '/' }],
+        providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
         imports: [HttpModule, MatIconModule],
         declarations: [NavItemComponent],
         schemas: [NO_ERRORS_SCHEMA]
@@ -29,13 +27,8 @@ describe('NavItemComponent', () => {
     });
 
     beforeEach(async () => {
-
       fixture = TestBed.createComponent(NavItemComponent);
       component = fixture.componentInstance;
-      iconRegistry = fixture.debugElement.injector.get(MatIconRegistry);
-      sanitizer = fixture.debugElement.injector.get(DomSanitizer);
-
-      const spyIconRegistry = spyOn(iconRegistry, 'addSvgIcon').and.callThrough();
     });
 
     it('should not show the hidden child nav-item', () => {
@@ -47,6 +40,7 @@ describe('NavItemComponent', () => {
           { title: 'c' }
         ]
       };
+      component.selectedNodes = [component.node];
       component.ngOnChanges();
       const children = component.nodeChildren;
       expect(children.length).toEqual(2);

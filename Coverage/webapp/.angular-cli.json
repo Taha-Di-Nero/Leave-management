@@ -66,5 +66,8 @@
     "component": {
       "inlineStyle": true
     }
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }
