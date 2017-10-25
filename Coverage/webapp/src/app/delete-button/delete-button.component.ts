@@ -16,19 +16,19 @@ export class DeleteButtonComponent {
 
   @Output() confirm = new EventEmitter<boolean>();
 
-  private title = 'Attenzione';
-  private confirmClicked = false;
-  private cancelClicked = false;
+  title = 'Attenzione';
+  confirmClicked = false;
+  cancelClicked = false;
 
   constructor(private ref: ChangeDetectorRef) { }
 
-  private canceled(): void {
+  canceled(): void {
     this.tooltip.close();
     this.ref.markForCheck();
     this.confirm.emit(false);
   }
 
-  private confirmed(): void {
+  confirmed(): void {
     this.tooltip.close();
     this.ref.markForCheck();
     this.confirm.emit(true);
