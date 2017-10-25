@@ -8,7 +8,7 @@
     "build": "ng build --show-circular-dependencies",
     "prod": "ng build --prod --aot --build-optimizer --show-circular-dependencies --base-href ./",
     "test": "ng test --sourcemaps=false",
-    "cov": "ng test --code-coverage",
+    "cov": "ng test --code-coverage --sourcemaps=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

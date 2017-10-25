@@ -2,6 +2,25 @@ import { InflexibilityPeriod } from '../dto/inflexibility-period';
 import { CalendarEvent } from 'angular-calendar';
 import { EmployesFlexibility } from '../dto/employes-flexibility';
 
+export const areasMock = [
+    {
+        'id': 75,
+        'description': 'Accentramento Contributivo'
+    },
+    {
+        'id': 61,
+        'description': 'Aggiornamento Contratti'
+    },
+    {
+        'id': 111,
+        'description': 'Anagrafe tributaria'
+    },
+    {
+        'id': 62,
+        'description': 'Analisi Costo'
+    }
+];
+
 export const inflexibilityPeriodListMock = [
     {
         'id': 20,

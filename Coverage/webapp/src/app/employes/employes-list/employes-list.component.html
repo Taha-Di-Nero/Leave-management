@@ -18,8 +18,8 @@
             <mat-header-cell *matHeaderCellDef> Aree </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <mat-select value="title" #select="matSelect">
-                    <mat-select-trigger [innerHTML]="getTitleValue(row.areaList.length)"></mat-select-trigger>
-                    <mat-option value="title" [innerHTML]="getTitleValue(row.areaList.length)">
+                    <mat-select-trigger [innerHTML]="getTitleValue(row?.areaList?.length)"></mat-select-trigger>
+                    <mat-option value="title" [innerHTML]="getTitleValue(row?.areaList?.length)">
                     </mat-option>
                     <mat-option *ngFor="let area of row.areaList" [value]="area.id" disabled>
                         <span> {{ area.description}}</span>

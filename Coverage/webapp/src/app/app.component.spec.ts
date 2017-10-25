@@ -1,4 +1,3 @@
-import { EmployeLeaves } from './shared/dto/employe-leaves';
 import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,13 +37,15 @@ import { EmployeAutocompleteModule } from './employe-autocomplete/employe-autoco
 import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
 import { ApplicationSharedData } from './shared/application-shared-data';
 import { leaves2018mocks, flexibilityCompositionObj } from './shared/tests-mocks/mocks';
-
-/*jasmine.getEnv().addReporter({
+import { EmployesModule } from './employes/employes.module';
+import { EmployeLeaves } from './shared/dto/employe-leaves';
+/*
+jasmine.getEnv().addReporter({
   specStarted: function(result) {
       console.log(result.fullName);
   }
-});*/
-
+});
+*/
 const employe = new Employe();
 employe.id = 12;
 employe.name = 'name';
@@ -92,6 +93,7 @@ describe('AppComponent', () => {
         HolidayShutdownsModule,
         InflexibilityPeriodsModule,
         LeavesApprovationModule,
+        EmployesModule,
         AppRoutingModule
       ],
     });
