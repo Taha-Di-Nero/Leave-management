@@ -1,0 +1,6 @@
+<span ngbTooltip="Elimina">
+  <button mat-icon-button mwlConfirmationPopover (confirm)="confirmed()" (canceled)="canceled()" (click)="confirmClicked = false; cancelClicked = false" [title]="title" [message]="message" placement="top"
+    (confirm)="confirmClicked = true" (cancel)="cancelClicked = true" [placement]="placement">
+    <mat-icon class="md-24">delete</mat-icon>
+  </button>
+</span>

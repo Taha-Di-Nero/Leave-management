@@ -1,14 +1,14 @@
-/deep/ .cal-month-view .cal-cell-top{
+::ng-deep .cal-month-view .cal-cell-top{
     min-height: 3.4375rem;
     min-width: 1rem;
   }
 
-/deep/ .cal-month-view .cal-day-number{
+::ng-deep .cal-month-view .cal-day-number{
   opacity: 1;
   margin-right: 5px;
 }
 
-/deep/ .tooltip-inner{
+::ng-deep .tooltip-inner{
     background-color: #3f51b5;
     white-space: nowrap;
 }
@@ -38,11 +38,11 @@
     align-items: center;
 }
 
-/deep/ .ngx-charts {
+::ng-deep .ngx-charts {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/deep/ .ngx-charts-outer {
+::ng-deep .ngx-charts-outer {
     margin-right: auto;
     margin-left: auto;
 }

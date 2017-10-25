@@ -2,11 +2,11 @@
     color: rgba(0, 0, 0, 0.87) !important;
 }
 
-/deep/ .app-badge {
+::ng-deep .app-badge {
     background-color: rgba(0, 0, 0, 0.87) !important;
 }
 
-/deep/ .mat-select {
+::ng-deep .mat-select {
     max-width: 12rem !important;
 }
 
