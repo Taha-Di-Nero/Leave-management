@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -8,22 +9,28 @@ import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy
 })
 export class DeleteButtonComponent {
 
+  @ViewChild('t') public tooltip: NgbTooltip;
+
   @Input() placement = 'left';
+  @Input() message = `Si desidera eliminare ?`;
 
   @Output() confirm = new EventEmitter<boolean>();
 
   private title = 'Attenzione';
-  private message = 'Si desidera eliminare ?';
   private confirmClicked = false;
   private cancelClicked = false;
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef) { }
 
   private canceled(): void {
+    this.tooltip.close();
+    this.ref.markForCheck();
     this.confirm.emit(false);
   }
 
   private confirmed(): void {
+    this.tooltip.close();
+    this.ref.markForCheck();
     this.confirm.emit(true);
   }
 

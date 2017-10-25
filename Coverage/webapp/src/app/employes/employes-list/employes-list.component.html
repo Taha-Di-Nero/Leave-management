@@ -36,7 +36,7 @@
                         <mat-icon class="md-24">edit</mat-icon>
                     </button>
                 </span>
-                <app-delete-button (confirm)="delete($event, row)"></app-delete-button>
+                <app-delete-button [message]="'Si desidera eliminare '.concat(row.surname,' ', row.name, ' ?')" (confirm)="delete($event, row)"></app-delete-button>
             </mat-cell>
         </ng-container>
 
