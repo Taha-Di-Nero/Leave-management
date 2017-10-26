@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 
-import { ConfirmationPopoverModule } from 'angular-confirmation-button';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmationButtonComponent } from './confirmation-button.component';
