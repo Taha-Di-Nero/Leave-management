@@ -33,12 +33,3 @@
   font-weight: bold;
   animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
 }
-
-::ng-deep .popover-header {
-  color: white !important;
-  background-color: #dc3545 !important;
-}
-
-::ng-deep .btn {
-  line-height: 1 !important;
-}

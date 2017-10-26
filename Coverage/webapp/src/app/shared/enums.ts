@@ -59,3 +59,8 @@ export enum EmployesUri {
   EmployesBase = 'employes/',
   EmployeAreasBase = 'employes/area/'
 }
+
+export enum ConfirmationButtonType {
+  Success = 'success',
+  Danger = 'danger'
+}

@@ -10,7 +10,7 @@ import { AreaComponent } from './areas/area.component';
 import { EmployesService } from '../service/employes.service';
 import { EmployesComponent } from './employes-manager/employes.component';
 import { EmployesListComponent } from './employes-list/employes-list.component';
-import { DeleteButtonModule } from '../delete-button/delete-button.module';
+import { ConfirmationButtonModule } from '../confirmation-button/confirmation-button.module';
 
 @NgModule({
   providers: [
@@ -22,7 +22,7 @@ import { DeleteButtonModule } from '../delete-button/delete-button.module';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    DeleteButtonModule,
+    ConfirmationButtonModule,
     UsedMaterialModule
   ],
   declarations: [

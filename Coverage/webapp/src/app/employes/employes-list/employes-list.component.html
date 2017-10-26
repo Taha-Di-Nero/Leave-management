@@ -33,10 +33,12 @@
             <mat-cell *matCellDef="let row" style="text-align: right;">
                 <span ngbTooltip="Modifica">
                     <button mat-icon-button (click)="update(row)">
-                        <mat-icon class="md-24">edit</mat-icon>
+                        <mat-icon>edit</mat-icon>
                     </button>
                 </span>
-                <app-delete-button [message]="'Si desidera eliminare '.concat(row.surname,' ', row.name, ' ?')" (confirm)="delete($event, row)"></app-delete-button>
+                <app-critical-confirmation-button [message]="'Si desidera eliminare '.concat(row.surname,' ', row.name, ' ?')" (confirm)="delete($event, row)">  
+                    <mat-icon>delete</mat-icon>
+                </app-critical-confirmation-button>
             </mat-cell>
         </ng-container>
 
