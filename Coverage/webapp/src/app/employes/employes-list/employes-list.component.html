@@ -36,7 +36,7 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                 </span>
-                <app-critical-confirmation-button [message]="getdeleteMsg(row)" (confirm)="delete($event, row)">  
+                <app-critical-confirmation-button ngbTooltip="Elimina" [message]="getdeleteMsg(row)" (confirm)="delete($event, row)">
                     <mat-icon>delete</mat-icon>
                 </app-critical-confirmation-button>
             </mat-cell>

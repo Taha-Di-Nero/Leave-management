@@ -71,7 +71,7 @@ export class EmployesListComponent implements OnInit, OnDestroy {
   }
 
   getdeleteMsg(employe: Employe): string {
-    return 'Si desidera eliminare '.concat(employe.surname, ' ', employe.name, ' ?');
+    return 'Si desidera eliminare '.concat(employe.surname, ' ', employe.name, '?');
   }
 
   ngOnDestroy() {

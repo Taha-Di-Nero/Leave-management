@@ -13,7 +13,7 @@ import { ConfirmationButtonComponent } from './confirmation-button.component';
   styles: [`
             ::ng-deep .popover-header {
                color: white !important;
-               background-color: #dc3545 !important;
+               background-color: #3f51b5 !important;
                font-weight: bolder !important;
             }
             ::ng-deep .popover-body {
@@ -26,7 +26,8 @@ import { ConfirmationButtonComponent } from './confirmation-button.component';
 })
 export class CriticalConfirmationButtonComponent extends ConfirmationButtonComponent {
 
+  @Input() title = 'Attenzione';
+
   confirmButtonType = ConfirmationButtonType.Danger;
-  title = 'Attenzione';
 
 }

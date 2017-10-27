@@ -16,6 +16,7 @@ import { CriticalConfirmationButtonComponent } from './critical-confirmation-but
   imports: [
     CommonModule,
     ConfirmationPopoverModule.forRoot({
+      appendToBody: true,
       confirmText: 'Continua',
       cancelText: 'Annulla'
     }),

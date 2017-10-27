@@ -10,7 +10,7 @@ import { ConfirmationButtonType } from '../shared/enums';
   styles: [`
             ::ng-deep .popover-header {
                color: white !important;
-               background-color: #28a745 !important;
+               background-color: #3f51b5 !important;
                font-weight: bolder !important;
             }
             ::ng-deep .popover-body {
@@ -26,28 +26,21 @@ export class ConfirmationButtonComponent {
   @ViewChild('t') public tooltip: NgbTooltip;
 
   @Input() placement = 'left';
+  @Input() toolTip = '';
+  @Input() title = 'Conferma';
 
   @Output() confirm = new EventEmitter<boolean>();
-
-  title = 'Conferma';
   confirmButtonType = ConfirmationButtonType.Success;
-
-  confirmClicked = false;
-  cancelClicked = false;
 
   private _message = '';
 
   constructor(private ref: ChangeDetectorRef) { }
 
   canceled(): void {
-    this.tooltip.close();
-    this.ref.markForCheck();
     this.confirm.emit(false);
   }
 
   confirmed(): void {
-    this.tooltip.close();
-    this.ref.markForCheck();
     this.confirm.emit(true);
   }
 
