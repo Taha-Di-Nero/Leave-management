@@ -70,6 +70,10 @@ export class EmployesListComponent implements OnInit, OnDestroy {
     this.employes.filter = this.filter.nativeElement.value = '';
   }
 
+  getdeleteMsg(employe: Employe): string {
+    return 'Si desidera eliminare '.concat(employe.surname, ' ', employe.name, '?');
+  }
+
   ngOnDestroy() {
     if (!!this.searchSubscription) {
       this.searchSubscription.unsubscribe();

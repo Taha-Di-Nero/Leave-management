@@ -5,26 +5,29 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import { UsedMaterialModule } from '../shared/used-material.module';
-import { DeleteButtonComponent } from './delete-button.component';
+import { ConfirmationButtonComponent } from './confirmation-button.component';
+import { CriticalConfirmationButtonComponent } from './critical-confirmation-button.component';
 
 @NgModule({
   declarations: [
-    DeleteButtonComponent
+    ConfirmationButtonComponent,
+    CriticalConfirmationButtonComponent
   ],
   imports: [
     CommonModule,
     ConfirmationPopoverModule.forRoot({
-      confirmButtonType: 'danger',
-      confirmText: 'Elimina',
+      appendToBody: true,
+      confirmText: 'Continua',
       cancelText: 'Annulla'
     }),
     NgbModule,
     UsedMaterialModule
   ],
   exports: [
-    DeleteButtonComponent
+    ConfirmationButtonComponent,
+    CriticalConfirmationButtonComponent
   ]
 
 })
 
-export class DeleteButtonModule { }
+export class ConfirmationButtonModule { }

@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { DeleteButtonComponent } from './delete-button.component';
+import { ConfirmationButtonComponent } from './confirmation-button.component';
 import { UsedMaterialModule } from '../shared/used-material.module';
-import { DeleteButtonModule } from './delete-button.module';
+import { ConfirmationButtonModule } from './confirmation-button.module';
 
-describe('DeleteButtonComponent', () => {
-  let component: DeleteButtonComponent;
-  let fixture: ComponentFixture<DeleteButtonComponent>;
+describe('ConfirmationButtonComponent', () => {
+  let component: ConfirmationButtonComponent;
+  let fixture: ComponentFixture<ConfirmationButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('DeleteButtonComponent', () => {
           cancelText: 'Annulla'
         }),
         NgbModule.forRoot(),
-        DeleteButtonModule,
+        ConfirmationButtonModule,
         UsedMaterialModule
       ]
     })
@@ -30,7 +30,7 @@ describe('DeleteButtonComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteButtonComponent);
+    fixture = TestBed.createComponent(ConfirmationButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

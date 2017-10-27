@@ -1,0 +1,6 @@
+<span [ngbTooltip]="toolTip" #t="ngbTooltip">
+  <button mat-icon-button mwlConfirmationPopover [confirmButtonType]="confirmButtonType" (confirm)="confirmed()" (cancel)="canceled()"
+    [title]="title" [message]="message" placement="top" (confirm)="confirmClicked = true" (cancel)="cancelClicked = true" [placement]="placement">
+    <ng-content></ng-content>
+  </button>
+</span>

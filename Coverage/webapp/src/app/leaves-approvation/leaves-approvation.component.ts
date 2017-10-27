@@ -50,13 +50,23 @@ export class LeavesApprovationComponent implements OnInit {
     this.ref.markForCheck();
   }
 
-  approve(employeleaves: EmployeLeaves): void {
-    if (this.mode === ApprovationMode.Add) {
+  approve(confirm: boolean, employeleaves: EmployeLeaves): void {
+    if (confirm && this.mode === ApprovationMode.Add) {
       this.updateLeavesPlan(employeleaves.leaves, [], employeleaves, ApprovationExit.Approved);
-    } else {
+    } else if (confirm) {
       this.updateLeavesPlan([], employeleaves.leaves, employeleaves, ApprovationExit.Approved);
     }
   }
+
+  getConfirmMsg(approve: boolean, employeleaves: EmployeLeaves): string {
+    const requestOp = (this.mode === ApprovationMode.Add) ? ' di aggiungere ' : ' di rimuovere ';
+    const op = approve ? 'aprrovare' : 'respingere';
+    const endPrefix = (this.mode === ApprovationMode.Add) ? 'al' : 'dal';
+    const msg = `Si desidera ${op} la richiesta di ${employeleaves.fullName}${requestOp} i giorni:
+    <br/><div class=\"toast-dates\">${employeleaves.leavesIntervals.join(',<br\>')}.</div></br>${endPrefix} piano ferie?`;
+    return msg;
+  }
+
 
   reject(employeleaves: EmployeLeaves): void {
     if (this.mode === ApprovationMode.Add) {
@@ -82,7 +92,7 @@ export class LeavesApprovationComponent implements OnInit {
 
   approveLeavesSuccess(response: UpdatePlanResponse, approvationExit: ApprovationExit): void {
     let succesMsg = '';
-    if(response.savedDates.length > 0 || response.removedDates.length > 0){
+    if (response.savedDates.length > 0 || response.removedDates.length > 0) {
       succesMsg = `La richiesta è stata ${approvationExit === ApprovationExit.Approved ? 'approvata' : 'respinta'} correttamente.`;
     }
     if (!!succesMsg) {
@@ -90,7 +100,7 @@ export class LeavesApprovationComponent implements OnInit {
     }
     if (response.rejectedDates.length > 0) {
       this.toastr.error(
-        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates.join(',<br\>')}.</div>`,  '', this.tostPos);
+        `Per Assicurare la copertura le seguente date sono state scartate:<br/><div class=\"toast-dates\">${response.rejectedDates.join(',<br\>')}.</div>`, '', this.tostPos);
     }
     this.fetchLeaves();
   }

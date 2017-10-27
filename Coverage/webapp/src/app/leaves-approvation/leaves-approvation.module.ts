@@ -8,6 +8,7 @@ import { BlockUIModule } from 'ng-block-ui';
 
 import { UsedMaterialModule } from '../shared/used-material.module';
 import { LeavesApprovationComponent } from './leaves-approvation.component';
+import { ConfirmationButtonModule } from '../confirmation-button/confirmation-button.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { LeavesApprovationComponent } from './leaves-approvation.component';
     NgbModule,
     ToastrModule,
     BlockUIModule,
+    ConfirmationButtonModule,
     UsedMaterialModule,
   ],
   declarations: [

@@ -15,19 +15,17 @@
                     </mat-select>
                 </span>
             </span>
-            <span ngbTooltip="Approva">
-                <button mat-icon-button (click)="approve(employeleaves)">
-                    <mat-icon class="md-24">check</mat-icon>
-                </button>
-            </span>
-            <span ngbTooltip="Respinga">
-                <button mat-icon-button (click)="reject(employeleaves)">
-                    <mat-icon class="md-24">delete</mat-icon>
-                </button>
-            </span>
+            <app-confirmation-button ngbTooltip="Approva" [message]="getConfirmMsg(true, employeleaves)" (confirm)="approve($event, employeleaves)"
+                placement="bottom">
+                <mat-icon>check</mat-icon>
+            </app-confirmation-button>
+            <app-critical-confirmation-button ngbTooltip="Respinga" [message]="getConfirmMsg(false, employeleaves)" (confirm)="reject($event, employeleaves)"
+                placement="bottom">
+                <mat-icon>delete</mat-icon>
+            </app-critical-confirmation-button>
             <span ngbTooltip="Dettagli">
                 <button mat-icon-button (click)="details(employeleaves)">
-                    <mat-icon class="md-24">forward</mat-icon>
+                    <mat-icon>forward</mat-icon>
                 </button>
             </span>
         </mat-list-item>
