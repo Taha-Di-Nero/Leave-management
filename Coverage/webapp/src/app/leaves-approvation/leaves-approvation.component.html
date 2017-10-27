@@ -1,37 +1,46 @@
 <div *ngIf="(employesleaves && employesleaves.length > 0); then notEmpty else empty"></div>
 <ng-template #notEmpty>
-    <mat-list *ngFor="let employeleaves of employesleaves;">
-        <mat-list-item>
-            <span matLine>
-                <span class="align-bottom" style="min-width: 12.5rem !important;display: inline-block;">{{ employeleaves.fullName }}</span>
-                <span class="ml-sm-5">
-                    <mat-select value="title" #select="matSelect">
-                        <mat-select-trigger [innerHTML]="getTitleValue(employeleaves.leavesNumber)"></mat-select-trigger>
-                        <mat-option value="title" [innerHTML]="getTitleValue(employeleaves.leavesNumber)">
-                        </mat-option>
-                        <mat-option *ngFor="let leave of employeleaves.leavesIntervals" [value]="leave" disabled class="app-select-item">
-                            {{ leave }}
-                        </mat-option>
-                    </mat-select>
-                </span>
-            </span>
-            <app-confirmation-button ngbTooltip="Approva" [message]="getConfirmMsg(true, employeleaves)" (confirm)="approve($event, employeleaves)"
-                placement="bottom">
-                <mat-icon>check</mat-icon>
-            </app-confirmation-button>
-            <app-critical-confirmation-button ngbTooltip="Respinga" [message]="getConfirmMsg(false, employeleaves)" (confirm)="reject($event, employeleaves)"
-                placement="bottom">
-                <mat-icon>delete</mat-icon>
-            </app-critical-confirmation-button>
-            <span ngbTooltip="Dettagli">
-                <button mat-icon-button (click)="details(employeleaves)">
-                    <mat-icon>forward</mat-icon>
-                </button>
-            </span>
-        </mat-list-item>
-    </mat-list>
+        <mat-card class="approvation-list">
+            <mat-list *ngFor="let employeleaves of employesleaves;">
+                <mat-list-item>
+                    <span matLine>
+                        <span class="align-bottom" style="min-width: 12.5rem !important;display: inline-block;">{{ employeleaves.fullName }}</span>
+                        <span class="ml-sm-5">
+                            <mat-select value="title" #select="matSelect">
+                                <mat-select-trigger [innerHTML]="getTitleValue(employeleaves.leavesNumber)"></mat-select-trigger>
+                                <mat-option value="title" [innerHTML]="getTitleValue(employeleaves.leavesNumber)">
+                                </mat-option>
+                                <mat-option *ngFor="let leave of employeleaves.leavesIntervals" [value]="leave" disabled class="app-select-item">
+                                    {{ leave }}
+                                </mat-option>
+                            </mat-select>
+                        </span>
+                    </span>
+                    <app-confirmation-button ngbTooltip="Approva" [message]="getConfirmMsg(true, employeleaves)" (confirm)="approve($event, employeleaves)"
+                        placement="bottom">
+                        <mat-icon>check</mat-icon>
+                    </app-confirmation-button>
+                    <app-critical-confirmation-button ngbTooltip="Respinga" [message]="getConfirmMsg(false, employeleaves)" (confirm)="reject($event, employeleaves)"
+                        placement="bottom">
+                        <mat-icon>delete</mat-icon>
+                    </app-critical-confirmation-button>
+                    <span ngbTooltip="Dettagli">
+                        <button mat-icon-button (click)="details(employeleaves)">
+                            <mat-icon>forward</mat-icon>
+                        </button>
+                    </span>
+                    <span ngbTooltip="Nessun controllo di copertura">
+                        <button mat-icon-button style="vertical-align: text-top;">
+                            <mat-checkbox [(ngModel)]="employeleaves.force">Force</mat-checkbox>
+                        </button>
+                    </span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
 </ng-template>
 
 <ng-template #empty>
-    <h3>Non ci sono richieste da approvare</h3>
+        <mat-card>
+            <h3>Non ci sono richieste da approvare</h3>
+        </mat-card>
 </ng-template>

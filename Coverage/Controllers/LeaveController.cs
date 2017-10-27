@@ -47,12 +47,12 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<LeaveDto> GetYearLeaves(int year) => _leaveService.GetYearLeaves(year);
 
         [HttpPost("employe/plan")]
-        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId, NotificationType notificationType)
+        public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId, NotificationType notificationType, bool force = false)
         {
             var loggedEmploye = GetLoggedEmploye();
             var targetEmploye = _employeService.GetWithArea(GetEmployeId(employeId));
 
-            var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye);
+            var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye, force);
             if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
             {
                 var param = new ApprovationMailParams(notificationType, GetServerUrl(), new MailAddress[] { GetRecipients(targetEmploye) }, GetNotificationMessage(notificationType, response), GetSender(loggedEmploye));
