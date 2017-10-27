@@ -32,7 +32,7 @@ namespace Seac.Coverage.Repositories
 
         public Employe GetWithArea(long id)
         {
-            return Context.Set<Employe>().AsNoTracking().Include(e => e.EmployeArea).ThenInclude(ea => ea.Area).Include(e => e.EmployeArea).ThenInclude(ea => ea.Employe).Where(e => e.Id == id).SingleOrDefault();
+            return Context.Set<Employe>().Include(e => e.EmployeArea).ThenInclude(ea => ea.Area).Include(e => e.EmployeArea).ThenInclude(ea => ea.Employe).Where(e => e.Id == id).SingleOrDefault();
         }
 
         public IEnumerable<Employe> GetAllWithArea()
