@@ -15,6 +15,6 @@
 }
 
 .approvation-list {
-    overflow-y: auto !important;
+    overflow-y: scroll !important;
     max-height: 500px !important;
 }
