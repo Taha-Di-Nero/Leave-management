@@ -27,6 +27,8 @@ export class LeavesApprovationComponent implements OnInit {
 
   employesleaves: EmployeLeaves[] = new Array<EmployeLeaves>();
 
+  force = false;
+
   private tostPos = { positionClass: 'toast-top-center' };
 
   constructor(private leaveService: LeaveService, private toastr: ToastrService, private ref: ChangeDetectorRef, private sanitizer: DomSanitizer) {
@@ -68,10 +70,10 @@ export class LeavesApprovationComponent implements OnInit {
   }
 
 
-  reject(employeleaves: EmployeLeaves): void {
-    if (this.mode === ApprovationMode.Add) {
+  reject(confirm: boolean, employeleaves: EmployeLeaves): void {
+    if (confirm && this.mode === ApprovationMode.Add) {
       this.updateLeavesPlan(new Array<FullDayLeave>(), employeleaves.leaves, employeleaves, ApprovationExit.Rejected);
-    } else {
+    } else if (confirm) {
       employeleaves.leaves.forEach(l => l.state = LeaveState.ToAdd);
       this.updateLeavesPlan(employeleaves.leaves, [], employeleaves, ApprovationExit.Rejected);
     }
@@ -83,7 +85,7 @@ export class LeavesApprovationComponent implements OnInit {
 
   private updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[],
     employeleaves: EmployeLeaves, approvationExit: ApprovationExit): void {
-    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id, approvationExit)
+    this.leaveService.updateLeavesPlan(addedLeaves, removedLeaves, employeleaves.id, approvationExit, employeleaves.force)
       .then(resp => {
         this.details(employeleaves);
         this.approveLeavesSuccess(resp, approvationExit);

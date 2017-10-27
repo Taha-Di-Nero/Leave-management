@@ -46,11 +46,11 @@ export class LeaveService extends BaseService {
       .catch(this.handleError);
   }
 
-  updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number, approvationExit?: ApprovationExit): Promise<UpdatePlanResponse> {
+  updateLeavesPlan(addedLeaves: FullDayLeave[], removedLeaves: FullDayLeave[], employeId: number, approvationExit?: ApprovationExit, force = false): Promise<UpdatePlanResponse> {
     const uri = LeaveUri.LeavesEmployePlanUpdate;
     const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })),
       removedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
-    return this.post(`${uri}${this.getQueryString(employeId, approvationExit)}`, update)
+    return this.post(`${uri}${this.getQueryString(employeId, approvationExit, force)}`, update)
       .toPromise()
       .then((response) => {
         return this.concatUpdatePlanResponseDates(response.json() as UpdatePlanResponse);
@@ -139,10 +139,16 @@ export class LeaveService extends BaseService {
     return isSameDay(from, to) ? `Il ${format(from, 'DD/MM/YYYY')}` : `Dal ${format(from, 'DD/MM/YYYY')} al ${format(to, 'DD/MM/YYYY')}`;
   }
 
-  private getQueryString(employeId: number, approvationExit?: ApprovationExit): string {
+  private getQueryString(employeId: number, approvationExit?: ApprovationExit, force = false): string {
     let queryString = !!employeId ? `?employeId=${employeId}` : '';
-    queryString += !!queryString ? '&' : '?';
+    if (!!approvationExit) {
+      queryString += !!queryString ? '&' : '?';
+    }
     queryString += !!approvationExit ? `notificationType=${approvationExit}` : '';
+    if (force) {
+      queryString += !!queryString ? '&' : '?';
+    }
+    queryString += force ? `force=${force}` : '';
     return queryString;
   }
 }

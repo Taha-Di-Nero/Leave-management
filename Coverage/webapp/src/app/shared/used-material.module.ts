@@ -13,7 +13,8 @@ import {
   MatListModule,
   MatChipsModule,
   MatSelectModule,
-  MatTableModule
+  MatTableModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
@@ -31,7 +32,8 @@ import {
     MatListModule,
     MatTableModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCheckboxModule
   ],
   exports: [
     MatSidenavModule,
@@ -47,7 +49,8 @@ import {
     MatListModule,
     MatTableModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCheckboxModule
   ]
 })
 export class UsedMaterialModule { }

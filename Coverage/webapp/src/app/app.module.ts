@@ -36,7 +36,9 @@ import { EmployesModule } from './employes/employes.module';
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 20000,
+      maxOpened: 1,
+      autoDismiss: true,
+      timeOut: 10000,
       progressBar: true,
       progressAnimation: 'decreasing',
       closeButton: true,

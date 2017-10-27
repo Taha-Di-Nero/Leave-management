@@ -109,9 +109,12 @@ export class EmployesComponent implements OnInit {
                 setTimeout(() => {
                     this.fetchEmployes();
                     this.employesListChanged.emit();
+                    const logged = ApplicationSharedData.getInstance().loggedEmploye;
+                    ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch(logged.surname.concat(' ', logged.name));
                 }, 10);
             }).catch(err => this.toastr.error('Errore Generico!', '', this.tostPos));
     }
+
     getEmailErrorMessage() {
         return this.email.hasError('required') ? 'Specificare un email.' :
             this.email.hasError('email') ? 'Email non valido.' : '';

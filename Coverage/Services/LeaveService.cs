@@ -60,10 +60,10 @@ namespace Seac.Coverage.Services
             return _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(_leaveRepository.GetLeavesRange(yearInit, yearEnd));
         }
 
-        public UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne)
+        public UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne, bool force)
         {
             Employe currentEmploye = _employeRepository.GetWithArea(employeId);
-            var response = AddRejectedLeavesToResponse(coverageService, leaves.AddedLeaves, currentEmploye);
+            var response = force ? new UpdatePlanResponse()  : AddRejectedLeavesToResponse(coverageService, leaves.AddedLeaves, currentEmploye);
 
             if (loggedOne.Profile == EmployeProfile.Manager)
             {
