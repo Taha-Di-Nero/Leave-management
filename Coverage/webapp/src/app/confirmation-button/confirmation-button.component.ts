@@ -11,6 +11,10 @@ import { ConfirmationButtonType } from '../shared/enums';
             ::ng-deep .popover-header {
                color: white !important;
                background-color: #28a745 !important;
+               font-weight: bolder !important;
+            }
+            ::ng-deep .popover-body {
+                padding: 1rem 1rem 1rem .75rem !important;
             }
             ::ng-deep .btn {
                line-height: 1 !important;
@@ -22,7 +26,6 @@ export class ConfirmationButtonComponent {
   @ViewChild('t') public tooltip: NgbTooltip;
 
   @Input() placement = 'left';
-  @Input() message = `Si desidera eliminare ?`;
 
   @Output() confirm = new EventEmitter<boolean>();
 
@@ -31,6 +34,8 @@ export class ConfirmationButtonComponent {
 
   confirmClicked = false;
   cancelClicked = false;
+
+  private _message = '';
 
   constructor(private ref: ChangeDetectorRef) { }
 
@@ -44,6 +49,15 @@ export class ConfirmationButtonComponent {
     this.tooltip.close();
     this.ref.markForCheck();
     this.confirm.emit(true);
+  }
+
+  @Input()
+  set message(msg: string) {
+    this._message = msg;
+  }
+
+  get message(): string {
+    return `<p><strong>${this._message}</strong></p>`;
   }
 
 }

@@ -14,6 +14,10 @@ import { ConfirmationButtonComponent } from './confirmation-button.component';
             ::ng-deep .popover-header {
                color: white !important;
                background-color: #dc3545 !important;
+               font-weight: bolder !important;
+            }
+            ::ng-deep .popover-body {
+                padding: 1rem 1rem 1rem .75rem !important;
             }
             ::ng-deep .btn {
                line-height: 1 !important;
