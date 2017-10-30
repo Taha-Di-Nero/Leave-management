@@ -14,11 +14,19 @@ import { inflexibilityPeriodListMock, areasMock } from '../../shared/tests-mocks
 import { EmployesComponent } from './employes.component';
 import { EmployesModule } from '../employes.module';
 import { EmployesDataSource } from '../employes-list/employes-list-datasource';
+import { ConfirmationButtonModule } from '../../confirmation-button/confirmation-button.module';
+import { ApplicationSharedData } from '../../shared/application-shared-data';
+import { EmployeState, Profile } from '../../shared/enums';
 
 let employeService: EmployesService;
 
 const employes = <Employe[]>inflexibilityPeriodListMock[0].employes.concat(inflexibilityPeriodListMock[1].employes);
-const employe = JSON.parse(JSON.stringify(employes[0]));
+const loggedEmploye = JSON.parse(JSON.stringify(employes[0]));
+const employe = new Employe();
+loggedEmploye.id = 12;
+loggedEmploye.name = 'name';
+loggedEmploye.surname = 'surname';
+
 const areas = areasMock;
 employe.areaList = areas;
 
@@ -37,6 +45,7 @@ describe('EmployesComponent', () => {
         NgbModule.forRoot(),
         ToastrModule.forRoot(),
         EmployesModule,
+        ConfirmationButtonModule,
         UsedMaterialModule
       ]
     })
@@ -58,12 +67,14 @@ describe('EmployesComponent', () => {
     employe.areaList = areas;
     component.areasAutocomplete.areas = areas;
     component.employesDataSource = new EmployesDataSource(employes);
+    ApplicationSharedData.getInstance().loggedEmploye = loggedEmploye;
     fixture.detectChanges();
   });
 
   afterEach(function (done) {
     setTimeout(function () {
       done();
+      ApplicationSharedData.getInstance().setEmpAutoCompInjectSearch(null);
     }, 30);
   });
 
