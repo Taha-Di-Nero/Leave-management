@@ -16,7 +16,6 @@ import { I18n, ItalianDatepickerI18n } from '../../shared/italianDatepickerI18n'
 import { EmployeAutocompleteModule } from '../../employe-autocomplete/employe-autocomplete.module';
 import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
 import { Employe } from '../../shared/dto/employe';
-import { EmployeState, Profile } from '../../shared/enums';
 import { ApplicationSharedData } from '../../shared/application-shared-data';
 
 let inflexibilityPeriodsService: InflexibilityPeriodsService;

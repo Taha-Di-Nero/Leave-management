@@ -14,6 +14,7 @@ import { UsedMaterialModule } from '../shared/used-material.module';
 import { LeavesApprovationComponent } from './leaves-approvation.component';
 import { LeaveService } from '../service/leave.service';
 import { FullDayLeave } from '../shared/dto/leave';
+import { ConfirmationButtonModule } from '../confirmation-button/confirmation-button.module';
 
 const leaves = [{ id: 1, date: new Date(2017, 10, 4), state: 1 }, { id: 1, date: new Date(2017, 10, 5), state: 2 }];
 const employeLeaves = new EmployeLeaves(1, 'full name');
@@ -36,6 +37,7 @@ describe('LeavesApprovationComponent', () => {
         HttpModule,
         ToastrModule.forRoot(),
         NgbModule.forRoot(),
+        ConfirmationButtonModule,
         UsedMaterialModule,
       ],
       declarations: [LeavesApprovationComponent]
@@ -64,14 +66,14 @@ describe('LeavesApprovationComponent', () => {
   it('Trigger approvation.', () => {
     fixture.detectChanges();
     expect(function () {
-      component['approve'].call(component, employeLeaves);
+      component['approve'].call(component, true, employeLeaves);
     }).not.toThrow();
   });
 
   it('Trigger rejection.', () => {
     fixture.detectChanges();
     expect(function () {
-      component['reject'].call(component, employeLeaves);
+      component['reject'].call(component, true, employeLeaves);
     }).not.toThrow();
   });
 });

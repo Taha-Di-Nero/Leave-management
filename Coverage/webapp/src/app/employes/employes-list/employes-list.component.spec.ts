@@ -12,6 +12,7 @@ import { EmployesListComponent } from './employes-list.component';
 import { Employe } from '../../shared/dto/employe';
 import { EmployesDataSource } from './employes-list-datasource';
 import { inflexibilityPeriodListMock } from '../../shared/tests-mocks/mocks';
+import { ConfirmationButtonModule } from '../../confirmation-button/confirmation-button.module';
 
 const employes = <Employe[]>inflexibilityPeriodListMock[0].employes.concat(inflexibilityPeriodListMock[1].employes);
 
@@ -30,6 +31,7 @@ describe('EmployesListComponent', () => {
         FormsModule,
         NgbModule.forRoot(),
         EmployesModule,
+        ConfirmationButtonModule,
         UsedMaterialModule
       ]
     })
