@@ -2,7 +2,7 @@ import { gapsByAreaMock } from '../shared/tests-mocks/mocks';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/Common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CalendarModule, CalendarEvent } from 'angular-calendar';
@@ -26,7 +26,7 @@ describe('LeavesOverlapsComponent', () => {
             imports: [
                 CommonModule,
                 FormsModule,
-                HttpModule,
+                HttpClientModule,
                 BrowserAnimationsModule,
                 NgbModule.forRoot(),
                 NgbModalModule.forRoot(),

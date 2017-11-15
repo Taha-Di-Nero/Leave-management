@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/Common/http';
 import { CalendarModule } from 'angular-calendar';
 
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +19,7 @@ import { UsedMaterialModule } from '../shared/used-material.module';
   imports: [
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     NgbModule,
     NgbModalModule,
     CalendarModule,

@@ -5,7 +5,7 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { ReflectiveInjector } from '@angular/core';
 import { MockBackend } from '@angular/http/testing';
 
-import { XHRBackend, HttpModule, Response, ResponseOptions, RequestOptions, BaseRequestOptions, Http } from '@angular/http';
+import { XHRBackend, Response, ResponseOptions, RequestOptions, BaseRequestOptions, Http } from '@angular/http';
 
 import { CoverageService } from './coverage.service';
 import { gapsByAreaMock, gapsByEmployeMock, flexibilityCompositionMock, leaves2018mocks, inflexibilityPeriodListMock, holidayShutdownsmocks } from '../shared/tests-mocks/mocks';

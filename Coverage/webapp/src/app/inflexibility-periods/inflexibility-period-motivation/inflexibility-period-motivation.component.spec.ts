@@ -1,6 +1,6 @@
 import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/Common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,7 @@ describe('InflexibilityPeriodMotivationComponent', () => {
       imports: [
         CommonModule,
         BrowserAnimationsModule,
-        HttpModule,
+        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         NgbModule.forRoot(),

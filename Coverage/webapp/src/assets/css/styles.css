@@ -123,3 +123,7 @@ div {
 .badge {
     color: white !important;
 }
+
+mat-row:nth-child(even){
+    background-color:rgba(63, 81, 181, 0.1);
+}
