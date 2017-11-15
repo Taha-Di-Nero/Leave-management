@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import 'hammerjs';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,6 +33,7 @@ import { EmployesModule } from './employes/employes.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpModule ,
     NgbModule.forRoot(),
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),

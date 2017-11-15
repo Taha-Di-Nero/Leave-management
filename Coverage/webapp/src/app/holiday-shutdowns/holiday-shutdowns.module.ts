@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/Common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { I18n, ItalianDatepickerI18n } from '../shared/italianDatepickerI18n';
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,

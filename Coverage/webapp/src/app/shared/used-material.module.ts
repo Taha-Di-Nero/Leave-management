@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
   MatCardModule,
@@ -19,6 +20,7 @@ import {
 
 @NgModule({
   imports: [
+    HttpClientModule,
     MatSidenavModule,
     MatCardModule,
     MatIconModule,
@@ -51,6 +53,9 @@ import {
     MatSelectModule,
     MatChipsModule,
     MatCheckboxModule
-  ]
+  ],
+providers: [
+  HttpClient
+]
 })
 export class UsedMaterialModule { }
