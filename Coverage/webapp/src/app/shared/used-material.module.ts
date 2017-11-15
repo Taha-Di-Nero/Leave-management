@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
@@ -21,6 +22,7 @@ import {
 @NgModule({
   imports: [
     HttpClientModule,
+    HttpModule,
     MatSidenavModule,
     MatCardModule,
     MatIconModule,

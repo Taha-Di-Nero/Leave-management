@@ -1,7 +1,7 @@
-import { gapsByAreaMock } from '../shared/tests-mocks/mocks';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/Common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -12,6 +12,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LeavesOverlapsComponent } from './leaves-overlaps.component';
 import { CoverageService } from '../service/coverage.service';
 import { ViewMode } from '../shared/enums';
+import { gapsByAreaMock } from '../shared/tests-mocks/mocks';
 
 
 let coverageService: CoverageService;
@@ -27,6 +28,7 @@ describe('LeavesOverlapsComponent', () => {
                 CommonModule,
                 FormsModule,
                 HttpClientModule,
+                HttpModule,
                 BrowserAnimationsModule,
                 NgbModule.forRoot(),
                 NgbModalModule.forRoot(),
