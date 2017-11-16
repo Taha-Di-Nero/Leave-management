@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter
 
 import { Observable } from 'rxjs/Observable';
 
+
 import { ToastrService } from 'ngx-toastr';
 
 import { InflexibilityPeriodMotivation } from '../../shared/dto/inflexibility-period-motivation';

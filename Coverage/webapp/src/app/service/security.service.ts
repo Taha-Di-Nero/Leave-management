@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
-
 import { Employe } from '../shared/dto/employe';
 import { SecurityUri } from '../shared/enums';
 import { BaseService } from './base.service';

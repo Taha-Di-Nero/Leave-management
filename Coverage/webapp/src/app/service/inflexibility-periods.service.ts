@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import {toPromise} from 'rxjs/operator/toPromise';
+
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { BaseService } from './base.service';

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import {toPromise} from 'rxjs/operator/toPromise';
+
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay, endOfDay } from 'date-fns';
 

@@ -1,8 +1,8 @@
-import { Employe } from '../shared/dto/employe';
 import { Injectable } from '@angular/core';
 import { Response, ResponseContentType } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import {toPromise} from 'rxjs/operator/toPromise';
+
 import { format, isSameDay, addDays } from 'date-fns';
 
 import { BaseService } from './base.service';
@@ -11,6 +11,7 @@ import { LeaveState, LeaveUri, ApprovationExit } from '../shared/enums';
 import { LeavesPlanUpdate } from '../shared/dto/Leaves-plan-update';
 import { UpdatePlanResponse } from '../shared/dto/update-plan-response';
 import { EmployeLeaves } from '../shared/dto/employe-leaves';
+import { Employe } from '../shared/dto/employe';
 import { Utils } from '../shared/utils';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import {toPromise} from 'rxjs/operator/toPromise';
 
 import { BaseService } from './base.service';
 import { Employe } from '../shared/dto/employe';
@@ -54,7 +54,7 @@ export class EmployesService extends BaseService {
     return this.delete(`${uri}${id}`).toPromise().catch(this.handleError);
   }
 
-  private sortEmployeAreas(employes: Employe[]): Employe[]{
+  private sortEmployeAreas(employes: Employe[]): Employe[] {
     employes.forEach(e => e.areaList.sort((a, b) => a.description.toLocaleLowerCase().localeCompare(b.description.toLocaleLowerCase())));
     return employes;
   }
