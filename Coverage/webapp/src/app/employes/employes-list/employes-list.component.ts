@@ -13,8 +13,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/debounceTime';
+import { debounceTime } from 'rxjs/operators';
 import 'rxjs/add/operator/distinctUntilChanged';
+
 
 import { Employe } from '../../shared/dto/employe';
 import { EmployeState } from '../../shared/enums';
@@ -45,8 +46,7 @@ export class EmployesListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.searchSubscription = Observable.fromEvent(this.filter.nativeElement, 'keyup')
-      .debounceTime(150)
-      .distinctUntilChanged()
+      .debounceTime(150).distinctUntilChanged()
       .subscribe(() => {
         if (!this.employes) { return; }
         this.employes.filter = this.filter.nativeElement.value;

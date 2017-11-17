@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
-
-import 'rxjs/add/operator/toPromise';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 import { Employe } from '../shared/dto/employe';
 import { SecurityUri } from '../shared/enums';
@@ -10,20 +8,21 @@ import { BaseService } from './base.service';
 @Injectable()
 export class SecurityService extends BaseService {
 
+  constructor(protected http: HttpClient) { super(http); }
+
   getLoggedEmploye(): Promise<Employe> {
     const uri = SecurityUri.LoggedEmploye;
-    return this.get(`${uri}`)
+    return this.http.get(`${uri}`)
       .toPromise()
       .then((response) => {
-        return response.json() as Employe;
+        return response as Employe;
       })
       .catch(this.handleError);
   }
 
   logout(): Promise<any> {
     const uri = SecurityUri.Logout;
-    this._defaultOptions.headers.set('Authorization', 'Basic logout');
-    return this.get(`${uri}`, this._defaultOptions).toPromise();
+    return this.http.get(`${uri}`, { headers: new HttpHeaders().set('Authorization', 'Basic logout') }).toPromise();
   }
 
 }

@@ -9,7 +9,6 @@ import {
 
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
 
 import { DAYS_OF_WEEK } from 'calendar-utils/dist/calendar-utils';
 import { CalendarDateFormatter, CalendarMonthViewDay } from 'angular-calendar';

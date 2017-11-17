@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { toPromise } from 'rxjs/operator/toPromise';
+
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { BaseService } from './base.service';
@@ -12,48 +13,50 @@ import { InflexibilityPeriodMotivation } from '../shared/dto/inflexibility-perio
 @Injectable()
 export class InflexibilityPeriodsService extends BaseService {
 
+  constructor(protected http: HttpClient) { super(http); }
+
   getInflexibilityPeriods(): Promise<InflexibilityPeriod[]> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodsBase;
-    return this.get(`${uri}`)
+    return this.http.get(`${uri}`)
       .toPromise()
       .then((response) => {
-        return response.json() as InflexibilityPeriod[];
+        return response as InflexibilityPeriod[];
       })
       .catch(this.handleError);
   }
 
   saveInflexibilityPeriod(inflexibilityPeriod: InflexibilityPeriod): Promise<InflexibilityPeriod> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodsBase;
-    return this.post(`${uri}`, this.formatDate(inflexibilityPeriod))
+    return this.http.post(`${uri}`, this.formatDate(inflexibilityPeriod))
       .toPromise().catch(this.handleError);
   }
 
   deleteInflexibilityPeriod(id: number): Promise<InflexibilityPeriod> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodsBase;
-    return this.delete(`${uri}${id}`).toPromise().catch(this.handleError);
+    return this.http.delete(`${uri}${id}`).toPromise().catch(this.handleError);
   }
 
   getMotivations(): Promise<InflexibilityPeriodMotivation[]> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodMotivationsBase;
-    return this.get(`${uri}`)
+    return this.http.get(`${uri}`)
       .toPromise()
       .then((response) => {
-        return response.json() as InflexibilityPeriodMotivation[];
+        return response as InflexibilityPeriodMotivation[];
       })
       .catch(this.handleError);
   }
 
   addMotivation(motivation: InflexibilityPeriodMotivation): Promise<InflexibilityPeriodMotivation> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodMotivationsBase;
-    return this.post(`${uri}`, motivation)
+    return this.http.post(`${uri}`, motivation)
       .toPromise().then((response) => {
-        return response.json() as InflexibilityPeriodMotivation;
+        return response as InflexibilityPeriodMotivation;
       }).catch(this.handleError);
   }
 
   deleteMotivation(id: number): Promise<InflexibilityPeriodMotivation> {
     const uri = InflexibilityPeriodsUri.InflexibilityPeriodMotivationsBase;
-    return this.delete(`${uri}${id}`).toPromise().catch(this.handleError);
+    return this.http.delete(`${uri}${id}`).toPromise().catch(this.handleError);
   }
 
   private formatDate(inflexibilityPeriod: any): any {

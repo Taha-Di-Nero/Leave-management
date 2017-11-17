@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, XHRBackend, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
-export class BaseService  extends Http {
+export class BaseService {
 
-  constructor (backend: XHRBackend, options: RequestOptions) {
-    options.headers.set('X-Requested-With', 'XMLHttpRequest');
-    super(backend, options);
-  }
-
+  constructor(http: HttpClient) { }
 
   protected handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
