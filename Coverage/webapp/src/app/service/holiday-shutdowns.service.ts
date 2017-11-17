@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import {toPromise} from 'rxjs/operator/toPromise';
+import { toPromise } from 'rxjs/operator/toPromise';
 
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,25 +12,27 @@ import { HolidayShutdownsUri } from '../shared/enums';
 @Injectable()
 export class HolidayShutdownsService extends BaseService {
 
+  constructor(protected http: HttpClient) { super(http); }
+
+
   getHolidayShutdowns(): Promise<HolidayShutdown[]> {
     const uri = HolidayShutdownsUri.HolidayShutdownsBase;
-    return this.get(`${uri}`)
+    return this.http.get(`${uri}`)
       .toPromise()
       .then((response) => {
-        return response.json() as HolidayShutdown[];
+        return response as HolidayShutdown[];
       })
       .catch(this.handleError);
   }
 
   saveHolidayShutdown(holidayShutdown: HolidayShutdown): Promise<HolidayShutdown> {
     const uri = HolidayShutdownsUri.HolidayShutdownsBase;
-    return this.post(`${uri}`, this.formatDate(holidayShutdown))
-      .toPromise().catch(this.handleError);
+    return this.http.post(`${uri}`, this.formatDate(holidayShutdown)).toPromise().catch(this.handleError);
   }
 
   deleteHolidayShutdown(id: number): Promise<HolidayShutdown> {
     const uri = HolidayShutdownsUri.HolidayShutdownsBase;
-    return this.delete(`${uri}${id}`).toPromise().catch(this.handleError);
+    return this.http.delete(`${uri}${id}`).toPromise().catch(this.handleError);
   }
 
   private formatDate(holidayShutdown: any): any {

@@ -1,6 +1,6 @@
-import { HttpModule } from '@angular/http';
 import 'hammerjs';
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,6 +25,7 @@ import { LeaveService } from './service/leave.service';
 import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation.module';
 import { LayoutModule } from './layout/layout.module';
 import { EmployesModule } from './employes/employes.module';
+import { BaseInterceptor } from './service/base.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { EmployesModule } from './employes/employes.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule ,
+    HttpClientModule,
     NgbModule.forRoot(),
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
@@ -62,6 +63,11 @@ import { EmployesModule } from './employes/employes.module';
     AppRoutingModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseInterceptor,
+      multi: true,
+    },
     SecurityService,
     CoverageService,
     LeaveService

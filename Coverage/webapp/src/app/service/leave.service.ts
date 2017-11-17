@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response, ResponseContentType } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import {toPromise} from 'rxjs/operator/toPromise';
+import { toPromise } from 'rxjs/operator/toPromise';
 
 import { format, isSameDay, addDays } from 'date-fns';
 
@@ -17,32 +17,34 @@ import { Utils } from '../shared/utils';
 @Injectable()
 export class LeaveService extends BaseService {
 
+  constructor(protected http: HttpClient) { super(http); }
+
   getLeaves(fromDate: string, toDate: string, employeId: number): Promise<FullDayLeave[]> {
     const uri = `${LeaveUri.GetLeavesByEmploye}${fromDate}/${toDate}${this.getQueryString(employeId)}`;
-    return this.get(uri)
+    return this.http.get(uri)
       .toPromise()
       .then((response) => {
-        return response.json() as FullDayLeave[];
+        return response as FullDayLeave[];
       })
       .catch(this.handleError);
   }
 
   getYearLeaves(year: number): Promise<FullDayLeave[]> {
     const uri = `${LeaveUri.GetYearLeaves}${year}`;
-    return this.get(uri)
+    return this.http.get(uri)
       .toPromise()
       .then((response) => {
-        return response.json() as FullDayLeave[];
+        return response as FullDayLeave[];
       })
       .catch(this.handleError);
   }
 
   getLeavesByState(state: LeaveState): Promise<EmployeLeaves[]> {
     const uri = `${LeaveUri.GetLeavesByState}${state}`;
-    return this.get(uri)
+    return this.http.get(uri)
       .toPromise()
       .then((response) => {
-        return this.toEmployeLeaves(response.json() as FullDayLeave[]);
+        return this.toEmployeLeaves(response as FullDayLeave[]);
       })
       .catch(this.handleError);
   }
@@ -51,19 +53,19 @@ export class LeaveService extends BaseService {
     const uri = LeaveUri.LeavesEmployePlanUpdate;
     const update = new LeavesPlanUpdate(addedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })),
       removedLeaves.map(l => ({ id: l.id, 'date': format(l.date, 'YYYY-MM-DD'), 'state': l.state })));
-    return this.post(`${uri}${this.getQueryString(employeId, approvationExit, force)}`, update)
+    return this.http.post(`${uri}${this.getQueryString(employeId, approvationExit, force)}`, update)
       .toPromise()
       .then((response) => {
-        return this.concatUpdatePlanResponseDates(response.json() as UpdatePlanResponse);
+        return this.concatUpdatePlanResponseDates(response as UpdatePlanResponse);
       })
       .catch(this.handleError);
   }
 
   getLeavesPlan(year: number): Promise<Blob> {
     const uri = LeaveUri.LeavesPlan;
-    return this.get(`${uri}${year}`, { responseType: ResponseContentType.Blob }).toPromise()
+    return this.http.get(`${uri}${year}`, { responseType: 'blob' }).toPromise()
       .then((response) => {
-        return response.blob();
+        return new Blob([response], { type: 'application/vnd.ms-excel' });
       })
       .catch(this.handleError);
   }

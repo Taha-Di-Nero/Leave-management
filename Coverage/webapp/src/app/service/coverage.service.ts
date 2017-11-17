@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import {toPromise} from 'rxjs/operator/toPromise';
+import { toPromise } from 'rxjs/operator/toPromise';
 
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay, endOfDay } from 'date-fns';
@@ -15,19 +15,21 @@ import { BaseService } from './base.service';
 @Injectable()
 export class CoverageService extends BaseService {
 
+  constructor(protected http: HttpClient) { super(http); }
+
   searchFlexibility(): Promise<EmployesFlexibility> {
     const uri = LeaveOverlapsUri.ByFlexibility;
-    return this.get(`${uri}`)
+    return this.http.get(`${uri}`)
       .toPromise()
       .then((response) => {
-        return new EmployesFlexibility(response.json());
+        return new EmployesFlexibility(response);
       })
       .catch(this.handleError);
   }
 
   searchGaps(fromDate: string, toDate: string, mode: ViewMode): Promise<Array<CalendarEvent>> {
     const uri = (mode === ViewMode.Area) ? LeaveOverlapsUri.ByArea : LeaveOverlapsUri.ByEmploye;
-    return this.get(`${uri}${fromDate}/${toDate}`)
+    return this.http.get(`${uri}${fromDate}/${toDate}`)
       .toPromise()
       .then((response) => {
         return this.getCoverageGaps(response, mode);
@@ -35,22 +37,22 @@ export class CoverageService extends BaseService {
       .catch(this.handleError);
   }
 
-  private getCoverageGaps(response: Response, mode: ViewMode): CalendarEvent[] {
-    const gaps: EmployeCoverageGaps[] = response.json() as EmployeCoverageGaps[];
+  private getCoverageGaps(response: Object, mode: ViewMode): CalendarEvent[] {
+    const gaps: EmployeCoverageGaps[] = response as EmployeCoverageGaps[];
     const events: CalendarEvent[] = (mode === ViewMode.Employe) ?
       this.getCoverageGapsByEmploye(response) : this.getCoverageGapsByArea(response);
     return events;
   }
 
-  private getCoverageGapsByEmploye(response: Response): CalendarEvent[] {
-    const gaps: EmployeCoverageGaps[] = response.json() as EmployeCoverageGaps[];
+  private getCoverageGapsByEmploye(response: Object): CalendarEvent[] {
+    const gaps: EmployeCoverageGaps[] = response as EmployeCoverageGaps[];
     const events: CalendarEvent[] = [];
     for (const gap of gaps) {
       events.push({
         start: startOfDay(gap.date),
         end: endOfDay(gap.date),
         title: gap.employes.map(e => e.surname + ' ' + e.name).join(', ') + ': ' +
-        gap.dayGaps.map(g => '[' + g.initTime + ', ' + g.endTime + ']').join(', '),
+          gap.dayGaps.map(g => '[' + g.initTime + ', ' + g.endTime + ']').join(', '),
         color: (gap.employes.length === 1) ? COLORS.red : COLORS.yellow,
         meta: {
           type: (gap.employes.length === 1) ? 'danger' : 'warning',
@@ -62,8 +64,8 @@ export class CoverageService extends BaseService {
     return events;
   }
 
-  private getCoverageGapsByArea(response: Response): CalendarEvent[] {
-    const aree: AreaCoverageGaps[] = response.json() as AreaCoverageGaps[];
+  private getCoverageGapsByArea(response: Object): CalendarEvent[] {
+    const aree: AreaCoverageGaps[] = response as AreaCoverageGaps[];
     const events: CalendarEvent[] = [];
     for (const a of aree) {
       for (const day of a.gaps) {

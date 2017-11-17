@@ -66,7 +66,6 @@ export class HolidayShutdownListComponent implements AfterViewInit, OnDestroy {
         if (this.holidayShutdownModel) {
             this.holidayShutdownsService.saveHolidayShutdown(this.holidayShutdownModel)
                 .then(hs => {
-                    this.holidayShutdowns.unshift(hs);
                     this.resetForm();
                     this.fetchHolidayShudowns();
                 });
