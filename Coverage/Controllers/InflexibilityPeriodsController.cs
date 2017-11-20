@@ -24,10 +24,18 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<InflexibilityPeriodDto> GetAll() => _inflexibilityPeriodsService.GetAll();
 
         [HttpPost]
-        public void Post([FromBody]InflexibilityPeriodDto period) => _inflexibilityPeriodsService.Update(period);
+        public IActionResult Post([FromBody]InflexibilityPeriodDto period)
+        {
+            _inflexibilityPeriodsService.Update(period);
+            return new NoContentResult();
+        }
 
         [HttpDelete("{id}")]
-        public void Delete(long id) => _inflexibilityPeriodsService.Delete(id);
+        public IActionResult Delete(long id)
+        {
+            _inflexibilityPeriodsService.Delete(id);
+            return new NoContentResult();
+        }
 
         [HttpGet("motivation")]
         public IEnumerable<InflexibilityPeriodMotivationDto> GetAllMotivation() => _inflexibilityPeriodsService.GetAllMotivation();
@@ -36,6 +44,10 @@ namespace Seac.Coverage.Controllers
         public InflexibilityPeriodMotivationDto AddMotivation([FromBody]InflexibilityPeriodMotivationDto motivation) => _inflexibilityPeriodsService.AddMotivation(motivation);
 
         [HttpDelete("motivation/{id}")]
-        public void DeleteMotivation(long id) => _inflexibilityPeriodsService.DeleteMotivation(id);
+        public IActionResult DeleteMotivation(long id)
+        {
+            _inflexibilityPeriodsService.DeleteMotivation(id);
+            return new NoContentResult();
+        }
     }
 }

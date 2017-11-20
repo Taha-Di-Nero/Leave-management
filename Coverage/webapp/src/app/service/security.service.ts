@@ -22,7 +22,7 @@ export class SecurityService extends BaseService {
 
   logout(): Promise<any> {
     const uri = SecurityUri.Logout;
-    return this.http.get(`${uri}`, { headers: new HttpHeaders().set('Authorization', 'Basic logout') }).toPromise();
+    return this.http.get(`${uri}`, { headers: new HttpHeaders().set('Authorization', 'Basic logout') }).toPromise().catch();
   }
 
 }

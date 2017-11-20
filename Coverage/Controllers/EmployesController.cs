@@ -28,7 +28,11 @@ namespace Seac.Coverage.Controllers
         public void Post([FromBody]EmployeDto employe) => _employeService.Update(employe);
 
         [HttpDelete("{id}")]
-        public void Delete(long id) => _employeService.Delete(id);
+        public IActionResult Delete(long id)
+        {
+            _employeService.Delete(id);
+            return new NoContentResult();
+        }
 
         [HttpGet("area")]
         public IEnumerable<AreaBaseDto> GetAllArea() => _areaService.GetAllArea();
@@ -37,6 +41,10 @@ namespace Seac.Coverage.Controllers
         public AreaBaseDto AddArea([FromBody]AreaBaseDto area) => _areaService.AddArea(area);
 
         [HttpDelete("area/{id}")]
-        public void DeleteArea(long id) => _areaService.DeleteArea(id);
+        public IActionResult DeleteArea(long id)
+        {
+            _areaService.DeleteArea(id);
+            return new NoContentResult();
+        }
     }
 }
