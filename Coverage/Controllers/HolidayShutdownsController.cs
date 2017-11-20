@@ -24,9 +24,17 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<HolidayShutdown> GetAll() => _holidayShutdownService.GetAll();
 
         [HttpPost]
-        public void Post([FromBody]HolidayShutdown period) => _holidayShutdownService.Update(period);
+        public IActionResult Post([FromBody]HolidayShutdown period)
+        {
+            _holidayShutdownService.Update(period);
+            return new NoContentResult();
+        }
 
         [HttpDelete("{id}")]
-        public void Delete(int id) => _holidayShutdownService.Delete(_holidayShutdownService.Get(id));
+        public IActionResult Delete(int id)
+        {
+            _holidayShutdownService.Delete(_holidayShutdownService.Get(id));
+            return new NoContentResult();
+        }
     }
 }
