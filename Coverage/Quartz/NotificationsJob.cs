@@ -42,7 +42,7 @@ namespace Seac.Coverage.Quartz
             try
             {
                 var leaves = _jobRepository.GetNotApprovedLeaves();
-                if (leaves.Count() > 0)
+                if (leaves.Any())
                 {
                     var managers = _jobRepository.GetManagers();
                     var param = new ApprovationMailParams(NotificationType.Alert, GetServerUrl(), GetRecipients(managers), GetNotificationMessage(leaves));

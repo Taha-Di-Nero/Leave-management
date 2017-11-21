@@ -55,7 +55,7 @@ namespace Seac.Coverage.Controllers
             var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmploye.Id, loggedEmploye, force);
             if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
             {
-                var param = new ApprovationMailParams(notificationType, GetServerUrl(), new MailAddress[] { GetRecipients(targetEmploye) }, GetNotificationMessage(notificationType, response), GetSender(loggedEmploye));
+                var param = new ApprovationMailParams(notificationType, GetServerUrl(), new MailAddress[] { GetRecipients(targetEmploye) }, GetNotificationMessage(response), GetSender(loggedEmploye));
                 SendMail(param).ConfigureAwait(false);
             }
 
@@ -89,7 +89,7 @@ namespace Seac.Coverage.Controllers
             return send;
         }
 
-        private string GetNotificationMessage(NotificationType notificationType, UpdatePlanResponse response)
+        private string GetNotificationMessage(UpdatePlanResponse response)
         {
             var msg = "Le date:<blockquote>{0}</blockquote>sono state {1}.";
             var days = ConcatDays(response.SavedDates.Length > 0 ? response.SavedDates : response.RemovedDates);

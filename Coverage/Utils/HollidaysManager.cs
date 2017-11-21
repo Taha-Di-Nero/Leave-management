@@ -10,7 +10,7 @@ namespace Seac.Coverage.Utils
     {
 
         private static HollidaysManager INSTANCE = new HollidaysManager();
-        private List<List<int>> fixedHolidays = new List<List<int>>();
+        private readonly List<List<int>> fixedHolidays = new List<List<int>>();
 
         private HollidaysManager()
         {
@@ -28,7 +28,7 @@ namespace Seac.Coverage.Utils
             fixedHolidays.Insert(11, new List<int>(new int[] { 8, 25, 26 }));
         }
 
-        public static bool isHolidayDay(DateTime date)
+        public static bool IsHolidayDay(DateTime date)
         {
             int day = date.Day;
             int month = date.Month - 1;

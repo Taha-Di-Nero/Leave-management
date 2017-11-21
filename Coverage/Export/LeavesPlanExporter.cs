@@ -23,7 +23,7 @@ namespace Seac.Coverage.Export
         private IWorkbook wb;
         private Dictionary<String, XSSFCellStyle> styles;
 
-        private List<LeaveDto> leaves = null;
+        private readonly List<LeaveDto> leaves = null;
         private List<EmployeDto> employes = null;
 
         public LeavesPlanExporter(List<LeaveDto> leaves, List<EmployeDto> employes)
@@ -75,7 +75,7 @@ namespace Seac.Coverage.Export
             CreateTotalColumn(sheet, employesLeavesRows, dayNameRow, dayNumberRow, i);
             sheet.CreateFreezePane(1, 3);
             sheet.SetActiveCell(3, 0);
-            
+
             wb.Write(outStram);
             wb.Close();
         }
@@ -182,7 +182,7 @@ namespace Seac.Coverage.Export
 
         private Dictionary<String, XSSFCellStyle> CreateStyles()
         {
-            Dictionary<String, XSSFCellStyle> styles = new Dictionary<String, XSSFCellStyle>();
+            Dictionary<String, XSSFCellStyle> XssfStyles = new Dictionary<String, XSSFCellStyle>();
 
             IFont titleFont = Getfont(18, new XSSFColor(new byte[] { 255, 255, 255 }));
             IFont normalFont = Getfont(10, new XSSFColor(new byte[] { 39, 51, 89 }));
@@ -197,44 +197,44 @@ namespace Seac.Coverage.Export
             style.SetFillForegroundColor(new XSSFColor(new byte[] { 63, 81, 181 }));
             style.FillPattern = FillPattern.SolidForeground;
             style.SetFont(titleFont);
-            styles["title"] = style;
+            XssfStyles["title"] = style;
 
             XSSFColor workDayBorderColor = new XSSFColor(new byte[] { 39, 51, 89 });
             XSSFColor foreGroundColor = new XSSFColor(new byte[] { 255, 255, 255 });
             XSSFColor notWorkDayBorderColor = new XSSFColor(new byte[] { 255, 0, 0 });
 
-            styles["workday"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
-            styles["notWorkDay"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Thin);
+            XssfStyles["workday"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
+            XssfStyles["notWorkDay"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Thin);
 
             style = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
             style.Alignment = HorizontalAlignment.Left;
-            styles["employe"] = style;
+            XssfStyles["employe"] = style;
 
-            styles["workdayMonthEnd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Double);
+            XssfStyles["workdayMonthEnd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Double);
 
-            styles["notWorkDayMonthEnd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Double);
+            XssfStyles["notWorkDayMonthEnd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Double);
 
             foreGroundColor = new XSSFColor(new byte[] { 239, 243, 255 });
 
-            styles["workdayOdd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
-            styles["notWorkDayOdd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Thin);
+            XssfStyles["workdayOdd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
+            XssfStyles["notWorkDayOdd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Thin);
 
             style = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
             style.Alignment = HorizontalAlignment.Left;
-            styles["employeOdd"] = style;
+            XssfStyles["employeOdd"] = style;
 
-            styles["workdayMonthEndOdd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Double);
+            XssfStyles["workdayMonthEndOdd"] = GetCellCommonStyle(normalFont, workDayBorderColor, foreGroundColor, BorderStyle.Double);
 
-            styles["notWorkDayMonthEndOdd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Double);
+            XssfStyles["notWorkDayMonthEndOdd"] = GetCellCommonStyle(notWorkDayFont, notWorkDayBorderColor, foreGroundColor, BorderStyle.Double);
 
             foreGroundColor = new XSSFColor(new byte[] { 63, 81, 181 });
             IDataFormat format = wb.CreateDataFormat();
-            styles["leave"] = GetCellCommonStyle(leaveFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
-            styles["leave"].DataFormat = format.GetFormat(";;;");
+            XssfStyles["leave"] = GetCellCommonStyle(leaveFont, workDayBorderColor, foreGroundColor, BorderStyle.Thin);
+            XssfStyles["leave"].DataFormat = format.GetFormat(";;;");
 
-            styles["leave"].FillPattern = FillPattern.BigSpots;
+            XssfStyles["leave"].FillPattern = FillPattern.BigSpots;
 
-            return styles;
+            return XssfStyles;
         }
 
         private XSSFCellStyle GetCellCommonStyle(IFont font, XSSFColor color, XSSFColor foregroundColor, BorderStyle borderRight)
@@ -282,7 +282,7 @@ namespace Seac.Coverage.Export
         private String GetStyleNameForHeader(DateTime day, int i, int mergeSize)
         {
             String styleName = null;
-            if (isHolidayDay(day))
+            if (IsHolidayDay(day))
             {
                 styleName = (i < (mergeSize - 1)) ? "notWorkDay" : "notWorkDayMonthEnd";
             }
@@ -294,9 +294,10 @@ namespace Seac.Coverage.Export
         }
 
 
-        private XSSFCellStyle GetStyle(String styleName, int row)
+        private XSSFCellStyle GetStyle(string styleName, int row)
         {
-            return (row % 2 == 0) ? styles[styleName] : styles[styleName += "Odd"];
+            styleName = (row % 2 == 0) ? styleName : styleName + "Odd";
+            return styles[styleName];
         }
 
 

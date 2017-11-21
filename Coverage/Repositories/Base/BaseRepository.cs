@@ -11,7 +11,7 @@ namespace Seac.Coverage.Repositories.Base
     {
         public DomainContext Context { get; set; }
 
-        public BaseRepository(DomainContext context)
+        protected BaseRepository(DomainContext context)
         {
             Context = context;
         }
@@ -69,8 +69,13 @@ namespace Seac.Coverage.Repositories.Base
 
         public void Dispose()
         {
-            Context.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Context.Dispose();
         }
     }
 }

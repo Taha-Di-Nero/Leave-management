@@ -10,7 +10,7 @@ using static Seac.Coverage.Utils.ConfigurationKeys;
 
 namespace Coverage
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -20,7 +20,7 @@ namespace Coverage
                 options.Listen(IPAddress.Any, Convert.ToInt32(configuration[ServerHttpPort]));
                 options.Listen(IPAddress.Any, Convert.ToInt32(configuration[ServerHttpsPort]), listenOptions =>
                 {
-                    listenOptions.UseHttps(configuration[ServerHttpsCertificatePath], configuration[ServerHttpsCertificatePassword]);
+                    listenOptions.UseHttps(configuration[ServerHttpsCertificatePath], configuration[ServerHttpsCertificatePass]);
                 });
             }).Build().Run();
         }

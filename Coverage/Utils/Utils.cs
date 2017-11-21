@@ -22,13 +22,13 @@ namespace Seac.Coverage.Utils
                 currentDate = GetDate(date);
                 tempDate = ForwardNonWorkingDays(tempDate);
                 nextDay = tempDate.AddDays(1);
-                if (nextDay.Date == currentDate.Date || HollidaysManager.isHolidayDay(nextDay))
+                if (nextDay.Date == currentDate.Date || HollidaysManager.IsHolidayDay(nextDay))
                 {
                     tempDate = currentDate;
                 }
                 else
                 {
-                    tempDate = HollidaysManager.isHolidayDay(tempDate) ? BackwardNonWorkingDays(tempDate) : tempDate;
+                    tempDate = HollidaysManager.IsHolidayDay(tempDate) ? BackwardNonWorkingDays(tempDate) : tempDate;
                     lastCurrentDate = tempDate;
                     leavesInterval.Add(FormatDateInterval(lastDate, tempDate));
                     lastDate = tempDate = currentDate;
@@ -45,7 +45,7 @@ namespace Seac.Coverage.Utils
         private static DateTime ForwardNonWorkingDays(DateTime from)
         {
             var nextDay = from.AddDays(1);
-            if (HollidaysManager.isHolidayDay(nextDay))
+            if (HollidaysManager.IsHolidayDay(nextDay))
             {
                 from = ForwardNonWorkingDays(nextDay);
             }
@@ -55,7 +55,7 @@ namespace Seac.Coverage.Utils
         private static DateTime BackwardNonWorkingDays(DateTime from)
         {
             from = from.AddDays(-1);
-            if (HollidaysManager.isHolidayDay(from))
+            if (HollidaysManager.IsHolidayDay(from))
             {
                 from = BackwardNonWorkingDays(from);
             }

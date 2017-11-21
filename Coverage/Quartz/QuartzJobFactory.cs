@@ -22,6 +22,9 @@ namespace Seac.Coverage.Quartz
             return job;
         }
 
-        public void ReturnJob(IJob job) { }
+        public void ReturnJob(IJob job)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Seac.Coverage.Services
     {
         private readonly IMapper _mapper;
         private readonly ILeaveRepository _leaveRepository;
-        IEmployeRepository _employeRepository;
+        private readonly IEmployeRepository _employeRepository;
 
         public LeaveService(IMapper mapper, IEmployeRepository employeRepository, ILeaveRepository leaveRepository)
         {
@@ -97,7 +97,7 @@ namespace Seac.Coverage.Services
                 if (daysToRemove?.Count > 0)
                 {
                     response.RejectedDates = daysToRemove.Select(d => d.ToString(DateIsoFormat)).ToArray();
-                    daysToRemove.ForEach(day => leaves.Remove(leaves.Where(l => l.Date == day).FirstOrDefault()));
+                    daysToRemove.ForEach(day => leaves.Remove(leaves.FirstOrDefault(l => l.Date == day)));
                 }
             }
             return response;

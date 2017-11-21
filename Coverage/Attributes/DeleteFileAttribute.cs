@@ -7,10 +7,10 @@ namespace Seac.Coverage.Attributes
 {
     public sealed class DeleteFileAttribute : ActionFilterAttribute
     {
-        public override void OnResultExecuted(ResultExecutedContext filterContext)
+        public override void OnResultExecuted(ResultExecutedContext context)
         {
-            filterContext.HttpContext.Response.Body.Flush();
-            string filePath = (filterContext.Result as PhysicalFileResult).FileName;
+            context.HttpContext.Response.Body.Flush();
+            string filePath = (context.Result as PhysicalFileResult).FileName;
             File.Delete(filePath);
         }
     }

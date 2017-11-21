@@ -16,10 +16,6 @@ namespace Seac.Coverage.Mail
         private static string _headerImageId = "header";
         private static string _bodyImageId = "body";
 
-        private static string _notifyBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "avviso-email.html");
-        private static string _approvedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "approvation-email.html");
-        private static string _rejectedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
-
         private static string _notifySubject = "Ci sono modifiche del piano ferie da approvare.";
         private static string _approvedRejectedSubject = "Piano ferie";
 
@@ -76,13 +72,13 @@ namespace Seac.Coverage.Mail
             switch (type)
             {
                 case NotificationType.Alert:
-                    path = _notifyBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "avviso-email.html");
                     break;
                 case NotificationType.Approved:
-                    path = _approvedBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "approvation-email.html");
                     break;
                 case NotificationType.Rejected:
-                    path = _rejectedBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
                     break;
             }
             return path;

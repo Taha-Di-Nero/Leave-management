@@ -14,15 +14,13 @@ namespace Seac.Coverage.Services
 {
     public class CoverageService : ICoverageService
     {
-        private readonly IMapper _mapper;
         private readonly IAreaService _areaService;
         private readonly IEmployeService _employeService;
         private readonly ILeaveService _leaveService;
         private readonly IInflexibilityPeriodsService _inflexibilityPeriodsService;
 
-        public CoverageService(IMapper mapper, IAreaService areaService, IEmployeService employeService, ILeaveService leaveService, IInflexibilityPeriodsService inflexibilityPeriodsService)
+        public CoverageService(IAreaService areaService, IEmployeService employeService, ILeaveService leaveService, IInflexibilityPeriodsService inflexibilityPeriodsService)
         {
-            _mapper = mapper;
             _areaService = areaService;
             _employeService = employeService;
             _leaveService = leaveService;
@@ -66,7 +64,7 @@ namespace Seac.Coverage.Services
             {
                 if (a.EmployeList.Count == 1)
                 {
-                    allEmployesWithArea.Remove(allEmployesWithArea.Where(e => e.Id == a.EmployeList[0].Id).FirstOrDefault());
+                    allEmployesWithArea.Remove(allEmployesWithArea.FirstOrDefault(e => e.Id == a.EmployeList[0].Id));
                     a.EmployeList[0].State = EmployeState.Inflexible;
                     inflexible.Add(new EmployeDto(a.EmployeList[0]));
                 }
@@ -75,7 +73,7 @@ namespace Seac.Coverage.Services
             return new EmployesFlexibility(GetFlexibleEmployes(allEmployesWithArea, areas), inflexible.Distinct().OrderBy(e => e.Surname).ToList(), allEmployesNoArea);
         }
 
-        private IList<DayCoverageGaps> FindLeaveOverlaps(IList<LeaveDto> leaves, DateTime from, DateTime to, int employeNumber)
+        private IList<DayCoverageGaps> FindLeaveOverlaps(IList<LeaveDto> leaves, int employeNumber)
         {
             IList<DayCoverageGaps> leavesOverlaps = new List<DayCoverageGaps>();
             IList<DateTime> period = leaves.Select(l => l.Date).Distinct().ToList();
@@ -90,11 +88,11 @@ namespace Seac.Coverage.Services
 
                 if (morningLeaves.Count > 0 && morningLeaves.Count == employeNumber)
                 {
-                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(morningLeaves, morningLeaves.Max(d => d.MFrom), morningLeaves.Max(d => d.MTo)));
+                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(morningLeaves.Max(d => d.MFrom), morningLeaves.Max(d => d.MTo)));
                 }
                 if (afternoonLeaves.Count > 0 && afternoonLeaves.Count == employeNumber)
                 {
-                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(afternoonLeaves, afternoonLeaves.Max(d => d.AFrom), afternoonLeaves.Max(d => d.ATo)));
+                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(afternoonLeaves.Max(d => d.AFrom), afternoonLeaves.Max(d => d.ATo)));
                 }
 
                 if (dayLeaveOverlaps.DayGaps.Count > 0)
@@ -104,7 +102,7 @@ namespace Seac.Coverage.Services
             return leavesOverlaps;
         }
 
-        private IList<CoverageGap> GetMayBeLeaveOverlap(IList<LeaveDto> dayLeaves, TimeSpan maxBegin, TimeSpan minEnd)
+        private IList<CoverageGap> GetMayBeLeaveOverlap(TimeSpan maxBegin, TimeSpan minEnd)
         {
             IList<CoverageGap> leaveOverlaps = new List<CoverageGap>();
 
@@ -201,7 +199,7 @@ namespace Seac.Coverage.Services
                 {
                     areaEmployeNumber--;
                 }
-                IList<DayCoverageGaps> areaLeaveOverlaps = FindLeaveOverlaps(leaves.Where(l => l.Employe.AreaList.Any(ea => ea.Id == a.Id)).ToList(), fromDate, toDate, areaEmployeNumber);
+                IList<DayCoverageGaps> areaLeaveOverlaps = FindLeaveOverlaps(leaves.Where(l => l.Employe.AreaList.Any(ea => ea.Id == a.Id)).ToList(), areaEmployeNumber);
                 areaCoverageGaps.Gaps.AddRange(areaLeaveOverlaps);
                 if (areaCoverageGaps.Gaps.Count > 0 && actionForArea != null)
                 {
