@@ -1,6 +1,8 @@
 node {
-	stage 'Checkout'
+    stage 'Checkout'
         checkout scm
     stage 'Build'
-        bat 'codeAnalysis.bat'
+        bat 'dotnet restore --configfile NuGet.Config'
+    stage 'Build'
+        bat 'dotnet msbuild'
 }
