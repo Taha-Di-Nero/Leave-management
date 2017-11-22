@@ -40,7 +40,7 @@ namespace Seac.Coverage.Services
 
         private void UpdateEntity(EmployeDto employeDto)
         {
-            var entity = employeDto.Id > 0 ? _employeRepository.GetWithArea(employeDto.Id) : _mapper.Map<EmployeDto, Employe>(employeDto); ;
+            var entity = employeDto.Id > 0 ? _employeRepository.GetWithArea(employeDto.Id) : _mapper.Map<EmployeDto, Employe>(employeDto);
             entity.Surname = employeDto.Surname;
             entity.Name = employeDto.Name;
             entity.Email = employeDto.Email;

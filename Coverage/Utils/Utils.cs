@@ -45,21 +45,13 @@ namespace Seac.Coverage.Utils
         private static DateTime ForwardNonWorkingDays(DateTime from)
         {
             var nextDay = from.AddDays(1);
-            if (HollidaysManager.IsHolidayDay(nextDay))
-            {
-                from = ForwardNonWorkingDays(nextDay);
-            }
-            return from;
+            return (HollidaysManager.IsHolidayDay(nextDay)) ? ForwardNonWorkingDays(nextDay) : from;
         }
 
         private static DateTime BackwardNonWorkingDays(DateTime from)
         {
-            from = from.AddDays(-1);
-            if (HollidaysManager.IsHolidayDay(from))
-            {
-                from = BackwardNonWorkingDays(from);
-            }
-            return from;
+            var yesturday = from.AddDays(-1);
+            return (HollidaysManager.IsHolidayDay(yesturday)) ? BackwardNonWorkingDays(yesturday) : yesturday;
         }
 
         private static string FormatDateInterval(DateTime from, DateTime to)

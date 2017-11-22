@@ -13,29 +13,31 @@
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            var other = obj as CoverageGap;
+            if (other == null)
             {
                 return false;
             }
-            if (base.Equals(obj))
+
+            if (InitTime == null && other.InitTime != null)
             {
-                return true;
-            }
-            CoverageGap other = (CoverageGap)obj;
-            if (InitTime == null)
-            {
-                if (other.InitTime != null)
-                    return false;
-            }
-            else if (InitTime != other.InitTime)
                 return false;
-            if (EndTime == null)
-            {
-                if (other.EndTime != null)
-                    return false;
             }
-            else if (EndTime != other.EndTime)
+
+            if (InitTime != other.InitTime)
+            {
                 return false;
+            }
+
+            if (EndTime == null && other.EndTime != null)
+            {
+                return false;
+            }
+
+            if (EndTime != other.EndTime)
+            {
+                return false;
+            }
             return true;
         }
 

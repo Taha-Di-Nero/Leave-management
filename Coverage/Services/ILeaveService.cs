@@ -20,5 +20,7 @@ namespace Seac.Coverage.Services
 
         IEnumerable<LeaveDto> GetLeavesRange(DateTime yearInit, DateTime yearEnd);
 
+        string ExportLeavesPlan(int year);
+
     }
 }

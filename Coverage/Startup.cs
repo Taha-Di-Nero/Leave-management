@@ -26,7 +26,10 @@ namespace Coverage
             services.AddMySqlDbContext(Configuration);
             services.AddTransient();
             services.AddLogging();
-            if (HostingEnvironment.IsDevelopment()) services.AddSwagger();
+            if (HostingEnvironment.IsDevelopment())
+            {
+                services.AddSwagger();
+            }
             services.AddHttps();
             services.AddDistributedMemoryCache();
             services.AddSession();

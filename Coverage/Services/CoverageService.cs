@@ -96,7 +96,9 @@ namespace Seac.Coverage.Services
                 }
 
                 if (dayLeaveOverlaps.DayGaps.Count > 0)
+                {
                     leavesOverlaps.Add(dayLeaveOverlaps);
+                }
             }
 
             return leavesOverlaps;
@@ -149,8 +151,7 @@ namespace Seac.Coverage.Services
                 ecg.Areas = ecg.Areas.OrderBy(a => a.Description).ToList();
                 ecg.Employes = ecg.Employes.OrderBy(e => e.Surname).ThenBy(e => e.Name).ToList();
             }
-            employeLeaveOverlaps = employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList();
-            return employeLeaveOverlaps;
+            return employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList(); ;
         }
 
 
@@ -165,8 +166,7 @@ namespace Seac.Coverage.Services
             }
 
             flexibleEmployesDto.ForEach(e => RemoveDuplicatedGroup(e));
-            flexibleEmployesDto = flexibleEmployesDto.OrderBy(e => e.Groups.Count).ThenBy(e => e.Surname).ToList();
-            return flexibleEmployesDto;
+            return flexibleEmployesDto.OrderBy(e => e.Groups.Count).ThenBy(e => e.Surname).ToList();
         }
 
         private void RemoveDuplicatedGroup(EmployeDto employe)
@@ -208,6 +208,9 @@ namespace Seac.Coverage.Services
                 else if (areaCoverageGaps.Gaps.Count > 0 && actionForEmploye != null)
                 {
                     actionForEmploye(employesCoverageGaps, a, areaCoverageGaps);
+                }
+                else {
+                    //nothing to do just removing sonar issue
                 }
             }
             return areas.Count;

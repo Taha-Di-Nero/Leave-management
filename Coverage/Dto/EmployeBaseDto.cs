@@ -22,33 +22,39 @@ namespace Seac.Coverage.Dto
             Email = employe.Email;
             Profile = employe.Profile;
         }
+
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is EmployeBaseDto) || !(obj is EmployeBaseDto))
+
+            var other = obj as EmployeBaseDto;
+
+            if (other == null)
             {
                 return false;
             }
-            if (base.Equals(obj))
-            {
-                return true;
-            }
-            EmployeBaseDto other = (EmployeBaseDto)obj;
+
             if (Id != other.Id)
-                return false;
-            if (Name == null)
             {
-                if (other.Name != null)
-                    return false;
-            }
-            else if (Name != other.Name)
                 return false;
-            if (Surname == null)
+            }
+            if (Name == null && other.Name != null)
             {
-                if (other.Surname != null)
-                    return false;
-            }
-            else if (Surname != other.Surname)
                 return false;
+            }
+
+            if (Name != other.Name)
+            {
+                return false;
+            }
+            if (Surname == null && other.Surname != null)
+            {
+                return false;
+            }
+
+            if (Surname != other.Surname)
+            {
+                return false;
+            }
             return true;
         }
 

@@ -80,6 +80,8 @@ namespace Seac.Coverage.Mail
                 case NotificationType.Rejected:
                     path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
                     break;
+                default:
+                    break;
             }
             return path;
         }
@@ -93,12 +95,7 @@ namespace Seac.Coverage.Mail
 
         private static MailAddress CheckSenderMail(MailAddress sender)
         {
-            if (sender == null)
-            {
-                sender = new MailAddress(_notifyEmail);
-
-            }
-            return sender;
+            return sender ?? new MailAddress(_notifyEmail);
         }
 
         private static void SetFromTo(MailMessage mailMessage, MailAddress sender, MailAddress[] recipients)

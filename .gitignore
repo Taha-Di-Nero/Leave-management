@@ -7,3 +7,4 @@ wwwroot
 /Coverage/webapp/coverage
 .vs
 node
+.sonarqube

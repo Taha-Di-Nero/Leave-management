@@ -43,7 +43,7 @@ namespace Seac.Coverage.Services
         public IEnumerable<InflexibilityPeriodDto> GetByEmployeAndDates(long employeId, DateTime init, DateTime end)
         {
             var entities = _inflexibilityPeriodRepository.GetByEmployeAndDates(employeId, init, end).ToList();
-            return _mapper.Map<IList<InflexibilityPeriod>, IList<InflexibilityPeriodDto>>(entities); ;
+            return _mapper.Map<IList<InflexibilityPeriod>, IList<InflexibilityPeriodDto>>(entities);
         }
 
         public void Update(InflexibilityPeriodDto period)

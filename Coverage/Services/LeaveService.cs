@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ using Seac.Coverage.Repositories;
 using Seac.Coverage.Models;
 using Seac.Coverage.Dto;
 using Seac.Coverage.Enum;
+using Seac.Coverage.Export;
 
 using static Seac.Coverage.Utils.GeneralConstants;
 
@@ -63,7 +65,7 @@ namespace Seac.Coverage.Services
         public UpdatePlanResponse UpdateLeavesPlan(ICoverageService coverageService, LeavesPlanUpdate leaves, long employeId, EmployeDto loggedOne, bool force)
         {
             Employe currentEmploye = _employeRepository.GetWithArea(employeId);
-            var response = force ? new UpdatePlanResponse()  : AddRejectedLeavesToResponse(coverageService, leaves.AddedLeaves, currentEmploye);
+            var response = force ? new UpdatePlanResponse() : AddRejectedLeavesToResponse(coverageService, leaves.AddedLeaves, currentEmploye);
 
             if (loggedOne.Profile == EmployeProfile.Manager)
             {
@@ -83,6 +85,23 @@ namespace Seac.Coverage.Services
         }
 
         public IEnumerable<LeaveDto> GetLeavesRange(DateTime yearInit, DateTime yearEnd) => _mapper.Map<IEnumerable<Leave>, IEnumerable<LeaveDto>>(_leaveRepository.GetLeavesRange(yearInit, yearEnd));
+
+        public string ExportLeavesPlan(int year)
+        {
+            var yearInit = new DateTime(year, 1, 1);
+            var yearEnd = new DateTime(year, 12, 31);
+            var xlsxFilePath = Path.GetTempFileName();
+
+            var leaves = GetLeavesRange(yearInit, yearEnd);
+            leaves = leaves.Where(l => l.State == LeaveState.Approved);
+            var employes = GetAllEmploye();
+
+            var leavesPlanExporter = new LeavesPlanExporter(leaves.ToList(), employes.ToList());
+            leavesPlanExporter.Export(new FileStream(xlsxFilePath, FileMode.Create), year);
+            return xlsxFilePath;
+        }
+
+        private IEnumerable<EmployeDto> GetAllEmploye() => _mapper.Map<IEnumerable<Employe>, IEnumerable<EmployeDto>>(_employeRepository.GetAll());
 
         private UpdatePlanResponse AddRejectedLeavesToResponse(ICoverageService coverageService, IList<LeaveDto> leaves, Employe currentEmploye)
         {

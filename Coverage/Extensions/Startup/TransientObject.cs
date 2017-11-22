@@ -25,6 +25,7 @@ namespace Seac.Coverage.Extensions.Startup
             services.AddTransient<IEmployeService, EmployeService>();
             services.AddTransient<IHolidayShutdownsService, HolidayShutdownsService>();
             services.AddTransient<IInflexibilityPeriodsService, InflexibilityPeriodsService>();
+            services.AddTransient<IMailService, MailService>();
         }
     }
 }

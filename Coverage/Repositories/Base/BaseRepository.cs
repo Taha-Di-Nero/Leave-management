@@ -19,8 +19,9 @@ namespace Seac.Coverage.Repositories.Base
         public void Insert(T entity)
         {
             if (entity == null)
+            {
                 throw new ArgumentException("entity is null");
-
+            }
             Context.Set<T>().Add(entity);
             Context.SaveChanges();
         }
@@ -34,7 +35,9 @@ namespace Seac.Coverage.Repositories.Base
         public void Update(T entity)
         {
             if (entity == null)
+            {
                 throw new ArgumentException("entity is null");
+            }
             Context.Set<T>().Update(entity);
             Context.SaveChanges();
         }

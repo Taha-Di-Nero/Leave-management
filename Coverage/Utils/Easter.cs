@@ -45,9 +45,7 @@ namespace Seac.Coverage.Utils
 
         public static DateTime? GetEasterDate(int year)
         {
-            var constant = Costanti.First(cx =>
-                (!cx.MinDate.HasValue || year >= cx.MinDate.Value) &&
-                (year <= cx.MaxDate));
+            var constant = Costanti.First(cx => (!cx.MinDate.HasValue || year >= cx.MinDate.Value) && (year <= cx.MaxDate));
             var x = constant.X;
             var y = constant.Y;
             var a = year % 19;
@@ -56,13 +54,30 @@ namespace Seac.Coverage.Utils
             var d = (19 * a + x) % 30;
             var e = (2 * b + 4 * c + 6 * d + y) % 7;
             var sum = 22 + d + e;
-            if (sum <= 31) return new DateTime(year, 3, sum);
-            else if (((sum - 31) != 26 && (sum - 31) != 25) ||
-                        ((sum - 31) == 25 && (d != 28 || a <= 10)))
-                return new DateTime(year, 4, sum - 31);
-            else if ((sum - 31) == 25 && d == 28 && a > 10) return new DateTime(year, 4, 18);
-            else return new DateTime(year, 4, 19);
+            var adCondition = d == 28 && a > 10;
+            return ConstructEasterDate(year, sum, adCondition);
+        }
 
+        private static DateTime? ConstructEasterDate(int year, int sum, bool adCondition)
+        {
+            var sum25 = (sum - 31) == 25;
+            var sum26 = (sum - 31) == 26;
+            if (sum <= 31)
+            {
+                return new DateTime(year, 3, sum);
+            }
+            else if ((!sum26 && !sum25) || (sum25 && !adCondition))
+            {
+                return new DateTime(year, 4, sum - 31);
+            }
+            else if (sum25 && adCondition)
+            {
+                return new DateTime(year, 4, 18);
+            }
+            else
+            {
+                return new DateTime(year, 4, 19);
+            }
         }
     }
 }
