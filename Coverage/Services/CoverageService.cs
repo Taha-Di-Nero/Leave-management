@@ -151,7 +151,7 @@ namespace Seac.Coverage.Services
                 ecg.Areas = ecg.Areas.OrderBy(a => a.Description).ToList();
                 ecg.Employes = ecg.Employes.OrderBy(e => e.Surname).ThenBy(e => e.Name).ToList();
             }
-            return employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList(); ;
+            return employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList();
         }
 
 

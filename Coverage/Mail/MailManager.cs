@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace Seac.Coverage.Mail
 
             MailMessage mailMessage = new MailMessage();
             SetFromTo(mailMessage, param.Sender, param.Recipients);
-            mailMessage.Body = BuildBody(param.Type, param.Sender, param.Recipients, param.ServerUrl, param.Message);
+            mailMessage.Body = BuildBody(param.Type, param.Sender, param.Recipients, param.ServerLink, param.Message);
             mailMessage.Subject = GetSubject(param.Type);
             mailMessage.Attachments.Add(GetAttachment(_headerImagePath, _headerImageId));
             mailMessage.Attachments.Add(GetAttachment(GetBodyImagePath(param.Type), _bodyImageId));
@@ -38,7 +39,7 @@ namespace Seac.Coverage.Mail
             await client.SendMailAsync(mailMessage);
         }
 
-        private static string BuildBody(NotificationType type, MailAddress sender, MailAddress[] recipients, string serverUrl, string msg)
+        private static string BuildBody(NotificationType type, MailAddress sender, MailAddress[] recipients, string serverLink, string msg)
         {
             var builder = new BodyBuilder();
             using (StreamReader SourceReader = File.OpenText(GetBodyPath(type)))
@@ -49,11 +50,11 @@ namespace Seac.Coverage.Mail
             var body = "";
             if (type == NotificationType.Alert)
             {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverUrl);
+                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverLink);
             }
             else
             {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverUrl);
+                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverLink);
             }
             return body;
         }
@@ -81,7 +82,7 @@ namespace Seac.Coverage.Mail
                     path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
                     break;
                 default:
-                    break;
+                    throw new NotSupportedException();
             }
             return path;
         }

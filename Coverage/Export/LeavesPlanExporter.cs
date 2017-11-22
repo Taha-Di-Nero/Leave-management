@@ -23,8 +23,8 @@ namespace Seac.Coverage.Export
         private IWorkbook wb;
         private ExportStyleManager exportStyleManager;
 
-        private readonly List<LeaveDto> leaves = null;
-        private List<EmployeDto> employes = null;
+        private readonly List<LeaveDto> leaves;
+        private List<EmployeDto> employes;
 
         public LeavesPlanExporter(List<LeaveDto> leaves, List<EmployeDto> employes)
         {
@@ -80,7 +80,7 @@ namespace Seac.Coverage.Export
             wb.Close();
         }
 
-        private void CreateDayCells(List<IRow> employesLeavesRows, String styleName, DateTime date, int cellIndex)
+        private void CreateDayCells(IList<IRow> employesLeavesRows, String styleName, DateTime date, int cellIndex)
         {
             for (int i = 0; i < employes.Count; i++)
             {
@@ -153,7 +153,7 @@ namespace Seac.Coverage.Export
         }
 
 
-        private void CreateTotalColumn(ISheet sheet, List<IRow> employesLeavesRows, IRow dayNameRow, IRow dayNumberRow, int lastCellIndex)
+        private void CreateTotalColumn(ISheet sheet, IList<IRow> employesLeavesRows, IRow dayNameRow, IRow dayNumberRow, int lastCellIndex)
         {
             CellRangeAddress range = new CellRangeAddress(1, 2, lastCellIndex, lastCellIndex);
             XSSFCellStyle style = exportStyleManager.GetStyle("workday");
@@ -186,16 +186,12 @@ namespace Seac.Coverage.Export
 
         }
 
-        private String GetStyleNameForHeader(DateTime day, int i, int mergeSize)
+        private static string GetStyleNameForHeader(DateTime day, int i, int mergeSize)
         {
-            String styleName = null;
+            string styleName = (i < (mergeSize - 1)) ? "workday" : "workdayMonthEnd";
             if (IsHolidayDay(day))
             {
                 styleName = (i < (mergeSize - 1)) ? "notWorkDay" : "notWorkDayMonthEnd";
-            }
-            else
-            {
-                styleName = (i < (mergeSize - 1)) ? "workday" : "workdayMonthEnd";
             }
             return styleName;
         }

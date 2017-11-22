@@ -71,16 +71,16 @@ namespace Seac.Coverage.Services
             {
                 _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.Approved));
                 _leaveRepository.UpdateAll(GetLeavesEntity(leaves.AddedLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.Approved));
-                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.removedLeaves, currentEmploye, LeaveState.Approved));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovedLeaves, currentEmploye, LeaveState.Approved));
             }
             else
             {
                 _leaveRepository.InsertAll(GetLeavesEntity(leaves.AddedLeaves, currentEmploye, LeaveState.ToAdd));
-                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.removedLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.ToRemove));
-                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.removedLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.ToRemove));
+                _leaveRepository.DeleteAll(GetLeavesEntity(leaves.RemovedLeaves.Where(l => l.State == LeaveState.ToAdd).ToList(), currentEmploye, LeaveState.ToRemove));
+                _leaveRepository.UpdateAll(GetLeavesEntity(leaves.RemovedLeaves.Where(l => l.State == LeaveState.Approved).ToList(), currentEmploye, LeaveState.ToRemove));
             }
 
-            SetUpdatedDatesMessage(leaves.AddedLeaves, leaves.removedLeaves, response);
+            SetUpdatedDatesMessage(leaves.AddedLeaves, leaves.RemovedLeaves, response);
             return response;
         }
 

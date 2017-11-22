@@ -24,7 +24,8 @@ namespace Coverage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMySqlDbContext(Configuration);
-            services.AddTransient();
+            services.AddRepositories();
+            services.AddServices();
             services.AddLogging();
             if (HostingEnvironment.IsDevelopment())
             {

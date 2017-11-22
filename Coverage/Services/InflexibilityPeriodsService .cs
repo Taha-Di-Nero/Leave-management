@@ -17,7 +17,8 @@ namespace Seac.Coverage.Services
         private readonly IInflexibilityPeriodRepository _inflexibilityPeriodRepository;
         private readonly IInflexibilityPeriodMotivationRepository _inflexibilityPeriodMotivationRepository;
 
-        public InflexibilityPeriodsService(IMapper mapper, IInflexibilityPeriodRepository inflexibilityPeriodRepository, IInflexibilityPeriodMotivationRepository inflexibilityPeriodMotivationRepository)
+        public InflexibilityPeriodsService(IMapper mapper, IInflexibilityPeriodRepository inflexibilityPeriodRepository,
+            IInflexibilityPeriodMotivationRepository inflexibilityPeriodMotivationRepository)
         {
             _mapper = mapper;
             _inflexibilityPeriodRepository = inflexibilityPeriodRepository;
@@ -28,6 +29,7 @@ namespace Seac.Coverage.Services
         {
             var entity = _inflexibilityPeriodRepository.Get(id);
             var dto = _mapper.Map<InflexibilityPeriod, InflexibilityPeriodDto>(entity);
+
             dto.Employes = entity.EmployeInflexibilityPeriod.Select(ei => new EmployeDto(ei.Employe, EmployeState.Indifferent)).ToList();
             return dto;
         }
@@ -36,7 +38,11 @@ namespace Seac.Coverage.Services
         {
             var entities = _inflexibilityPeriodRepository.GetAllWithEmploye().ToList();
             var dtos = _mapper.Map<List<InflexibilityPeriod>, List<InflexibilityPeriodDto>>(entities);
-            dtos.ForEach(ip => ip.Employes = entities.Find(ent => ent.Id == ip.Id).EmployeInflexibilityPeriod.Select(ei => new EmployeDto(ei.Employe, EmployeState.Indifferent)).ToList());
+            dtos.ForEach(ip =>
+            {
+                ip.Employes.Clear();
+                ip.Employes = entities.Find(ent => ent.Id == ip.Id).EmployeInflexibilityPeriod.Select(ei => new EmployeDto(ei.Employe, EmployeState.Indifferent)).ToList();
+            });
             return dtos;
         }
 
@@ -61,7 +67,8 @@ namespace Seac.Coverage.Services
 
         public void Delete(long id) => _inflexibilityPeriodRepository.Delete(_inflexibilityPeriodRepository.Get(id));
 
-        public IEnumerable<InflexibilityPeriodMotivationDto> GetAllMotivation() => _mapper.Map<IList<InflexibilityPeriodMotivation>, IList<InflexibilityPeriodMotivationDto>>(_inflexibilityPeriodMotivationRepository.GetAll().ToList());
+        public IEnumerable<InflexibilityPeriodMotivationDto> GetAllMotivation() =>
+            _mapper.Map<IList<InflexibilityPeriodMotivation>, IList<InflexibilityPeriodMotivationDto>>(_inflexibilityPeriodMotivationRepository.GetAll().ToList());
 
         public InflexibilityPeriodMotivationDto AddMotivation(InflexibilityPeriodMotivationDto motivation)
         {

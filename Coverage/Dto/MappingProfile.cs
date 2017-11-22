@@ -20,7 +20,8 @@ namespace Seac.Coverage.Dto
             CreateMap<Leave, LeaveDto>();
             CreateMap<LeaveDto, Leave>();
 
-            CreateMap<Employe, EmployeDto>().ForMember(dto => dto.AreaList, opt => opt.ResolveUsing(x => x.EmployeArea == null ? new List<AreaBaseDto>() : x.EmployeArea.Select(y => new AreaBaseDto(y.Area)).ToList()));
+            CreateMap<Employe, EmployeDto>().ForMember(dto => dto.AreaList, opt => opt.ResolveUsing(x =>
+                                                                        x.EmployeArea == null ? new List<AreaBaseDto>() : x.EmployeArea.Select(y => new AreaBaseDto(y.Area)).ToList()));
             CreateMap<EmployeDto, Employe>();
 
             CreateMap<InflexibilityPeriod, InflexibilityPeriodDto>();
