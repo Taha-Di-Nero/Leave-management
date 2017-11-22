@@ -12,8 +12,8 @@ namespace Seac.Coverage.Models
 
         [Column("to")]
         public DateTime To { get; set; }
-		
-		[ForeignKey("inflexibility_periods_motivation_id")]
+
+        [ForeignKey("inflexibility_periods_motivation_id")]
         public InflexibilityPeriodMotivation InflexibilityPeriodMotivation { get; set; }
 
         public List<EmployeInflexibilityPeriod> EmployeInflexibilityPeriod { get; set; }

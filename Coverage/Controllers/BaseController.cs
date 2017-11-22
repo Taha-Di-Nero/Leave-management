@@ -12,8 +12,10 @@ using static Seac.Coverage.Utils.SessionKeys;
 namespace Seac.Coverage.Controllers
 {
     [Produces("application/json")]
-    public abstract class BaseController : Controller
+    public class BaseController : Controller
     {
+        protected BaseController() { }
+
         protected EmployeDto GetLoggedEmploye() => HttpContext.Session.Get<EmployeDto>(LoggedEmployeKey);
 
         protected DateTime GetDateParam(string dateParam) => DateTime.ParseExact(dateParam, DateParamFormat, CultureInfo.InvariantCulture);

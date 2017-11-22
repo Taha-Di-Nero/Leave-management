@@ -30,17 +30,17 @@ namespace Seac.Coverage.Utils
             public int Y { get; set; }
         }
 
-        private static IEnumerable<CalendarConstants> Costanti = new List<CalendarConstants>()
+        private static IEnumerable<CalendarConstants> Costanti = new List<CalendarConstants>
         {
-           new CalendarConstants() { MinDate = null , MaxDate = 1582, X = 15, Y= 6 },
-           new CalendarConstants()  { MinDate = 1583 , MaxDate = 1699, X = 22, Y= 2 },
-           new CalendarConstants()  { MinDate = 1700 , MaxDate = 1799, X = 23, Y= 3 },
-           new CalendarConstants()  { MinDate = 1800 , MaxDate = 1899, X = 23, Y= 4 },
-           new CalendarConstants()  { MinDate = 1900 , MaxDate = 2099, X = 24, Y= 5 },
-           new CalendarConstants()  { MinDate = 2100 , MaxDate = 2199, X = 24, Y= 6 },
-           new CalendarConstants()  { MinDate = 2200 , MaxDate = 2299, X = 25, Y= 7 },
-           new CalendarConstants()  { MinDate = 2300 , MaxDate = 2399, X = 26, Y= 1 },
-           new CalendarConstants()  { MinDate = 2400 , MaxDate = 2499, X = 25, Y= 1 }
+           new CalendarConstants { MinDate = null , MaxDate = 1582, X = 15, Y= 6 },
+           new CalendarConstants { MinDate = 1583 , MaxDate = 1699, X = 22, Y= 2 },
+           new CalendarConstants { MinDate = 1700 , MaxDate = 1799, X = 23, Y= 3 },
+           new CalendarConstants { MinDate = 1800 , MaxDate = 1899, X = 23, Y= 4 },
+           new CalendarConstants { MinDate = 1900 , MaxDate = 2099, X = 24, Y= 5 },
+           new CalendarConstants { MinDate = 2100 , MaxDate = 2199, X = 24, Y= 6 },
+           new CalendarConstants { MinDate = 2200 , MaxDate = 2299, X = 25, Y= 7 },
+           new CalendarConstants { MinDate = 2300 , MaxDate = 2399, X = 26, Y= 1 },
+           new CalendarConstants { MinDate = 2400 , MaxDate = 2499, X = 25, Y= 1 }
         };
 
         public static DateTime? GetEasterDate(int year)

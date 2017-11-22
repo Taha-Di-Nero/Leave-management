@@ -13,7 +13,8 @@ namespace Seac.Coverage.Services
     {
         private readonly IEmployeService _employeService;
 
-        public MailService(IEmployeService employeService) {
+        public MailService(IEmployeService employeService)
+        {
             _employeService = employeService;
         }
 
@@ -22,7 +23,7 @@ namespace Seac.Coverage.Services
             var targetEmploye = _employeService.GetWithArea(targetEmployeId);
             if (SendNotification(notificationType, loggedEmploye, targetEmploye, response))
             {
-                var param = new ApprovationMailParams(notificationType, serverLink, new MailAddress[] { GetRecipients(targetEmploye) }, GetNotificationMessage(response), GetSender(loggedEmploye));
+                var param = new ApprovationMailParams(notificationType, serverLink, new[] { GetRecipients(targetEmploye) }, GetNotificationMessage(response), GetSender(loggedEmploye));
                 SendMail(param).ConfigureAwait(false);
             }
         }

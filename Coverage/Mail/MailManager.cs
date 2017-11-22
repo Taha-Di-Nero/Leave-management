@@ -47,22 +47,16 @@ namespace Seac.Coverage.Mail
                 builder.HtmlBody = SourceReader.ReadToEnd();
             }
 
-            var body = "";
-            if (type == NotificationType.Alert)
-            {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverLink);
-            }
-            else
-            {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverLink);
-            }
-            return body;
+            return (type == NotificationType.Alert) ? string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverLink) :
+                                                          string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverLink);
         }
 
         private static Attachment GetAttachment(string attachmentPath, string contentId)
         {
-            Attachment attachment = new Attachment(attachmentPath);
-            attachment.ContentId = contentId;
+            Attachment attachment = new Attachment(attachmentPath)
+            {
+                ContentId = contentId
+            };
             attachment.ContentDisposition.Inline = true;
             return attachment;
         }

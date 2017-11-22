@@ -56,8 +56,7 @@ namespace Seac.Coverage.Services
             }
             else
             {
-                entity.EmployeArea.Clear();
-                entity.EmployeArea.AddRange(areas);
+                entity.EmployeArea = areas;
                 _employeRepository.Update(entity);
             }
         }

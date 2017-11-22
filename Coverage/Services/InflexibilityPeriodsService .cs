@@ -38,11 +38,7 @@ namespace Seac.Coverage.Services
         {
             var entities = _inflexibilityPeriodRepository.GetAllWithEmploye().ToList();
             var dtos = _mapper.Map<List<InflexibilityPeriod>, List<InflexibilityPeriodDto>>(entities);
-            dtos.ForEach(ip =>
-            {
-                ip.Employes.Clear();
-                ip.Employes = entities.Find(ent => ent.Id == ip.Id).EmployeInflexibilityPeriod.Select(ei => new EmployeDto(ei.Employe, EmployeState.Indifferent)).ToList();
-            });
+            dtos.ForEach(ip => ip.Employes = entities.Find(ent => ent.Id == ip.Id).EmployeInflexibilityPeriod.Select(ei => new EmployeDto(ei.Employe, EmployeState.Indifferent)).ToList());
             return dtos;
         }
 

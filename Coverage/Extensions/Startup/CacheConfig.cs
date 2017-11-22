@@ -10,7 +10,7 @@ namespace Seac.Coverage.Extensions.Startup
         {
             app.Use(async (context, next) =>
             {
-                HeaderDictionaryTypeExtensions.GetTypedHeaders(context.Response).CacheControl = new CacheControlHeaderValue()
+                HeaderDictionaryTypeExtensions.GetTypedHeaders(context.Response).CacheControl = new CacheControlHeaderValue
                 {
                     NoStore = true,
                 };

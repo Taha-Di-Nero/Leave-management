@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-using AutoMapper;
-
 using Seac.Coverage.Dto;
 using Seac.Coverage.Extensions;
 using static Seac.Coverage.Utils.GeneralConstants;
@@ -47,7 +45,7 @@ namespace Seac.Coverage.Services
         {
             List<AreaCoverageGaps> leaveOverlaps = new List<AreaCoverageGaps>();
             Action<AreaCoverageGaps> actionForArea = leaveOverlaps.Add;
-            FindLeavesOverlaps(from, to, actionForArea, null, null, employeId);
+            FindLeavesOverlaps(from, to, actionForArea, employeId: employeId);
             var inflexibiltyDays = leaveOverlaps.SelectMany(areaGap => areaGap.Gaps).Select(gap => DateTime.ParseExact(gap.Date, DateIsoFormat, CultureInfo.InvariantCulture)).Distinct().ToList();
             inflexibiltyDays.AddRange(GetInflexibiltyPeriodsDays(_inflexibilityPeriodsService.GetByEmployeAndDates(employeId, from, to).ToList(), from, to));
             return inflexibiltyDays.Distinct().ToList();
@@ -181,7 +179,8 @@ namespace Seac.Coverage.Services
             employe.Groups.Insert(0, smallestGroup);
         }
 
-        private int FindLeavesOverlaps(DateTime fromDate, DateTime toDate, Action<AreaCoverageGaps> actionForArea, Action<IList<EmployesCoverageGaps>, AreaDto, AreaCoverageGaps> actionForEmploye = null, IList<EmployesCoverageGaps> employesCoverageGaps = null, long employeId = -1)
+        private int FindLeavesOverlaps(DateTime fromDate, DateTime toDate, Action<AreaCoverageGaps> actionForArea, Action<IList<EmployesCoverageGaps>, AreaDto,
+                                       AreaCoverageGaps> actionForEmploye = null, IList<EmployesCoverageGaps> employesCoverageGaps = null, long employeId = -1)
         {
             List<AreaDto> areas = employeId > 0 ? _areaService.FindByEmployeId(employeId).ToList() : _areaService.GetAllWithEmploye().ToList();
             List<LeaveDto> leaves = _leaveService.GetLeavesRange(fromDate, toDate).ToList();
@@ -209,7 +208,8 @@ namespace Seac.Coverage.Services
                 {
                     actionForEmploye(employesCoverageGaps, a, areaCoverageGaps);
                 }
-                else {
+                else
+                {
                     //nothing to do just removing sonar issue
                 }
             }

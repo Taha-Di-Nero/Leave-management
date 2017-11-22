@@ -6,14 +6,14 @@ namespace Seac.Coverage.Extensions.Startup
 {
     public static class SwaggerConfig
     {
-        private static string _endpointUri = "/swagger/v1/swagger.json";
+        private static string _endpoint = "/swagger/v1/swagger.json";
 
         public static void UseSwaggerConf(this IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(_endpointUri, "Coverage Rest API");
+                c.SwaggerEndpoint(_endpoint, "Coverage Rest API");
             });
         }
 
