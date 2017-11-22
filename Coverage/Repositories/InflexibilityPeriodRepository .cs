@@ -15,8 +15,11 @@ namespace Seac.Coverage.Repositories
         {
         }
 
-        public InflexibilityPeriod GetWithEmploye(long id) => Context.Set<InflexibilityPeriod>().Include(i => i.InflexibilityPeriodMotivation).Include(i => i.EmployeInflexibilityPeriod).ThenInclude(ei => ei.Employe).Where(i => i.Id == id).SingleOrDefault();
-        public IEnumerable<InflexibilityPeriod> GetAllWithEmploye() => Context.Set<InflexibilityPeriod>().Include(i => i.InflexibilityPeriodMotivation).Include(i => i.EmployeInflexibilityPeriod).ThenInclude(ei => ei.Employe).ToList();
-        public IEnumerable<InflexibilityPeriod> GetByEmployeAndDates(long employeId, DateTime init, DateTime end) => Context.Set<InflexibilityPeriod>().Where(ip => ip.EmployeInflexibilityPeriod.Any(ei => ei.Employe.Id == employeId) && init <= ip.To && ip.From <= end).ToList();
+        public InflexibilityPeriod GetWithEmploye(long id) => Context.Set<InflexibilityPeriod>().Include(i => i.InflexibilityPeriodMotivation)
+                                                                            .Include(i => i.EmployeInflexibilityPeriod).ThenInclude(ei => ei.Employe).Where(i => i.Id == id).SingleOrDefault();
+        public IEnumerable<InflexibilityPeriod> GetAllWithEmploye() => Context.Set<InflexibilityPeriod>().Include(i => i.InflexibilityPeriodMotivation)
+                                                                            .Include(i => i.EmployeInflexibilityPeriod).ThenInclude(ei => ei.Employe).ToList();
+        public IEnumerable<InflexibilityPeriod> GetByEmployeAndDates(long employeId, DateTime init, DateTime end) => Context.Set<InflexibilityPeriod>()
+                                                                        .Where(ip => ip.EmployeInflexibilityPeriod.Any(ei => ei.Employe.Id == employeId) && init <= ip.To && ip.From <= end).ToList();
     }
 }

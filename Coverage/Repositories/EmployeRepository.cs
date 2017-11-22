@@ -20,7 +20,9 @@ namespace Seac.Coverage.Repositories
         public void Update(Employe entity, List<EmployeArea> removedAreas)
         {
             if (entity == null)
+            {
                 throw new ArgumentException("entity is null");
+            }
 
             foreach (EmployeArea employeArea in removedAreas)
             {

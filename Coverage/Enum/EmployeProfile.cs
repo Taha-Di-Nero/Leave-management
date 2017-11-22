@@ -2,7 +2,7 @@
 {
     public enum EmployeProfile
     {
-        Manager, 
-		Normal
+        Manager,
+        Normal
     }
 }

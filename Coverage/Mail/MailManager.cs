@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -16,10 +17,6 @@ namespace Seac.Coverage.Mail
         private static string _headerImageId = "header";
         private static string _bodyImageId = "body";
 
-        private static string _notifyBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "avviso-email.html");
-        private static string _approvedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "approvation-email.html");
-        private static string _rejectedBodyPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
-
         private static string _notifySubject = "Ci sono modifiche del piano ferie da approvare.";
         private static string _approvedRejectedSubject = "Piano ferie";
 
@@ -33,7 +30,7 @@ namespace Seac.Coverage.Mail
 
             MailMessage mailMessage = new MailMessage();
             SetFromTo(mailMessage, param.Sender, param.Recipients);
-            mailMessage.Body = BuildBody(param.Type, param.Sender, param.Recipients, param.ServerUrl, param.Message);
+            mailMessage.Body = BuildBody(param.Type, param.Sender, param.Recipients, param.ServerLink, param.Message);
             mailMessage.Subject = GetSubject(param.Type);
             mailMessage.Attachments.Add(GetAttachment(_headerImagePath, _headerImageId));
             mailMessage.Attachments.Add(GetAttachment(GetBodyImagePath(param.Type), _bodyImageId));
@@ -42,7 +39,7 @@ namespace Seac.Coverage.Mail
             await client.SendMailAsync(mailMessage);
         }
 
-        private static string BuildBody(NotificationType type, MailAddress sender, MailAddress[] recipients, string serverUrl, string msg)
+        private static string BuildBody(NotificationType type, MailAddress sender, MailAddress[] recipients, string serverLink, string msg)
         {
             var builder = new BodyBuilder();
             using (StreamReader SourceReader = File.OpenText(GetBodyPath(type)))
@@ -50,22 +47,16 @@ namespace Seac.Coverage.Mail
                 builder.HtmlBody = SourceReader.ReadToEnd();
             }
 
-            var body = "";
-            if (type == NotificationType.Alert)
-            {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverUrl);
-            }
-            else
-            {
-                body = string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverUrl);
-            }
-            return body;
+            return (type == NotificationType.Alert) ? string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, msg, serverLink) :
+                                                          string.Format(builder.HtmlBody, _headerImageId, _bodyImageId, recipients[0].DisplayName, msg, sender.DisplayName, serverLink);
         }
 
         private static Attachment GetAttachment(string attachmentPath, string contentId)
         {
-            Attachment attachment = new Attachment(attachmentPath);
-            attachment.ContentId = contentId;
+            Attachment attachment = new Attachment(attachmentPath)
+            {
+                ContentId = contentId
+            };
             attachment.ContentDisposition.Inline = true;
             return attachment;
         }
@@ -76,14 +67,16 @@ namespace Seac.Coverage.Mail
             switch (type)
             {
                 case NotificationType.Alert:
-                    path = _notifyBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "avviso-email.html");
                     break;
                 case NotificationType.Approved:
-                    path = _approvedBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "approvation-email.html");
                     break;
                 case NotificationType.Rejected:
-                    path = _rejectedBodyPath;
+                    path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "templates", "reject-email.html");
                     break;
+                default:
+                    throw new NotSupportedException();
             }
             return path;
         }
@@ -97,12 +90,7 @@ namespace Seac.Coverage.Mail
 
         private static MailAddress CheckSenderMail(MailAddress sender)
         {
-            if (sender == null)
-            {
-                sender = new MailAddress(_notifyEmail);
-
-            }
-            return sender;
+            return sender ?? new MailAddress(_notifyEmail);
         }
 
         private static void SetFromTo(MailMessage mailMessage, MailAddress sender, MailAddress[] recipients)

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 using Microsoft.AspNetCore.Mvc;
@@ -5,13 +6,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Seac.Coverage.Attributes
 {
+    [AttributeUsage(AttributeTargets.Method)]
     public sealed class DeleteFileAttribute : ActionFilterAttribute
     {
-        public override void OnResultExecuted(ResultExecutedContext filterContext)
+        public override void OnResultExecuted(ResultExecutedContext context)
         {
-            filterContext.HttpContext.Response.Body.Flush();
-            string filePath = (filterContext.Result as PhysicalFileResult).FileName;
-            File.Delete(filePath);
+            context?.HttpContext.Response.Body.Flush();            
+            File.Delete((context?.Result as PhysicalFileResult).FileName);
         }
     }
 }

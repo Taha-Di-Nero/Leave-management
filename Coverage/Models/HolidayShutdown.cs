@@ -6,10 +6,6 @@ namespace Seac.Coverage.Models
     [Table("holiday_shutdowns")]
     public class HolidayShutdown : BaseEntity
     {
-        public HolidayShutdown()
-        {
-        }
-
         [Column("from")]
         public DateTime From { get; set; }
 

@@ -7,11 +7,11 @@ using Seac.Coverage.Models.Context;
 
 namespace Seac.Coverage.Repositories.Base
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
         public DomainContext Context { get; set; }
 
-        public BaseRepository(DomainContext context)
+        protected BaseRepository(DomainContext context)
         {
             Context = context;
         }
@@ -19,8 +19,9 @@ namespace Seac.Coverage.Repositories.Base
         public void Insert(T entity)
         {
             if (entity == null)
+            {
                 throw new ArgumentException("entity is null");
-
+            }
             Context.Set<T>().Add(entity);
             Context.SaveChanges();
         }
@@ -34,7 +35,9 @@ namespace Seac.Coverage.Repositories.Base
         public void Update(T entity)
         {
             if (entity == null)
+            {
                 throw new ArgumentException("entity is null");
+            }
             Context.Set<T>().Update(entity);
             Context.SaveChanges();
         }
@@ -69,8 +72,13 @@ namespace Seac.Coverage.Repositories.Base
 
         public void Dispose()
         {
-            Context.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Context.Dispose();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Seac.Coverage.Models
 {
-    public abstract class BaseEntity
+    public class BaseEntity
     {
         [Key]
         public long Id { get; set; }

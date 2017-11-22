@@ -6,6 +6,6 @@ namespace Seac.Coverage.Dto
     {
         public List<LeaveDto> AddedLeaves { get; set; }
 
-        public List<LeaveDto> removedLeaves { get; set; }
+        public List<LeaveDto> RemovedLeaves { get; set; }
     }
 }

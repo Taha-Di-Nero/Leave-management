@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-using AutoMapper;
-
 using Seac.Coverage.Dto;
 using Seac.Coverage.Extensions;
 using static Seac.Coverage.Utils.GeneralConstants;
@@ -14,15 +12,13 @@ namespace Seac.Coverage.Services
 {
     public class CoverageService : ICoverageService
     {
-        private readonly IMapper _mapper;
         private readonly IAreaService _areaService;
         private readonly IEmployeService _employeService;
         private readonly ILeaveService _leaveService;
         private readonly IInflexibilityPeriodsService _inflexibilityPeriodsService;
 
-        public CoverageService(IMapper mapper, IAreaService areaService, IEmployeService employeService, ILeaveService leaveService, IInflexibilityPeriodsService inflexibilityPeriodsService)
+        public CoverageService(IAreaService areaService, IEmployeService employeService, ILeaveService leaveService, IInflexibilityPeriodsService inflexibilityPeriodsService)
         {
-            _mapper = mapper;
             _areaService = areaService;
             _employeService = employeService;
             _leaveService = leaveService;
@@ -49,7 +45,7 @@ namespace Seac.Coverage.Services
         {
             List<AreaCoverageGaps> leaveOverlaps = new List<AreaCoverageGaps>();
             Action<AreaCoverageGaps> actionForArea = leaveOverlaps.Add;
-            FindLeavesOverlaps(from, to, actionForArea, null, null, employeId);
+            FindLeavesOverlaps(from, to, actionForArea, employeId: employeId);
             var inflexibiltyDays = leaveOverlaps.SelectMany(areaGap => areaGap.Gaps).Select(gap => DateTime.ParseExact(gap.Date, DateIsoFormat, CultureInfo.InvariantCulture)).Distinct().ToList();
             inflexibiltyDays.AddRange(GetInflexibiltyPeriodsDays(_inflexibilityPeriodsService.GetByEmployeAndDates(employeId, from, to).ToList(), from, to));
             return inflexibiltyDays.Distinct().ToList();
@@ -66,7 +62,7 @@ namespace Seac.Coverage.Services
             {
                 if (a.EmployeList.Count == 1)
                 {
-                    allEmployesWithArea.Remove(allEmployesWithArea.Where(e => e.Id == a.EmployeList[0].Id).FirstOrDefault());
+                    allEmployesWithArea.Remove(allEmployesWithArea.FirstOrDefault(e => e.Id == a.EmployeList[0].Id));
                     a.EmployeList[0].State = EmployeState.Inflexible;
                     inflexible.Add(new EmployeDto(a.EmployeList[0]));
                 }
@@ -75,7 +71,7 @@ namespace Seac.Coverage.Services
             return new EmployesFlexibility(GetFlexibleEmployes(allEmployesWithArea, areas), inflexible.Distinct().OrderBy(e => e.Surname).ToList(), allEmployesNoArea);
         }
 
-        private IList<DayCoverageGaps> FindLeaveOverlaps(IList<LeaveDto> leaves, DateTime from, DateTime to, int employeNumber)
+        private IList<DayCoverageGaps> FindLeaveOverlaps(IList<LeaveDto> leaves, int employeNumber)
         {
             IList<DayCoverageGaps> leavesOverlaps = new List<DayCoverageGaps>();
             IList<DateTime> period = leaves.Select(l => l.Date).Distinct().ToList();
@@ -90,21 +86,23 @@ namespace Seac.Coverage.Services
 
                 if (morningLeaves.Count > 0 && morningLeaves.Count == employeNumber)
                 {
-                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(morningLeaves, morningLeaves.Max(d => d.MFrom), morningLeaves.Max(d => d.MTo)));
+                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(morningLeaves.Max(d => d.MFrom), morningLeaves.Max(d => d.MTo)));
                 }
                 if (afternoonLeaves.Count > 0 && afternoonLeaves.Count == employeNumber)
                 {
-                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(afternoonLeaves, afternoonLeaves.Max(d => d.AFrom), afternoonLeaves.Max(d => d.ATo)));
+                    dayLeaveOverlaps.DayGaps.AddRange(GetMayBeLeaveOverlap(afternoonLeaves.Max(d => d.AFrom), afternoonLeaves.Max(d => d.ATo)));
                 }
 
                 if (dayLeaveOverlaps.DayGaps.Count > 0)
+                {
                     leavesOverlaps.Add(dayLeaveOverlaps);
+                }
             }
 
             return leavesOverlaps;
         }
 
-        private IList<CoverageGap> GetMayBeLeaveOverlap(IList<LeaveDto> dayLeaves, TimeSpan maxBegin, TimeSpan minEnd)
+        private IList<CoverageGap> GetMayBeLeaveOverlap(TimeSpan maxBegin, TimeSpan minEnd)
         {
             IList<CoverageGap> leaveOverlaps = new List<CoverageGap>();
 
@@ -151,8 +149,7 @@ namespace Seac.Coverage.Services
                 ecg.Areas = ecg.Areas.OrderBy(a => a.Description).ToList();
                 ecg.Employes = ecg.Employes.OrderBy(e => e.Surname).ThenBy(e => e.Name).ToList();
             }
-            employeLeaveOverlaps = employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList();
-            return employeLeaveOverlaps;
+            return employeLeaveOverlaps.OrderBy(ecg => ecg.Employes[0].Surname).ToList();
         }
 
 
@@ -167,8 +164,7 @@ namespace Seac.Coverage.Services
             }
 
             flexibleEmployesDto.ForEach(e => RemoveDuplicatedGroup(e));
-            flexibleEmployesDto = flexibleEmployesDto.OrderBy(e => e.Groups.Count).ThenBy(e => e.Surname).ToList();
-            return flexibleEmployesDto;
+            return flexibleEmployesDto.OrderBy(e => e.Groups.Count).ThenBy(e => e.Surname).ToList();
         }
 
         private void RemoveDuplicatedGroup(EmployeDto employe)
@@ -183,7 +179,8 @@ namespace Seac.Coverage.Services
             employe.Groups.Insert(0, smallestGroup);
         }
 
-        private int FindLeavesOverlaps(DateTime fromDate, DateTime toDate, Action<AreaCoverageGaps> actionForArea, Action<IList<EmployesCoverageGaps>, AreaDto, AreaCoverageGaps> actionForEmploye = null, IList<EmployesCoverageGaps> employesCoverageGaps = null, long employeId = -1)
+        private int FindLeavesOverlaps(DateTime fromDate, DateTime toDate, Action<AreaCoverageGaps> actionForArea, Action<IList<EmployesCoverageGaps>, AreaDto,
+                                       AreaCoverageGaps> actionForEmploye = null, IList<EmployesCoverageGaps> employesCoverageGaps = null, long employeId = -1)
         {
             List<AreaDto> areas = employeId > 0 ? _areaService.FindByEmployeId(employeId).ToList() : _areaService.GetAllWithEmploye().ToList();
             List<LeaveDto> leaves = _leaveService.GetLeavesRange(fromDate, toDate).ToList();
@@ -201,7 +198,7 @@ namespace Seac.Coverage.Services
                 {
                     areaEmployeNumber--;
                 }
-                IList<DayCoverageGaps> areaLeaveOverlaps = FindLeaveOverlaps(leaves.Where(l => l.Employe.AreaList.Any(ea => ea.Id == a.Id)).ToList(), fromDate, toDate, areaEmployeNumber);
+                IList<DayCoverageGaps> areaLeaveOverlaps = FindLeaveOverlaps(leaves.Where(l => l.Employe.AreaList.Any(ea => ea.Id == a.Id)).ToList(), areaEmployeNumber);
                 areaCoverageGaps.Gaps.AddRange(areaLeaveOverlaps);
                 if (areaCoverageGaps.Gaps.Count > 0 && actionForArea != null)
                 {
@@ -210,6 +207,10 @@ namespace Seac.Coverage.Services
                 else if (areaCoverageGaps.Gaps.Count > 0 && actionForEmploye != null)
                 {
                     actionForEmploye(employesCoverageGaps, a, areaCoverageGaps);
+                }
+                else
+                {
+                    //nothing to do just removing sonar issue
                 }
             }
             return areas.Count;

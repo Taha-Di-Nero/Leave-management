@@ -42,10 +42,10 @@ namespace Seac.Coverage.Quartz
             try
             {
                 var leaves = _jobRepository.GetNotApprovedLeaves();
-                if (leaves.Count() > 0)
+                if (leaves.Any())
                 {
                     var managers = _jobRepository.GetManagers();
-                    var param = new ApprovationMailParams(NotificationType.Alert, GetServerUrl(), GetRecipients(managers), GetNotificationMessage(leaves));
+                    var param = new ApprovationMailParams(NotificationType.Alert, GetServerLink(), GetRecipients(managers), GetNotificationMessage(leaves));
                     await SendMail(param);
                 }
 
@@ -61,7 +61,7 @@ namespace Seac.Coverage.Quartz
             return recipients.Select(recipient => new MailAddress(recipient.Email, string.Concat(recipient.Surname, " ", recipient.Name))).ToArray();
         }
 
-        private string GetServerUrl() => string.Format("http://{0}:{1}", _configuration[ServerName], _configuration[ServerHttpPort]);
+        private string GetServerLink() => string.Format("http://{0}:{1}", _configuration[ServerName], _configuration[ServerHttpPort]);
 
 
         private string GetNotificationMessage(IEnumerable<Leave> leaves)

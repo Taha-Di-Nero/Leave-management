@@ -25,7 +25,11 @@ namespace Seac.Coverage.Controllers
         public IEnumerable<EmployeDto> GetAll() => _employeService.GetAllWithArea();
 
         [HttpPost]
-        public void Post([FromBody]EmployeDto employe) => _employeService.Update(employe);
+        public IActionResult Post([FromBody]EmployeDto employe)
+        {
+            _employeService.Update(employe);
+            return new NoContentResult();
+        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)

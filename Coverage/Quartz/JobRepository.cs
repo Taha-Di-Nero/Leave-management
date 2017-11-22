@@ -17,7 +17,8 @@ namespace Seac.Coverage.Quartz
             Context = context;
         }
 
-        public IEnumerable<Leave> GetNotApprovedLeaves() => Context.Set<Leave>().AsNoTracking().Include(l => l.Employe.EmployeArea).ThenInclude(ea => ea.Employe).Where(l => l.State != LeaveState.Approved).OrderBy(l => l.Date).ToList();
+        public IEnumerable<Leave> GetNotApprovedLeaves() => Context.Set<Leave>().AsNoTracking().Include(l => l.Employe.EmployeArea).ThenInclude(ea => ea.Employe)
+                                                                                                                            .Where(l => l.State != LeaveState.Approved).OrderBy(l => l.Date).ToList();
 
         public IEnumerable<Employe> GetManagers() => Context.Set<Employe>().AsNoTracking().Where(e => e.Profile == EmployeProfile.Manager).ToList();
     }

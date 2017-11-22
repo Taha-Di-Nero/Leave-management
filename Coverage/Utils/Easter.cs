@@ -30,24 +30,22 @@ namespace Seac.Coverage.Utils
             public int Y { get; set; }
         }
 
-        private static IEnumerable<CalendarConstants> Costanti = new List<CalendarConstants>()
+        private static IEnumerable<CalendarConstants> Costanti = new List<CalendarConstants>
         {
-           new CalendarConstants() { MinDate = null , MaxDate = 1582, X = 15, Y= 6 },
-           new CalendarConstants()  { MinDate = 1583 , MaxDate = 1699, X = 22, Y= 2 },
-           new CalendarConstants()  { MinDate = 1700 , MaxDate = 1799, X = 23, Y= 3 },
-           new CalendarConstants()  { MinDate = 1800 , MaxDate = 1899, X = 23, Y= 4 },
-           new CalendarConstants()  { MinDate = 1900 , MaxDate = 2099, X = 24, Y= 5 },
-           new CalendarConstants()  { MinDate = 2100 , MaxDate = 2199, X = 24, Y= 6 },
-           new CalendarConstants()  { MinDate = 2200 , MaxDate = 2299, X = 25, Y= 7 },
-           new CalendarConstants()  { MinDate = 2300 , MaxDate = 2399, X = 26, Y= 1 },
-           new CalendarConstants()  { MinDate = 2400 , MaxDate = 2499, X = 25, Y= 1 }
+           new CalendarConstants { MinDate = null , MaxDate = 1582, X = 15, Y= 6 },
+           new CalendarConstants { MinDate = 1583 , MaxDate = 1699, X = 22, Y= 2 },
+           new CalendarConstants { MinDate = 1700 , MaxDate = 1799, X = 23, Y= 3 },
+           new CalendarConstants { MinDate = 1800 , MaxDate = 1899, X = 23, Y= 4 },
+           new CalendarConstants { MinDate = 1900 , MaxDate = 2099, X = 24, Y= 5 },
+           new CalendarConstants { MinDate = 2100 , MaxDate = 2199, X = 24, Y= 6 },
+           new CalendarConstants { MinDate = 2200 , MaxDate = 2299, X = 25, Y= 7 },
+           new CalendarConstants { MinDate = 2300 , MaxDate = 2399, X = 26, Y= 1 },
+           new CalendarConstants { MinDate = 2400 , MaxDate = 2499, X = 25, Y= 1 }
         };
 
         public static DateTime? GetEasterDate(int year)
         {
-            var constant = Costanti.First(cx =>
-                (!cx.MinDate.HasValue || year >= cx.MinDate.Value) &&
-                (year <= cx.MaxDate));
+            var constant = Costanti.First(cx => (!cx.MinDate.HasValue || year >= cx.MinDate.Value) && (year <= cx.MaxDate));
             var x = constant.X;
             var y = constant.Y;
             var a = year % 19;
@@ -56,13 +54,30 @@ namespace Seac.Coverage.Utils
             var d = (19 * a + x) % 30;
             var e = (2 * b + 4 * c + 6 * d + y) % 7;
             var sum = 22 + d + e;
-            if (sum <= 31) return new DateTime(year, 3, sum);
-            else if (((sum - 31) != 26 && (sum - 31) != 25) ||
-                        ((sum - 31) == 25 && (d != 28 || a <= 10)))
-                return new DateTime(year, 4, sum - 31);
-            else if ((sum - 31) == 25 && d == 28 && a > 10) return new DateTime(year, 4, 18);
-            else return new DateTime(year, 4, 19);
+            var adCondition = d == 28 && a > 10;
+            return ConstructEasterDate(year, sum, adCondition);
+        }
 
+        private static DateTime? ConstructEasterDate(int year, int sum, bool adCondition)
+        {
+            var sum25 = (sum - 31) == 25;
+            var sum26 = (sum - 31) == 26;
+            if (sum <= 31)
+            {
+                return new DateTime(year, 3, sum);
+            }
+            else if ((!sum26 && !sum25) || (sum25 && !adCondition))
+            {
+                return new DateTime(year, 4, sum - 31);
+            }
+            else if (sum25 && adCondition)
+            {
+                return new DateTime(year, 4, 18);
+            }
+            else
+            {
+                return new DateTime(year, 4, 19);
+            }
         }
     }
 }
