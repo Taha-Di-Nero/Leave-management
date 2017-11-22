@@ -1,1 +1,4 @@
-{\rtf1}
+node {
+    stage 'Build'
+        bat 'codeAnalysis.bat'
+}
