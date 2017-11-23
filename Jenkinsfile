@@ -3,6 +3,7 @@ node {
         checkout scm
     stage 'Angular'
         dir('Coverage/webapp/src/app') {
+            bat 'npm install' 
             bat 'npm run build' 
         }        
     stage 'Build'
