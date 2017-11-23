@@ -1,14 +1,14 @@
 node {
     stage 'Checkout'
         checkout scm
-    stage 'Angular'
+    stage 'Build Angular'
         dir('Coverage/webapp/src/app') {
             bat 'npm --version'
             bat 'npm install' 
             bat 'npm run build' 
         }        
-    stage 'Build'
+    stage '.NetCore Build' {
         bat 'dotnet restore'
-    stage 'Build'
         bat 'dotnet msbuild'
+    }
 }
