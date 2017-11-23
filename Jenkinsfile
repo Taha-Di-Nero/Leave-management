@@ -1,7 +1,7 @@
 node {
     stage 'Checkout'
         checkout scm
-    stage 'Build Angular'
+    stage 'Angular Build'
         dir('Coverage/webapp/src/app') {
             bat 'npm --version'
             bat 'npm install' 
