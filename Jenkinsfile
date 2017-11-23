@@ -9,6 +9,11 @@ node {
         }        
     stage('.NetCore Build') {
         bat 'dotnet restore'
+        def sqScannerMsBuildHome = tool 'msbuild'
+        withSonarQubeEnv {
+            bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe begin /k:coverage /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.login=%SONAR_AUTH_TOKEN%"
         bat 'dotnet msbuild'
+            bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe end /d:sonar.login=%SONAR_AUTH_TOKEN%"
+        }
     }
 }
