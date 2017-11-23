@@ -7,7 +7,7 @@ node {
             bat 'npm install' 
             bat 'npm run build' 
         }        
-    stage '.NetCore Build' {
+    stage('.NetCore Build') {
         bat 'dotnet restore'
         bat 'dotnet msbuild'
     }
