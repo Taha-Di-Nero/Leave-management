@@ -8,11 +8,12 @@ node {
             bat 'npm run buildNoProgress' 
     }        
     stage('.NetCore Build') {
+        bat 'dotnet clean'
         bat 'dotnet restore'
         def sqScannerMsBuildHome = tool 'MsBuild scanner'
         withSonarQubeEnv('sonar') {
             bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe begin /k:coverage /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.login=%SONAR_AUTH_TOKEN%"
-            bat 'dotnet msbuild /t:rebuild'
+            bat 'dotnet build'
             bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe end"
         }
    }
