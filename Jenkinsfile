@@ -12,9 +12,9 @@ node {
         bat 'dotnet restore'
         def sqScannerMsBuildHome = tool 'MsBuild scanner'
         withSonarQubeEnv('sonar') {
-            bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe begin /k:coverage /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.login=%SONAR_AUTH_TOKEN%"
+            bat "MSBuild.SonarQube.Runner.exe begin /k:coverage /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.login=%SONAR_AUTH_TOKEN%"
             bat 'dotnet build'
-            bat "${sqScannerMsBuildHome}\\MSBuild.SonarQube.Runner.exe end"
+            bat "MSBuild.SonarQube.Runner.exe end"
         }
    }
 }
