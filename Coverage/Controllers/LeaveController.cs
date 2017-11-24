@@ -43,13 +43,12 @@ namespace Seac.Coverage.Controllers
         [HttpPost("employe/plan")]
         public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId, NotificationType notificationType, bool force = false)
         {
-            Console.WriteLine("so far, so good...");
             var loggedEmploye = GetLoggedEmploye();
             var targetEmployeId = GetEmployeId(employeId);
 
             var response = _leaveService.UpdateLeavesPlan(_coverageService, leaves, targetEmployeId, loggedEmploye, force);
 
-            _mailService.SendNotification(notificationType, loggedEmploye, targetEmployeId, response, GetServerUrl());
+            _mailService.SendNotification(notificationType, loggedEmploye, targetEmployeId, response, GetServerLink());
 
             return response;
         }
@@ -62,7 +61,7 @@ namespace Seac.Coverage.Controllers
             return PhysicalFile(_leaveService.ExportLeavesPlan(year), MediaTypeNames.Application.Octet);
         }
 
-        private string GetServerUrl() => string.Format("{0}://{1}", Request.Scheme, Request.Host);
+        private string GetServerLink() => string.Format("{0}://{1}", Request.Scheme, Request.Host);
 
         private long GetEmployeId(string employeId) => employeId != null ? Convert.ToInt64(employeId) : GetLoggedEmploye().Id;
     }
