@@ -2,7 +2,7 @@ node {
     stage 'Checkout'
         checkout scm
     stage('.NetCore Build') {
-        def sqScannerMsBuildHome = tool 'MsBuild scanner'
+        bat 'dotnet msbuild'
         withSonarQubeEnv('sonar') {
             dir('Coverage') {
                 bat 'sonar-scanner'
