@@ -43,6 +43,7 @@ namespace Seac.Coverage.Controllers
         [HttpPost("employe/plan")]
         public UpdatePlanResponse UpdateLeavesPlan([FromBody] LeavesPlanUpdate leaves, string employeId, NotificationType notificationType, bool force = false)
         {
+            Console.WriteLine("so far, so good...");
             var loggedEmploye = GetLoggedEmploye();
             var targetEmployeId = GetEmployeId(employeId);
 

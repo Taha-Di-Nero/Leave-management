@@ -7,7 +7,7 @@ using Seac.Coverage.Models.Context;
 
 namespace Seac.Coverage.Repositories.Base
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
         public DomainContext Context { get; set; }
 
