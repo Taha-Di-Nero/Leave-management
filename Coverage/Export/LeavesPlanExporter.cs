@@ -23,8 +23,8 @@ namespace Seac.Coverage.Export
         private IWorkbook wb;
         private ExportStyleManager exportStyleManager;
 
-        private readonly List<LeaveDto> leaves;
-        private List<EmployeDto> employes;
+        private readonly List<LeaveDto> leaves = null;
+        private List<EmployeDto> employes = null;
 
         public LeavesPlanExporter(List<LeaveDto> leaves, List<EmployeDto> employes)
         {
