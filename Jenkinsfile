@@ -4,7 +4,9 @@ node {
     stage('.NetCore Build') {
         def sqScannerMsBuildHome = tool 'MsBuild scanner'
         withSonarQubeEnv('sonar') {
-            bat 'sonar-scanner'
+            dir('Coverage') {
+                bat 'sonar-scanner'
+            }
         }
    }
 }
