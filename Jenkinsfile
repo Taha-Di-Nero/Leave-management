@@ -1,6 +1,10 @@
 node {
-	stage 'Checkout'
+    stage 'Checkout'
         checkout scm
-    stage 'Build'
-        bat 'codeAnalysis.bat'
+    stage('.NetCore Build') {
+        def sqScannerMsBuildHome = tool 'MsBuild scanner'
+        withSonarQubeEnv('sonar') {
+            bat '@powershell -File codeAnalysis.bat'
+        }
+   }
 }
