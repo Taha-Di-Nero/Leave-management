@@ -8,3 +8,4 @@ wwwroot
 .vs
 node
 .sonarqube
+.scannerwork
