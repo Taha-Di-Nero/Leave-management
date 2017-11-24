@@ -4,7 +4,7 @@ node {
     stage('.NetCore Build') {
         def sqScannerMsBuildHome = tool 'MsBuild scanner'
         withSonarQubeEnv('sonar') {
-            bat '@powershell -ExecutionPolicy ByPass -File codeAnalysis.ps1'
+            bat '@sonar-scanner'
         }
    }
 }
