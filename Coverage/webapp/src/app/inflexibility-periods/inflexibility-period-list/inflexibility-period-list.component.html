@@ -64,14 +64,14 @@
         <mat-chip-list selectable="false" placeholder="Dipendenti" required>
           <mat-chip *ngFor="let employe of inflexibilityPeriodModel.employes;" (remove)="removeChip(employe)" color="primary" [ngClass]="getChipColor(employe)"
             selected="false">
-            {{ employe?.surname}} {{employe?.name}}
+            {{ employe?.surname }} {{ employe?.name }}
             <mat-icon matChipRemove class="employe-chip-remove">cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>
       </div>
     </div>
     <ul *ngIf="isFormInvalid()" class="col list-group">
-      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{msg}}</li>
+      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{ msg }}</li>
     </ul>
     <hr class="dotted text-primary">
     <div class="form-group row">

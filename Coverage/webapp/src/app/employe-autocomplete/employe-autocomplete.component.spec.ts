@@ -31,7 +31,7 @@ employeInd.name = 'indName';
 employeInd.surname = 'indSurname';
 employeInd.state = EmployeState.Flexible;
 employeInd.currentYearLeaves = 3;
-const employes = [employef, employeInf, employeInd];
+const employess = [employef, employeInf, employeInd];
 
 describe('EmployeAutocompleteComponent', () => {
   let component: EmployeAutocompleteComponent;
@@ -57,7 +57,7 @@ describe('EmployeAutocompleteComponent', () => {
     component = fixture.componentInstance;
     component.employesSubject = ApplicationSharedData.getInstance().getEmployes();
     component.injectSearch = ApplicationSharedData.getInstance().getEmpAutoCompInjectSearch();
-    component.employesSubject.next(employes);
+    component.employesSubject.next(employess);
     fixture.detectChanges();
   });
 

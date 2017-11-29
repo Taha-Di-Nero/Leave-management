@@ -6,7 +6,7 @@
     <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="deleteArea()" ngbTooltip="Elimina area">delete</mat-icon>
     <mat-autocomplete #areasList="matAutocomplete" (optionSelected)="selectArea()">
         <mat-option *ngFor="let area of filteredAreas | async" [value]="area.description">
-            <span> {{ area.description}}</span>
+            <span> {{ area.description }}</span>
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

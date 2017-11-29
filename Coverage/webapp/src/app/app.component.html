@@ -41,8 +41,8 @@
     <img *ngIf="showCoverageTitle" src="/assets/images/coverage-page-title.png" style="max-height:58px;">
   </div>
   <span class="spacer"></span>
-  <span class="user-name">{{loggedEmploye?.surname}} {{loggedEmploye?.name}}</span>
-  <span ngbTooltip="Giorni di ferie" placement="bottom" class="badge rounded">{{ApplicationSharedData.getInstance().loggedEmploye?.currentYearLeaves}}</span>
+  <span class="user-name">{{ loggedEmploye?.surname }} {{ loggedEmploye?.name }}</span>
+  <span ngbTooltip="Giorni di ferie" placement="bottom" class="badge rounded">{{ ApplicationSharedData.getInstance().loggedEmploye?.currentYearLeaves }}</span>
 </ng-template>
 
 <ng-template #content>
@@ -86,8 +86,8 @@
 
 <ng-template #approvationModal let-close="close">
   <div class="modal-header modal-header-primary">
-    <span *ngIf="requestedApprovationMode === ApprovationMode.Remove"  class="modal-title">Ferie rimosse da approvare</span>
-    <span *ngIf="requestedApprovationMode === ApprovationMode.Add"  class="modal-title">Ferie aggiunte da approvare</span>
+    <span *ngIf="requestedApprovationMode === ApprovationMode.Remove" class="modal-title">Ferie rimosse da approvare</span>
+    <span *ngIf="requestedApprovationMode === ApprovationMode.Add" class="modal-title">Ferie aggiunte da approvare</span>
   </div>
   <div class="modal-body">
     <app-leaves-approvation [mode]="requestedApprovationMode" (showLeaves)="goToEmploeLeaves($event)"></app-leaves-approvation>

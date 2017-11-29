@@ -60,7 +60,7 @@
       </div>
     </div>
     <ul *ngIf="isFormInvalid()" class="col list-group">
-      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{msg}}</li>
+      <li *ngFor="let msg of getErrorMsg()" class="list-group-item list-group-item-danger">{{ msg }}</li>
     </ul>
   </form>
 </ng-template>

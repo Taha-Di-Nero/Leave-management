@@ -8,11 +8,11 @@
     <mat-table #table [dataSource]="employes">
         <ng-container matColumnDef="employeFullName">
             <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.surname}} {{row.name}} </mat-cell>
+            <mat-cell *matCellDef="let row">{{ row.surname }} {{ row.name }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="areas">
             <mat-header-cell *matHeaderCellDef> Aree </mat-header-cell>
@@ -22,7 +22,7 @@
                     <mat-option value="title" [innerHTML]="getTitleValue(row?.areaList?.length)">
                     </mat-option>
                     <mat-option *ngFor="let area of row.areaList" [value]="area.id" disabled>
-                        <span> {{ area.description}}</span>
+                        <span> {{ area.description }}</span>
                     </mat-option>
                 </mat-select>
             </mat-cell>
