@@ -8,9 +8,24 @@
       "root": "src",
       "outDir": "../wwwroot",
       "assets": [
-        { "glob": "**/*", "input": "./assets/", "output": "./assets/"},
-        { "glob": "**/*", "input": "./templates/", "output": "./templates/"},
-        { "glob": "favicon.ico", "input": "./", "output": "./"}
+        {
+  "glob": "**/*",
+  "input": "./assets/",
+  "output": "./assets/",
+  "allowOutsideOutDir": false
+},
+        {
+  "glob": "**/*",
+  "input": "./templates/",
+  "output": "./templates/",
+  "allowOutsideOutDir": false
+},
+        {
+  "glob": "favicon.ico",
+  "input": "./",
+  "output": "./",
+  "allowOutsideOutDir": false
+}
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,6 +34,7 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "serviceWorker": false,
       "styles": [
         "../node_modules/angular-calendar/dist/css/angular-calendar.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
