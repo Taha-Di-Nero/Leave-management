@@ -77,12 +77,12 @@
     <div class="form-group row">
       <div class="col text-left">
         <span ngbTooltip="Salva">
-          <button class="btn btn-primary" type="button" (click)="saveInflexibilityPeriod()" [disabled]="!inflexibilityPeriodForm.valid">
+          <button class="btn btn-primary" type="button" (click)="dTo.close();dFrom.close();saveInflexibilityPeriod()" [disabled]="!inflexibilityPeriodForm.valid">
             <i class="fa fa-floppy-o" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
           </button>
         </span>
         <span ngbTooltip="Annulla">
-          <button class="btn btn-primary" type="button" (click)="resetView()">
+          <button class="btn btn-primary" type="button" (click)="dTo.close();dFrom.close();resetView()">
             <i class="fa fa-times" aria-hidden="true" style="font-size:24px;width: 1.2rem; height: 1rem;"></i>
           </button>
         </span>

@@ -45,12 +45,17 @@ export class InflexibilityPeriodMotivationComponent implements OnInit {
   }
 
   public getselectedMotivation(): InflexibilityPeriodMotivation {
-    const selectedMotivation = this.motivationCtrl.value ? this.filterMotivations(this.motivationCtrl.value) : [];
+    const selectedMotivation = this.motivationCtrl.value ? this.selectedOption : [];
     if (selectedMotivation.length === 1) {
       this.motivationCtrl.setValue(selectedMotivation[0].description);
       return selectedMotivation[0];
     }
     return undefined;
+  }
+
+  private get selectedOption(){
+    return this.motivations.filter(motivation =>
+      motivation.description.toLowerCase() === this.motivationCtrl.value.toLowerCase());
   }
 
   selectMotivation(): void {

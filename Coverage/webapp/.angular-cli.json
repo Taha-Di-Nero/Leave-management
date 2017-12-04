@@ -36,7 +36,7 @@
       "prefix": "app",
       "serviceWorker": false,
       "styles": [
-        "../node_modules/angular-calendar/dist/css/angular-calendar.css",
+        "../node_modules/angular-calendar/css/angular-calendar.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
         "./assets/css/animate.css",
