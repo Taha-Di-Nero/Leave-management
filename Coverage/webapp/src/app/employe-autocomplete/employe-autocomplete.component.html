@@ -5,8 +5,8 @@
     <mat-autocomplete #employesList="matAutocomplete" (optionSelected)="selectEmploye()">
         <mat-option *ngFor="let employe of filteredEmployes | async" [value]="employe.surname.concat(' ', employe.name)">
             <span *ngIf="!showLeaves" [ngClass]="getStateClass(employe, 'employe-dot')"></span>
-            <span *ngIf="showLeaves" [ngClass]="getStateClass(employe, 'badge rounded')">{{employe.currentYearLeaves}}</span>
-            <span> {{ employe.surname}} {{employe.name}}</span>
+            <span *ngIf="showLeaves" [ngClass]="getStateClass(employe, 'badge rounded')">{{ employe.currentYearLeaves }}</span>
+            <span> {{ employe.surname }} {{ employe.name }}</span>
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

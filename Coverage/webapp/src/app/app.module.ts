@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { ToastrModule } from 'ngx-toastr';
 import { CalendarModule } from 'angular-calendar';
@@ -26,6 +27,7 @@ import { LeavesApprovationModule } from './leaves-approvation/leaves-approvation
 import { LayoutModule } from './layout/layout.module';
 import { EmployesModule } from './employes/employes.module';
 import { BaseInterceptor } from './service/base.interceptor';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { BaseInterceptor } from './service/base.interceptor';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
     NgbModule.forRoot(),
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),

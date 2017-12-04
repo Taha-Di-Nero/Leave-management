@@ -40,7 +40,7 @@
       <div class="col input-group">
         <mat-form-field style="width: 100%">
           <input matInput placeholder="Email" formControlName="email" [(ngModel)]="employeModel.email">
-          <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+          <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -53,7 +53,7 @@
       <div class="col-12">
         <mat-chip-list selectable="true" placeholder="Dipendenti" required>
           <mat-chip *ngFor="let area of employeModel.areaList;" (remove)="removeChip(area)" color="primary" class="area-chip" (click)="chipSelected(area)">
-            {{area?.description}}
+            {{ area?.description }}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>

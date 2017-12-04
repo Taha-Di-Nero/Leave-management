@@ -14,7 +14,7 @@ namespace Seac.Coverage.Extensions.Startup
         public static void AddMySqlDbContext(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<DomainContext>(opt => opt.UseMySql(Configuration[AppConnectionString]));
-            services.AddDbContext<JobDomainContext>(opt => opt.UseMySql(Configuration[QuartzConnectionString]), ServiceLifetime.Transient, ServiceLifetime.Transient);
+            services.AddDbContext<JobDomainContext>(opt => opt.UseMySql(Configuration[QuartzConnectionString]), ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Transient);
         }
     }
 }

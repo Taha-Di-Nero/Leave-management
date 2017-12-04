@@ -6,7 +6,7 @@
     <mat-icon matSuffix class="align-middle btn-pointer-cursor" (click)="deleteMotivation()" ngbTooltip="Elimina Motivo">delete</mat-icon>
     <mat-autocomplete #motivationsList="matAutocomplete" (optionSelected)="selectMotivation()">
         <mat-option *ngFor="let motivation of filteredMotivations | async" [value]="motivation.description">
-            <span> {{ motivation.description}}</span>
+            <span> {{ motivation.description }}</span>
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

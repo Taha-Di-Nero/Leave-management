@@ -32,7 +32,5 @@ namespace Seac.Coverage.Repositories
             Insert(entity);
             return entity.Id;
         }
-
-
     }
 }

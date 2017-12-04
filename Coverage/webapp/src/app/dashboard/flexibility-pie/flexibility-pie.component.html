@@ -7,9 +7,9 @@
 			<pre *ngIf='modalData?.listString'>{{ modalData?.listString }}</pre>
 			<div class="emp-list" *ngIf='modalData?.listArray'>
 				<ul>
-					<li *ngFor='let emp of modalData.listArray'>{{emp.surname}} {{emp.name}}:
+					<li *ngFor='let emp of modalData.listArray'>{{ emp.surname }} {{ emp.name }}:
 						<ul>
-							<li *ngFor='let g of emp.groups'>{{ g | groupMembersJoin}}</li>
+							<li *ngFor='let g of emp.groups'>{{ g | groupMembersJoin }}</li>
 						</ul>
 					</li>
 				</ul>

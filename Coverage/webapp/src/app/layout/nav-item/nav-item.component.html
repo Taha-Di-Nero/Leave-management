@@ -1,13 +1,13 @@
 <div *ngIf="!node.children">
   <a href="#" [ngClass]="classes" (click)="nodeClicked()" ngbTooltip="{{node.tooltip}}" placement="right" container="body" class="vertical-menu-item">
-    {{node.title}}
+    {{ node.title }}
   </a>
 </div>
 
 <div *ngIf="node.children">
-  <a href="#" [ngClass]="classes" ngbTooltip="{{node.tooltip}}" placement="right" container="body"
+  <a href="#" [ngClass]="classes" ngbTooltip="{{ node.tooltip }}" placement="right" container="body"
     (click)="headerClicked()" class="vertical-menu-item heading">
-    {{node.title}}
+    {{ node.title }}
     <mat-icon class="rotating-icon" svgIcon="keyboard-arrow-right"></mat-icon>
   </a>
 

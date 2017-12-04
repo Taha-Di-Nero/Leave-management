@@ -21,7 +21,7 @@ export class FlexibilityPieComponent implements OnInit, OnDestroy {
     title: string,
     titleCss: string,
     listString: string,
-    listArray:  Employe[]
+    listArray: Employe[]
   };
 
   // Workaround for IE11 ngbmodal close focus
@@ -70,11 +70,11 @@ export class FlexibilityPieComponent implements OnInit, OnDestroy {
     this.modal.open(this.modalWin, { size: 'lg', windowClass: 'animated bounceInRight' });
   }
 
-  getInflexibleList(employes: Employe[]): string{
+  getInflexibleList(employes: Employe[]): string {
     return employes.map(e => e.surname + ' ' + e.name).join('\n');
   }
 
-  getFlexibleList(employes: Employe[]): Employe[]{
+  getFlexibleList(employes: Employe[]): Employe[] {
     return employes;
   }
 
