@@ -106,7 +106,7 @@ namespace Seac.Coverage.Services
         private UpdatePlanResponse AddRejectedLeavesToResponse(ICoverageService coverageService, IList<LeaveDto> leaves, Employe currentEmploye)
         {
             var response = new UpdatePlanResponse();
-            if (leaves?.Count > 0 && currentEmploye.EmployeArea.Count > 0)
+            if (leaves?.Count > 0)
             {
                 var init = leaves.Min(l => l.Date);
                 var end = leaves.Max(l => l.Date);
