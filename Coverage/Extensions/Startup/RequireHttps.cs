@@ -14,7 +14,7 @@ namespace Seac.Coverage.Extensions.Startup
 {
     public static class RequireHttps
     {
-        public static void UseHttps(this IApplicationBuilder app, IConfiguration configuration1)
+        public static void UseHttps(this IApplicationBuilder app)
         {
             var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(ServerConfFileName).Build();
             var options = new RewriteOptions().AddRedirectToHttps(StatusCodes.Status301MovedPermanently, Convert.ToInt32(configuration[ServerHttpsPort]));

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 using static Seac.Coverage.Utils.ConfigurationKeys;
 
-namespace Coverage
+namespace Seac.Coverage
 {
     public static class Program
     {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Seac.Coverage.Extensions.Startup;
 using Seac.Coverage.Quartz;
 
-namespace Coverage
+namespace Seac.Coverage
 {
     public class Startup
     {
@@ -47,7 +47,7 @@ namespace Coverage
         {
             app.UseSession();
             app.DisableCache();
-            app.UseHttps(Configuration);
+            app.UseHttps();
             loggerFactory.AddConsole();
             if (env.IsDevelopment())
             {
